@@ -2,17 +2,17 @@ package cache;
 
 import java.util.HashMap;
 
-public class Cache {
+public class CacheLFU extends CacheManager {
 	private HashMap<String,RequestedObject> hashmap;
 	private int capacity;
 
-	public Cache(HashMap<String,RequestedObject> hashmap,int capacity)
+	public CacheLFU(HashMap<String,RequestedObject> hashmap,int capacity)
 	{
 		this.hashmap = hashmap;
 		this.capacity = capacity;
 	}
 
-  public Cache(int capacity)
+  public CacheLFU(int capacity)
   {
     this.hashmap = new HashMap<String,RequestedObject>(capacity);
     this.capacity = capacity;
