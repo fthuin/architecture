@@ -26,6 +26,11 @@ public class RequestedObject {
   {
     this.access_counter++;
   }
+  
+  public int getSize()
+  {
+    return this.size;
+  }
 
   public boolean equals(Object o) {
       if (o instanceof RequestedObject) {
