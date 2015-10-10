@@ -45,11 +45,14 @@ public class CacheLFU extends CacheManager {
 	public boolean get(RequestedObject requestObject)
 	{
     boolean res = true;
-		if(this.hashmap.get(requestObject.getName())==null)
+    RequestedObject request = this.hashmap.get(requestObject.getName());
+		if(request==null)
 		{
       put(requestObject);
       res = false;
 		}
+    else
+      request.incrementCounter();
     return res;
 	}
 

@@ -22,6 +22,11 @@ public class RequestedObject {
     return this.access_counter;
   }
 
+  public void incrementCounter()
+  {
+    this.access_counter++;
+  }
+
   public boolean equals(Object o) {
       if (o instanceof RequestedObject) {
           RequestedObject other = (RequestedObject)o;
