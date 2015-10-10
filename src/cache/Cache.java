@@ -22,6 +22,7 @@ public class Cache {
 	{
 		if(this.hashmap.size()>= capacity)
 		{
+      System.out.println("CACHE FULL REMOVING ELEM");
 			remove();
 		}
     hashmap.put(requestObject.getName(),requestObject);
@@ -48,6 +49,7 @@ public class Cache {
     boolean res = true;
 		if(this.hashmap.get(requestObject.getName())==null)
 		{
+      System.out.println("FAIL")
       put(requestObject);
       res = false;
 		}
