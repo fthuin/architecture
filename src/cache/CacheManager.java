@@ -1,7 +1,7 @@
 public abstract class CacheManager {
     int size;
 
-    abstract void put(RequestObject requestObject);
-    abstract RequestObject get();
+    abstract void put(RequestedObject requestObject);
+    abstract RequestedObject get();
     abstract void remove();
 }

@@ -11,32 +11,44 @@ public class Cache {
 		this.hashmap = hashmap;
 		this.capacity = capacity;
 	}
+
+  public Cache(int capacity)
+  {
+    this.hashmap = new HashMap<String,RequestedObject>(capacity);
+    this.capacity = capacity;
+  }
 	
-	public void put(RequestedObject request)
+	public void put(RequestedObject requestObject)
 	{
-		if(hashmap.size()>= capacity)
+		if(this.hashmap.size()>= capacity)
 		{
-			remove_lfu();
+			remove();
 		}
-    hashmap.put(request.getName(),request);
-    capacity++;
+    hashmap.put(requestObject.getName(),requestObject);
+    this.capacity++;
 	}
 	
-	private void remove_lfu() {
+	private void remove() {
     RequestedObject current = null; 
-    int counter = Integer.MAX;
-
-
-		// TODO Auto-generated method stub
-		
+    int min = Integer.MAX;
+    for(RequestedObject request : this.hashmap.values())
+    {
+      if(request.getAccessCounter() < min)
+      {
+        min = request.getAccessCounter();
+        current = request;  
+      }
+    }
+    hashmap.remove(current.getName());
+    this.capacity--;
 	}
 
-	public boolean get(RequestedObject request)
+	public boolean get(RequestedObject requestObject)
 	{
     boolean res = true;
-		if(hashmap.get(request.getName())==null)
+		if(this.hashmap.get(requestObject.getName())==null)
 		{
-      put(request); 	 	
+      put(requestObject); 	 	
       res = false;
 		}
     return res;

@@ -17,7 +17,7 @@ public class RequestedObject {
     return this.name;
   }
 
-  public int get_access_counter()
+  public int getAccessCounter()
   {
     return this.access_counter; 
   }
