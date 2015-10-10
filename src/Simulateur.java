@@ -38,8 +38,8 @@ public class Simulateur {
         }
         double hitrateLFU = (double)hitsLFU / (double)compteur;
         double hitrateLRU = (double)hitsLRU / (double)compteur;
-        System.out.println("Hits rate LFU : " + hitrateLFU);
-        System.out.println("Hits rate LRU : " + hitrateLRU);
+        System.out.println("Hits rate LFU : " + hitrateLFU*100 + "%");
+        System.out.println("Hits rate LRU : " + hitrateLRU*100 + "%");
         System.out.println("Total requests : " + compteur);
     }
 

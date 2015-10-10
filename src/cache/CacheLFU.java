@@ -20,7 +20,6 @@ public class CacheLFU extends CacheManager {
 
 	public void put(RequestedObject requestObject)
 	{
-    System.out.println("Size: "+ this.hashmap.size());
 		if(this.hashmap.size()>= this.capacity)
 		{
 			remove();
