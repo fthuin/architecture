@@ -28,7 +28,6 @@ public class Cache {
 			remove();
 		}
     hashmap.put(requestObject.getName(),requestObject);
-    this.capacity++;
 	}
 
 	private void remove() {
@@ -43,7 +42,6 @@ public class Cache {
       }
     }
     hashmap.remove(current.getName());
-    this.capacity--;
 	}
 
 	public boolean get(RequestedObject requestObject)
