@@ -13,7 +13,7 @@ public class CacheLRU extends CacheManager{
   
   public void put(RequestedObject requestObject)
   {
-    if(this.linkedlist.size()<=capacity)
+    if(this.linkedlist.size()>=capacity)
     {
       linkedlist.removeFirst();
     }
