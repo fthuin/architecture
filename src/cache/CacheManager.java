@@ -4,6 +4,5 @@ public abstract class CacheManager {
     int size;
 
     abstract void put(RequestedObject requestObject);
-    abstract RequestedObject get(RequestedObject requestObject);
-    abstract void remove();
+    abstract boolean get(RequestedObject requestObject);
 }
