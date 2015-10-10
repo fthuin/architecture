@@ -49,7 +49,7 @@ public class Cache {
     boolean res = true;
 		if(this.hashmap.get(requestObject.getName())==null)
 		{
-      System.out.println("FAIL")
+      System.out.println("FAIL");
       put(requestObject);
       res = false;
 		}
