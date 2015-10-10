@@ -8,16 +8,27 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import cache.RequestedObject;
 
+/* This method helps to read from the standard input and produces
+ * RequestedObject one at a time.
+ */
+
 public class TraceParser {
 
     private String filename = "";
     private BufferedReader br = null;
 
+    /* Constructor
+     * Create a TraceParser reading an InputStream containing in each line
+     * a representation of a requested object.
+     */
     public TraceParser(InputStream input) {
         this.filename = filename;
         this.br = new BufferedReader(new InputStreamReader(input));
     }
 
+    /* This method reads one line from the InputStream given in the
+     * constructor and returns the related RequestedObject.
+     */
     public RequestedObject getResFromFile() {
         String line = "";
         try {
