@@ -18,6 +18,7 @@ public class Simulateur {
 
         for (int i = 0 ; i < warmupLength ; i++) {
             RequestedObject ro = tp.getResFromFile();
+            if (ro == null) break;
             cacheLFU.get(ro);
             cacheLRU.get(ro);
         }
@@ -35,8 +36,8 @@ public class Simulateur {
             }
             compteur++;
         }
-        double hitrateLFU = (double) hitsLFU / (double)compteur;
-        double hitrateLRU = (double) hitsLRU / (double)compteur;
+        double hitrateLFU = (double)hitsLFU / (double)compteur;
+        double hitrateLRU = (double)hitsLRU / (double)compteur;
         System.out.println("Hits rate LFU : " + hitrateLFU);
         System.out.println("Hits rate LRU : " + hitrateLRU);
         System.out.println("Total requests : " + compteur);
