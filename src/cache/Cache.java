@@ -20,7 +20,9 @@ public class Cache {
 
 	public void put(RequestedObject requestObject)
 	{
-		if(this.hashmap.size()>= capacity)
+    System.out.println("Size: "+this.hashmap.size());
+    System.out.println("Capacity:"+this.capacity);
+		if(this.hashmap.size()>= this.capacity)
 		{
       System.out.println("CACHE FULL REMOVING ELEM");
 			remove();
