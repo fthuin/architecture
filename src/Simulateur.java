@@ -13,7 +13,7 @@ public class Simulateur {
     }
 
     public void simulateLFU() {
-        Cache cache = new Cache(slotsNbr);
+        CacheLFU cache = new CacheLFU(slotsNbr);
         for (int i = 0 ; i < warmupLength ; i++) {
             RequestedObject ro = tp.getResFromFile();
             cache.get(ro);
