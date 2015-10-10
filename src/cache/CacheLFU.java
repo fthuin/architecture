@@ -12,7 +12,7 @@ public class CacheLFU extends CacheManager {
 	private int capacity;
 
     /* Constructor
-     * @argument : capacity is the maximum number of slots available for
+     * @argument : capacity is the maximum number of slots available in
      * the LFU cache.
      */
     public CacheLFU(int capacity) {
@@ -20,8 +20,8 @@ public class CacheLFU extends CacheManager {
         this.capacity = capacity;
     }
 
-    /* This method makes room to add a RequestedObject in our data structure,
-     * removing elements if needed.
+    /* This method adds a RequestedObject in the data structure,
+     * removing the least frequently used element(s) if needed.
      */
 	public void put(RequestedObject requestObject) {
 		if(this.hashmap.size()>= this.capacity) {

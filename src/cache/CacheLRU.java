@@ -1,36 +1,47 @@
 package cache;
+
 import java.util.LinkedList;
 
-public class CacheLRU extends CacheManager{
-  private LinkedList<RequestedObject> linkedlist;
-  private int capacity;
+/* This class implements a LRU cache limited with a number of slots. Here
+ * we consider one resource = one slot: the size of the resource has no
+ * matter.
+ */
 
-  public CacheLRU(int capacity)
-  {
-    this.linkedlist = new LinkedList<RequestedObject>();
-    this.capacity = capacity;
-  }
-  
-  public void put(RequestedObject requestObject)
-  {
-    if(this.linkedlist.size()>=capacity)
-    {
-      linkedlist.removeFirst();
+public class CacheLRU extends CacheManager {
+
+    private LinkedList<RequestedObject> linkedlist;
+    private int capacity;
+
+    /* Constructor
+     * @argument : capacity is the maximum number of slots available in
+     * the LRU cache.
+     */
+    public CacheLRU(int capacity) {
+        this.linkedlist = new LinkedList<RequestedObject>();
+        this.capacity = capacity;
     }
-    linkedlist.addLast(requestObject);
-  }
 
-
-  public boolean get(RequestedObject requestObject)
-  {
-    boolean res = false;
-    if(this.linkedlist.contains(requestObject)) 
-    {
-      this.linkedlist.remove(requestObject);
-      res = true; 
+    /* This method adds RequesstObject in the data structure, removing
+     * least recently used element(s) if needed.
+     */
+    public void put(RequestedObject requestObject) {
+        if(this.linkedlist.size()>=capacity) {
+            linkedlist.removeFirst();
+        }
+        linkedlist.addLast(requestObject);
     }
-    put(requestObject);
-    return res;
-  }
-  
+
+    /* This method returns true if the RequestedObject was already in the
+     * cache, otherwise it returns false and put the RequestedObject in the
+     * LRU cache.
+     */
+    public boolean get(RequestedObject requestObject) {
+        boolean res = false;
+        if(this.linkedlist.contains(requestObject)) {
+            this.linkedlist.remove(requestObject);
+            res = true;
+        }
+        put(requestObject);
+        return res;
+    }
 }
