@@ -1,3 +1,5 @@
+package cache;
+
 public abstract class CacheManager {
     int size;
 

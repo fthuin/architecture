@@ -3,6 +3,8 @@ package cache;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import cache.RequestedObject;
 
@@ -11,14 +13,9 @@ public class TraceParser {
     private String filename = "";
     private BufferedReader br = null;
 
-    public TraceParser(String filename) {
+    public TraceParser(InputStream input) {
         this.filename = filename;
-        try {
-            this.br = new BufferedReader(new FileReader (filename));
-        } catch (FileNotFoundException e) {
-            /* Raised by FileReader */
-            System.out.println("File not found !");
-        }
+        this.br = new BufferedReader(new InputStreamReader(input));
     }
 
     public RequestedObject getResFromFile() {
