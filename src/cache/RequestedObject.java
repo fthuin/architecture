@@ -10,7 +10,7 @@ public class RequestedObject {
     this.name = name;
     this.size = size;
     this.access_counter = 0;
-  }  
+  }
 
   public String getName()
   {
@@ -19,8 +19,17 @@ public class RequestedObject {
 
   public int getAccessCounter()
   {
-    return this.access_counter; 
+    return this.access_counter;
   }
 
+  public boolean equals(Object o) {
+      if (o instanceof RequestedObject) {
+          RequestedObject other = (RequestedObject)o;
+          return this.getName().equals(other.getName());
+      }
+      else {
+          return false;
+      }
+  }
 
 }

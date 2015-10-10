@@ -9,25 +9,37 @@ public class Simulateur {
         this.warmupLength = Integer.parseInt(args[0]);
         this.slotsNbr = Integer.parseInt(args[1]);
         this.tp = new TraceParser(System.in);
-        this.simulateLFU();
+        this.simulate();
     }
 
-    public void simulateLFU() {
-        CacheLFU cache = new CacheLFU(slotsNbr);
+    public void simulate() {
+        CacheLFU cacheLFU = new CacheLFU(slotsNbr);
+        CacheLRU cacheLRU = new CacheLRU(slotsNbr);
+
         for (int i = 0 ; i < warmupLength ; i++) {
             RequestedObject ro = tp.getResFromFile();
-            cache.get(ro);
+            cacheLFU.get(ro);
+            cacheLRU.get(ro);
         }
         RequestedObject ro = null;
+        int hitsLFU = 0;
         int compteur = 0;
-        int hits = 0;
+        int hitsLRU = 0;
+
         while((ro = tp.getResFromFile()) != null) {
-            if (cache.get(ro)) {
-                hits++;
+            if (cacheLFU.get(ro)) {
+                hitsLFU++;
+            }
+            if (cacheLRU.get(ro)) {
+                hitsLRU++;
             }
             compteur++;
         }
-        System.out.println("Hits rate : " + hits);
+        double hitrateLFU = (double) hitsLFU / (double)compteur;
+        double hitrateLRU = (double) hitsLRU / (double)compteur;
+        System.out.println("Hits rate LFU : " + hitrateLFU);
+        System.out.println("Hits rate LRU : " + hitrateLRU);
         System.out.println("Total requests : " + compteur);
     }
+
 }
