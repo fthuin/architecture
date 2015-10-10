@@ -3,7 +3,7 @@ package cache;
 import java.util.HashMap;
 
 public class CacheLFUbytes extends CacheManager {
-    private HashMap<String, RequestedObject> hashMap = new Hashmap<String, RequestedObject>();
+    private HashMap<String, RequestedObject> hashMap = new HashMap<String, RequestedObject>();
     private int maxCapacity = 0;
     private int curUsedSpace = 0;
 
@@ -34,13 +34,18 @@ public class CacheLFUbytes extends CacheManager {
 
     public boolean get(RequestedObject requestObject) {
         boolean res = true;
-        RequestObject request = this.hashMap.get(requestObject.getName());
-        if (request == null) {
-            put(requestObject);
-            res = false;
+        if (requestObject.getSize() > maxCapacity) {
+        	System.out.println("We can't add the file " + requestObject.getName() + " in the provided cache because the given cache size is too small...");
+        	res = false;
         } else {
-            request.incrementCounter();
-        }
+		    RequestedObject request = this.hashMap.get(requestObject.getName());
+		    if (request == null) {
+		        put(requestObject);
+		        res = false;
+		    } else {
+		        request.incrementCounter();
+		    }
+		}
         return res;
     }
 
