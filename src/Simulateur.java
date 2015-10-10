@@ -16,6 +16,7 @@ public class Simulateur {
         //CacheLFU cacheLFU = new CacheLFU(slotsNbr);
         //CacheLRU cacheLRU = new CacheLRU(slotsNbr);
         CacheLFUbytes cacheLFUbytes = new CacheLFUbytes(slotsNbr);
+        CacheLRUbytes cacheLRUbytes = new CacheLRUbytes(slotsNbr);
 
         for (int i = 0 ; i < warmupLength ; i++) {
             RequestedObject ro = tp.getResFromFile();
@@ -23,12 +24,14 @@ public class Simulateur {
             //cacheLFU.get(ro);
             //cacheLRU.get(ro);
             cacheLFUbytes.get(ro);
+            cacheLRUbytes.get(ro);
         }
         RequestedObject ro = null;
         int hitsLFU = 0;
         int compteur = 0;
         int hitsLRU = 0;
         int hitsLFUbytes = 0;
+        int hitsLRUbytes = 0;
 
         while((ro = tp.getResFromFile()) != null) {
             /*if (cacheLFU.get(ro)) {
@@ -40,14 +43,19 @@ public class Simulateur {
             if (cacheLFUbytes.get(ro)) {
             	hitsLFUbytes++;
             }
+            if (cacheLRUbytes.get(ro)) {
+                 hitsLRUbytes++;
+            }
             compteur++;
         }
         double hitrateLFU = (double)hitsLFU / (double)compteur;
         double hitrateLRU = (double)hitsLRU / (double)compteur;
         double hitrateLFUbytes = (double)hitsLFUbytes / (double)compteur;
+        double hitrateLRUbytes = (double)hitsLRUbytes / (double)compteur;
         System.out.println("Hits rate LFU : " + hitrateLFU*100 + "%");
         System.out.println("Hits rate LRU : " + hitrateLRU*100 + "%");
         System.out.println("Hits rate LFUbytes : " + hitrateLFUbytes*100 + "%");
+        System.out.println("Hits rate LRUbytes : " + hitrateLRUbytes*100 + "%");
         System.out.println("Total requests : " + compteur);
     }
 
