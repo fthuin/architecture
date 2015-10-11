@@ -2,13 +2,11 @@ package cache;
 
 import java.util.HashMap;
 
-public class CacheLFUbytes extends CacheManager {
+public class CacheLFUbytes extends CacheManagerBytes {
     private HashMap<String, RequestedObject> hashMap = new HashMap<String, RequestedObject>();
-    private int maxCapacity = 0;
-    private int curUsedSpace = 0;
 
     public CacheLFUbytes(int capacity) {
-        this.maxCapacity = capacity;
+        this.capacity = capacity;
     }
 
     public void remove() {
@@ -25,27 +23,22 @@ public class CacheLFUbytes extends CacheManager {
     }
 
     public void put(RequestedObject requestObject) {
-        while (requestObject.getSize() + curUsedSpace > maxCapacity) {
+        while (requestObject.getSize() + curUsedSpace > this.getCapacity()) {
             remove();
         }
         hashMap.put(requestObject.getName(), requestObject);
         this.curUsedSpace += requestObject.getSize();
     }
 
-    public boolean get(RequestedObject requestObject) {
+    public boolean specific_get(RequestedObject requestObject) {
         boolean res = true;
-        if (requestObject.getSize() > maxCapacity) {
-        	System.out.println("We can't add the file " + requestObject.getName() + " in the provided cache because the given cache size is too small...");
-        	res = false;
-        } else {
-		    RequestedObject request = this.hashMap.get(requestObject.getName());
-		    if (request == null) {
-		        put(requestObject);
-		        res = false;
-		    } else {
-		        request.incrementCounter();
-		    }
-		}
+	    RequestedObject request = this.hashMap.get(requestObject.getName());
+	    if (request == null) {
+	        put(requestObject);
+	        res = false;
+	    } else {
+	        request.incrementCounter();
+	    }
         return res;
     }
 

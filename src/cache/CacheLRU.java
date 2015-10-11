@@ -10,7 +10,6 @@ import java.util.LinkedList;
 public class CacheLRU extends CacheManager {
 
     private LinkedList<RequestedObject> linkedlist;
-    private int capacity;
 
     /* Constructor
      * @argument : capacity is the maximum number of slots available in
@@ -25,7 +24,7 @@ public class CacheLRU extends CacheManager {
      * least recently used element(s) if needed.
      */
     public void put(RequestedObject requestObject) {
-        if(this.linkedlist.size()>=capacity) {
+        if(this.linkedlist.size()>= this.getCapacity()) {
             linkedlist.removeFirst();
         }
         linkedlist.addLast(requestObject);
@@ -38,10 +37,17 @@ public class CacheLRU extends CacheManager {
     public boolean get(RequestedObject requestObject) {
         boolean res = false;
         if(this.linkedlist.contains(requestObject)) {
-            this.linkedlist.remove(requestObject);
             res = true;
+        	RequestedObject ro = linkedlist.get(linkedlist.indexOf(requestObject));
+        	if (ro.getSize() != requestObject.getSize()) {
+        		sizeChangingReq.add(requestObject.getName());
+        		res = false;
+        	}
+            this.linkedlist.remove(requestObject);
         }
-        put(requestObject);
+        if (! sizeChangingReq.contains(requestObject.getName())) {
+        	put(requestObject);
+        }
         return res;
     }
 }

@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import cache.RequestedObject;
 
 /* This method helps to read from the standard input and produces
  * RequestedObject one at a time.

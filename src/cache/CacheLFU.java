@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class CacheLFU extends CacheManager {
 	private HashMap<String,RequestedObject> hashmap;
-	private int capacity;
 
     /* Constructor
      * @argument : capacity is the maximum number of slots available in
@@ -24,7 +23,7 @@ public class CacheLFU extends CacheManager {
      * removing the least frequently used element(s) if needed.
      */
 	public void put(RequestedObject requestObject) {
-		if(this.hashmap.size()>= this.capacity) {
+		if(this.hashmap.size()>= this.getCapacity()) {
 			this.remove();
 		}
         hashmap.put(requestObject.getName(),requestObject);
@@ -53,10 +52,17 @@ public class CacheLFU extends CacheManager {
         boolean res = true;
         RequestedObject request = this.hashmap.get(requestObject.getName());
         if(request==null) {
-            put(requestObject);
+        	if (! sizeChangingReq.contains(requestObject.getName())) {
+        		put(requestObject);
+        	}
             res = false;
 		} else {
-            request.incrementCounter();
+			if (request.getSize() != requestObject.getSize()) {
+				sizeChangingReq.add(requestObject.getName());
+				res = false;
+			} else {
+                request.incrementCounter();
+            }
         }
         return res;
 	}

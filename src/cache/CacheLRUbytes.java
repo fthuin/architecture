@@ -2,35 +2,38 @@ package cache;
 
 import java.util.LinkedList;
 
-public class CacheLRUbytes extends CacheManager {
+public class CacheLRUbytes extends CacheManagerBytes {
     private LinkedList<RequestedObject> linkedlist = new LinkedList<RequestedObject>();
-    private int capacity = 0;
-    private int curUsedCapacity = 0;
 
     public CacheLRUbytes(int capacity) {
         this.capacity = capacity;
     }
 
     public void put(RequestedObject requestObject) {
-        while (this.curUsedCapacity + requestObject.getSize() > this.capacity) {
+        while (this.curUsedSpace + requestObject.getSize() > this.getCapacity()) {
+        	//System.out.println(this.curUsedSpace + " " + requestObject.getSize() + " " + this.getCapacity());
             RequestedObject ro = linkedlist.remove();
-            this.curUsedCapacity -= ro.getSize();
+            this.curUsedSpace -= ro.getSize();
         }
         linkedlist.addLast(requestObject);
-        this.curUsedCapacity += requestObject.getSize();
+        this.curUsedSpace += requestObject.getSize();
     }
 
-    public boolean get(RequestedObject requestObject) {
+    public boolean specific_get(RequestedObject requestObject) {
         boolean res = false;
 		if (this.linkedlist.contains(requestObject)) {
-            this.linkedlist.remove(requestObject);
-            this.curUsedCapacity -= requestObject.getSize();
-            res = true;
+			RequestedObject ro = linkedlist.get(linkedlist.indexOf(requestObject));
+			if (requestObject.getSize() != ro.getSize()) {
+				sizeChangingReq.add(requestObject.getName());
+				res = false;
+			} else {
+				res = true;
+			}
+            this.linkedlist.remove(ro);
+            this.curUsedSpace -= ro.getSize();
         }
-        if (requestObject.getSize() > capacity) {
-        	System.out.println("LRU cache - We can't add the file " + requestObject.getName() + " in the provided cache because the given size is too small...");
-        } else {
-        	put(requestObject);
+        if (! sizeChangingReq.contains(requestObject.getName())) {
+            put(requestObject);
         }
         return res;
     }

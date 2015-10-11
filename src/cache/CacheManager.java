@@ -1,10 +1,18 @@
 package cache;
 
-/* This abstract class defines basic methods every cache should have.
+import java.util.ArrayList;
+import java.util.List;
+
+/* This abstract class defines basic methods and variables every cache should have.
  */
 public abstract class CacheManager {
-    int size;
+    public int capacity = 0;
+    public List<String> sizeChangingReq = new ArrayList<String>();
 
     abstract void put(RequestedObject requestObject);
     abstract boolean get(RequestedObject requestObject);
+
+    public int getCapacity() {
+        return this.capacity;
+    }
 }
