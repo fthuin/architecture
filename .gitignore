@@ -13,3 +13,12 @@ hs_err_pid*
 
 # swap files
 *.swp
+
+# LaTeX files
+*.aux
+*.fls
+*.log
+*.pdf
+*.out
+*.fls
+*.fdb_latexmk
