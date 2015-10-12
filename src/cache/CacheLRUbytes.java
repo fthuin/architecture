@@ -11,7 +11,7 @@ public class CacheLRUbytes extends CacheManagerBytes {
 
     public void put(RequestedObject requestObject) {
         while (this.curUsedSpace + requestObject.getSize() > this.getCapacity()) {
-            RequestedObject ro = linkedlist.remove();
+            RequestedObject ro = linkedlist.removeFirst();
             this.curUsedSpace -= ro.getSize();
         }
         linkedlist.addLast(requestObject);

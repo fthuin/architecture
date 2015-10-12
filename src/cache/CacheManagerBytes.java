@@ -4,6 +4,7 @@ public abstract class CacheManagerBytes extends CacheManager {
   private long hittedbytes = 0;
   private long totalbytes = 0;
   protected long curUsedSpace = 0;
+  private boolean isWarm = false;
 
   abstract boolean specific_get(RequestedObject requestObject);
   abstract void removeDynamicRessource(RequestedObject requestObject);
@@ -15,17 +16,21 @@ public abstract class CacheManagerBytes extends CacheManager {
   public long getHittedBytes() {
     return this.hittedbytes;
   }
+  
+  public void setWarm() {
+    this.isWarm=true;
+  }
 
 
-  public boolean get(RequestedObject requestObject,boolean inWarm) {
-    if(!inWarm)
+  public boolean get(RequestedObject requestObject) {
+    if(isWarm)
       this.totalbytes += requestObject.getSize();
     boolean res = false;
     if (requestObject.getSize() > this.getCapacity()) {
       removeDynamicRessource(requestObject);
     } else {
       res = specific_get(requestObject);
-      if (res && !inWarm) {
+      if (res && isWarm) {
         hittedbytes += requestObject.getSize();
       }
 
