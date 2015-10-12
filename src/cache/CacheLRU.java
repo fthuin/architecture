@@ -38,16 +38,9 @@ public class CacheLRU extends CacheManager {
         boolean res = false;
         if(this.linkedlist.contains(requestObject)) {
             res = true;
-        	RequestedObject ro = linkedlist.get(linkedlist.indexOf(requestObject));
-        	if (ro.getSize() != requestObject.getSize()) {
-        		sizeChangingReq.add(requestObject.getName());
-        		res = false;
-        	}
             this.linkedlist.remove(requestObject);
         }
-        if (! sizeChangingReq.contains(requestObject.getName())) {
-        	put(requestObject);
-        }
+      	put(requestObject);
         return res;
     }
 }

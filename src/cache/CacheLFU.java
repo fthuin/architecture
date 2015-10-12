@@ -52,17 +52,10 @@ public class CacheLFU extends CacheManager {
         boolean res = true;
         RequestedObject request = this.hashmap.get(requestObject.getName());
         if(request==null) {
-        	if (! sizeChangingReq.contains(requestObject.getName())) {
-        		put(requestObject);
-        	}
+        	put(requestObject);
             res = false;
 		} else {
-			if (request.getSize() != requestObject.getSize()) {
-				sizeChangingReq.add(requestObject.getName());
-				res = false;
-			} else {
-                request.incrementCounter();
-            }
+          	request.incrementCounter();
         }
         return res;
 	}
