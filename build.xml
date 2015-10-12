@@ -1,4 +1,4 @@
-<project name="CacheManagement" basedir="." default="main">
+<project name="task1_1" basedir="." default="main">
 
     <property name="src.dir"     value="src"/>
 
