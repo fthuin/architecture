@@ -46,7 +46,7 @@ public class CacheLRU extends CacheManager {
 
     public String printCache() {
         String res = "";
-        for (RoequestedObject ro : this.linkedlist) {
+        for (RequestedObject ro : this.linkedlist) {
              res += ro.getName() + "\n";
         }
         return res;

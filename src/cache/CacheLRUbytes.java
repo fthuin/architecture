@@ -11,7 +11,6 @@ public class CacheLRUbytes extends CacheManagerBytes {
 
     public void put(RequestedObject requestObject) {
         while (this.curUsedSpace + requestObject.getSize() > this.getCapacity()) {
-        	//System.out.println(this.curUsedSpace + " " + requestObject.getSize() + " " + this.getCapacity());
             RequestedObject ro = linkedlist.remove();
             this.curUsedSpace -= ro.getSize();
         }
@@ -21,7 +20,7 @@ public class CacheLRUbytes extends CacheManagerBytes {
 
     public void removeDynamicRessource(RequestedObject requestObject){
       linkedlist.remove(requestObject);
-      this.capacity -= requestObject.getSize();
+      this.curUsedSpace -= requestObject.getSize();
     }
 
     public boolean specific_get(RequestedObject requestObject) {
@@ -40,7 +39,7 @@ public class CacheLRUbytes extends CacheManagerBytes {
         return res;
     }
 
-    print String printCache() {
+    public String printCache() {
         String res = "";
         for (RequestedObject ro : this.linkedlist) {
              res += ro.getName() + "\n";
