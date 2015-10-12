@@ -34,12 +34,12 @@ public class CacheRLF extends CacheManagerBytes {
         boolean result = false;
     	RequestedObject ro = hashMap.get(requestObject.getName());
     	if (ro == null) {
-    		if (! sizeChangingReq.contains(requestObject.getName())) {
- 		   		put(requestObject);
- 		   	}
+ 			put(requestObject);
     	} else {
     		if (ro.getSize() != requestObject.getSize()) {
-    			sizeChangingReq.add(requestObject.getName());
+    			hashMap.remove(ro);
+    			this.curUsedSpace -= ro.getSize();
+    			put(requestObject);
     		} else {
 	    		result = true;
 	    	}

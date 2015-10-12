@@ -37,7 +37,14 @@ public class CacheLFUbytes extends CacheManagerBytes {
 	        put(requestObject);
 	        res = false;
 	    } else {
-	        request.incrementCounter();
+	    	if (request.getSize() != requestObject.getSize()) {
+	    		hashMap.remove(request.getName());
+	    		this.curUsedSpace -= request.getSize();
+	    		put(requestObject);
+	    		res = false;
+	    	} else {
+	    		request.incrementCounter();
+	    	}
 	    }
         return res;
     }

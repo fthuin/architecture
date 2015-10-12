@@ -24,7 +24,6 @@ public class CacheLRUbytes extends CacheManagerBytes {
 		if (this.linkedlist.contains(requestObject)) {
 			RequestedObject ro = linkedlist.get(linkedlist.indexOf(requestObject));
 			if (requestObject.getSize() != ro.getSize()) {
-				sizeChangingReq.add(requestObject.getName());
 				res = false;
 			} else {
 				res = true;
@@ -32,9 +31,7 @@ public class CacheLRUbytes extends CacheManagerBytes {
             this.linkedlist.remove(ro);
             this.curUsedSpace -= ro.getSize();
         }
-        if (! sizeChangingReq.contains(requestObject.getName())) {
-            put(requestObject);
-        }
+        put(requestObject);
         return res;
     }
 }
