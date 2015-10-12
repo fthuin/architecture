@@ -11,7 +11,7 @@ public abstract class CacheManagerBytes extends CacheManager {
   public long getTotalBytes() {
     return this.totalbytes;
   }
-  
+
   public long getHittedBytes() {
     return this.hittedbytes;
   }
@@ -21,7 +21,6 @@ public abstract class CacheManagerBytes extends CacheManager {
     this.totalbytes += requestObject.getSize();
     boolean res = false;
     if (requestObject.getSize() > this.getCapacity()) {
-      System.out.println("CacheManagerBytes - You tried to add a file ("+requestObject.getName()+") larger than cache size.");
       removeDynamicRessource(requestObject);
     } else {
       res = specific_get(requestObject);
@@ -33,4 +32,4 @@ public abstract class CacheManagerBytes extends CacheManager {
     return res;
   }
 
-} 
+}

@@ -50,21 +50,20 @@ public class Simulateur_Task2 {
         double bytesrateLRU = (double) cacheLRUbytes.getHittedBytes() / (double) cacheLRUbytes.getTotalBytes();
         double hitrateRLF = (double)hitsRLF / (double)compteur;
         double bytesrateRLF = (double) cacheRLF.getHittedBytes() / (double) cacheRLF.getTotalBytes();
-        System.out.println("Hits rate LFUbytes : " + roundDouble(hitrateLFU*100) + "%");
-        System.out.println("Bytes rate LFUbytes : " +  roundDouble(bytesrateLFU*100) + "%");
-        System.out.println("Hits rate LRUbytes : " + roundDouble(hitrateLRU*100) + "%");
-        System.out.println("Bytes rate LRUbytes : " + roundDouble(bytesrateLRU*100) + "%");
-        System.out.println("Hits rate RLF : " + roundDouble(hitrateRLF*100) + "%");
-        System.out.println("Bytes rate RLF : " + roundDouble(bytesrateRLF*100) + "%");
-        System.out.println("Total requests : " + compteur);
+        System.out.println("LRU Hit rate: " + roundDouble(hitrateLRU));
+        System.out.println("LRU Byte hit rate: " + roundDouble(bytesrateLRU));
+        System.out.println("LFU Hit rate: " + roundDouble(hitrateLFU));
+        System.out.println("LFU Byte hit rate: " +  roundDouble(bytesrateLFU));
+        System.out.println("Size-based hit rate: " + roundDouble(hitrateRLF));
+        System.out.println("Size-based Byte hit rate: " + roundDouble(bytesrateRLF));
         tp.print("cache_lru.txt",cacheLRUbytes.printCache());
         tp.print("cache_lfu.txt",cacheLFUbytes.printCache());
         tp.print("cache_size-based.txt", cacheRLF.printCache());
     }
-    
+
     public String roundDouble(double d){
-       return formatter.format(d); 
+       return formatter.format(d);
     }
-    
+
 
 }

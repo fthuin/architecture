@@ -54,6 +54,7 @@ public class TraceParser {
         try {
             bw = new BufferedWriter(new FileWriter(filename));
             bw.write(toPrint, 0, toPrint.length());
+            bw.close();
         } catch (IOException e) {
              System.out.println("Can't write in file " + filename);
         }
