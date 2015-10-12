@@ -45,4 +45,7 @@ public class Simulateur_Task1 {
         tp.print("cache_lru.txt", cacheLRU.printCache());
     }
 
+    public String roundDouble(double d){
+       return formatter.format(d); 
+    }
 }
