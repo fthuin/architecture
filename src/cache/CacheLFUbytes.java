@@ -23,8 +23,10 @@ public class CacheLFUbytes extends CacheManagerBytes {
     }
 
     public void removeDynamicRessource(RequestedObject requestObject) {
-      hashMap.remove(requestObject.getName());
-      this.curUsedSpace -= requestObject.getSize();
+      if(this.hashMap.containsKey(requestObject.getName())){
+       hashMap.remove(requestObject.getName());
+       this.curUsedSpace -= requestObject.getSize();
+      }
     }
 
     public void put(RequestedObject requestObject) {

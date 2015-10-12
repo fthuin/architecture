@@ -22,9 +22,9 @@ public class Simulateur_Task2 {
         for (int i = 0 ; i < warmupLength ; i++) {
             RequestedObject ro = tp.getResFromFile();
             if (ro == null) break;
-            cacheLFUbytes.get(ro);
-            cacheLRUbytes.get(ro);
-            cacheRLF.get(ro);
+            cacheLFUbytes.get(ro,true);
+            cacheLRUbytes.get(ro,true);
+            cacheRLF.get(ro,true);
         }
         RequestedObject ro = null;
         int compteur = 0;
@@ -33,13 +33,13 @@ public class Simulateur_Task2 {
         int hitsRLF = 0;
 
         while((ro = tp.getResFromFile()) != null) {
-            if (cacheLFUbytes.get(ro)) {
+            if (cacheLFUbytes.get(ro,false)) {
             	hitsLFU++;
             }
-            if (cacheLRUbytes.get(ro)) {
+            if (cacheLRUbytes.get(ro,false)) {
                  hitsLRU++;
             }
-            if (cacheRLF.get(ro)) {
+            if (cacheRLF.get(ro,false)) {
             	hitsRLF++;
            	}
             compteur++;

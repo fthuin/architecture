@@ -19,8 +19,10 @@ public class CacheLRUbytes extends CacheManagerBytes {
     }
 
     public void removeDynamicRessource(RequestedObject requestObject){
-      linkedlist.remove(requestObject);
-      this.curUsedSpace -= requestObject.getSize();
+      if(this.linkedlist.contains(requestObject)){
+        linkedlist.remove(requestObject);
+        this.curUsedSpace -= requestObject.getSize();
+      }
     }
 
     public boolean specific_get(RequestedObject requestObject) {

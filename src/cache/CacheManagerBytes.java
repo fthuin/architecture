@@ -17,14 +17,15 @@ public abstract class CacheManagerBytes extends CacheManager {
   }
 
 
-  public boolean get(RequestedObject requestObject) {
-    this.totalbytes += requestObject.getSize();
+  public boolean get(RequestedObject requestObject,boolean inWarm) {
+    if(!inWarm)
+      this.totalbytes += requestObject.getSize();
     boolean res = false;
     if (requestObject.getSize() > this.getCapacity()) {
       removeDynamicRessource(requestObject);
     } else {
       res = specific_get(requestObject);
-      if (res) {
+      if (res && !inWarm) {
         hittedbytes += requestObject.getSize();
       }
 

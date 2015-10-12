@@ -31,9 +31,11 @@ public class CacheRLF extends CacheManagerBytes {
     }
 
     public void removeDynamicRessource(RequestedObject requestObject){
-      this.hashMap.remove(requestObject.getName());
-      this.curUsedSpace -= requestObject.getSize();
-    }
+      if(this.hashMap.containsKey(requestObject.getName())) {
+        this.hashMap.remove(requestObject.getName());
+        this.curUsedSpace -= requestObject.getSize();
+      }
+   }
 
     public boolean specific_get(RequestedObject requestObject) {
         boolean result = false;
