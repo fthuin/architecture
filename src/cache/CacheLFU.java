@@ -59,4 +59,12 @@ public class CacheLFU extends CacheManager {
         }
         return res;
 	}
+
+    public String printCache() {
+         String res = "";
+         for (RequestedObject ro : this.hashMap.values()) {
+             res += ro.getName() + "\n";
+         }
+         return res;
+    }
 }

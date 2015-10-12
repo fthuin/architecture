@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 /* This method helps to read from the standard input and produces
  * RequestedObject one at a time.
@@ -15,6 +17,7 @@ public class TraceParser {
 
     private String filename = "";
     private BufferedReader br = null;
+    private BufferedWriter bw = null;
 
     /* Constructor
      * Create a TraceParser reading an InputStream containing in each line
@@ -45,5 +48,10 @@ public class TraceParser {
             System.out.println("Can't readline() from " + this.filename);
             return null;
         }
+    }
+
+    public print(String filename, String toPrint) {
+         bw = new BufferedWriter(FileWriter(filename));
+         bw.writei(toPrint, 0, toPrint.length());
     }
 }
