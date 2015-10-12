@@ -1,9 +1,11 @@
 import cache.*;
+import java.text.DecimalFormat;
 
 public class Simulateur_Task2 {
     private int warmupLength;
     private int cacheSize;
     private TraceParser tp = null;
+    private DecimalFormat formatter = new DecimalFormat("0.00%");
 
     public Simulateur_Task2(String[] args) {
         this.warmupLength = Integer.parseInt(args[0]);
@@ -59,5 +61,10 @@ public class Simulateur_Task2 {
         tp.print("cache_lfu.txt",cacheLFUbytes.printCache());
         tp.print("cache_size-based.txt", cacheRLF.printCache());
     }
+    
+    public String roundDouble(double d){
+       return formatter.format(d); 
+    }
+    
 
 }
