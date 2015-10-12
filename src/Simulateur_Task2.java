@@ -1,9 +1,11 @@
 import cache.*;
+import java.text.DecimalFormat;
 
 public class Simulateur_Task2 {
     private int warmupLength;
     private int cacheSize;
     private TraceParser tp = null;
+    private DecimalFormat formatter = new DecimalFormat("0.00%");
 
     public Simulateur_Task2(String[] args) {
         this.warmupLength = Integer.parseInt(args[0]);
@@ -50,5 +52,10 @@ public class Simulateur_Task2 {
         System.out.println("Hits rate RLF : " + hitrateRLF*100 + "%");
         System.out.println("Total requests : " + compteur);
     }
+    
+    public String roundDouble(double d){
+       return formatter.format(d); 
+    }
+    
 
 }
