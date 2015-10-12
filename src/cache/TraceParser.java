@@ -50,8 +50,12 @@ public class TraceParser {
         }
     }
 
-    public print(String filename, String toPrint) {
-         bw = new BufferedWriter(FileWriter(filename));
-         bw.writei(toPrint, 0, toPrint.length());
+    public void print(String filename, String toPrint) {
+        try {
+            bw = new BufferedWriter(new FileWriter(filename));
+            bw.write(toPrint, 0, toPrint.length());
+        } catch (IOException e) {
+             System.out.println("Can't write in file " + filename);
+        }
     }
 }

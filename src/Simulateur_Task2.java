@@ -26,16 +26,16 @@ public class Simulateur_Task2 {
         }
         RequestedObject ro = null;
         int compteur = 0;
-        int hitsLFUb = 0;
+        int hitsLFU = 0;
         int hitsLRU = 0;
         int hitsRLF = 0;
 
         while((ro = tp.getResFromFile()) != null) {
             if (cacheLFUbytes.get(ro)) {
-            	hitsLFUb++;
+            	hitsLFU++;
             }
             if (cacheLRUbytes.get(ro)) {
-                 hitsLRUb++;
+                 hitsLRU++;
             }
             if (cacheRLF.get(ro)) {
             	hitsRLF++;
@@ -48,15 +48,15 @@ public class Simulateur_Task2 {
         double bytesrateLRU = (double) cacheLRUbytes.getHittedBytes() / (double) cacheLRUbytes.getTotalBytes();
         double hitrateRLF = (double)hitsRLF / (double)compteur;
         double bytesrateRLF = (double) cacheRLF.getHittedBytes() / (double) cacheRLF.getTotalBytes();
-        System.out.println("Hits rate LFUbytes : " + hitrateLFU*100 + "%");
-        System.out.println("Bytes rate LFUbytes : " +  bytesrateLFU)
-        System.out.println("Hits rate LRUbytes : " + hitrateLRU*100 + "%");
-        System.out.println("Bytes rate LRUbytes : " bytesrateLRU);
-        System.out.println("Hits rate RLF : " + hitrateRLF*100 + "%");
-        System.out.println("Bytes rate RLF : " + bytesrateRLF);
+        System.out.println("Hits rate LFUbytes : " + roundDouble(hitrateLFU*100) + "%");
+        System.out.println("Bytes rate LFUbytes : " +  roundDouble(bytesrateLFU*100) + "%");
+        System.out.println("Hits rate LRUbytes : " + roundDouble(hitrateLRU*100) + "%");
+        System.out.println("Bytes rate LRUbytes : " + roundDouble(bytesrateLRU*100) + "%");
+        System.out.println("Hits rate RLF : " + roundDouble(hitrateRLF*100) + "%");
+        System.out.println("Bytes rate RLF : " + roundDouble(bytesrateRLF*100) + "%");
         System.out.println("Total requests : " + compteur);
-        tp.print("cache_lru.txt", cacheLRUbytes.printCache());
-        tp.print("cache_lfu.txt", cacheLFUbytes.printCache());
+        tp.print("cache_lru.txt",cacheLRUbytes.printCache());
+        tp.print("cache_lfu.txt",cacheLFUbytes.printCache());
         tp.print("cache_size-based.txt", cacheRLF.printCache());
     }
 
