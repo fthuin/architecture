@@ -4,6 +4,7 @@ public class Simulateur_Task1 {
     private int warmupLength;
     private int slotsNbr;
     private TraceParser tp = null;
+    private DecimalFormat formatter = new DecimalFormat("0.00%")
 
     public Simulateur_Task1(String[] args) {
         this.warmupLength = Integer.parseInt(args[0]);
