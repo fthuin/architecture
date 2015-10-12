@@ -11,6 +11,7 @@ public abstract class CacheManager {
 
     abstract void put(RequestedObject requestObject);
     abstract boolean get(RequestedObject requestObject);
+    abstract String printCache();
 
     public int getCapacity() {
         return this.capacity;

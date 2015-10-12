@@ -34,4 +34,12 @@ public class CacheLRUbytes extends CacheManagerBytes {
         put(requestObject);
         return res;
     }
+
+    print String printCache() {
+        String res = "";
+        for (RequestedObject ro : this.linkedlist) {
+             res += ro.getName() + "\n";
+        }
+        return res;
+    }
 }

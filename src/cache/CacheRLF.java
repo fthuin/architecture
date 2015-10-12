@@ -12,7 +12,7 @@ public class CacheRLF extends CacheManagerBytes {
     public CacheRLF(int capacity) {
     	this.capacity = capacity;
     }
-    
+
     public void put(RequestedObject requestObject) {
     	while (requestObject.getSize() + curUsedSpace > capacity) {
     		int maxSize = Integer.MIN_VALUE;
@@ -29,7 +29,7 @@ public class CacheRLF extends CacheManagerBytes {
     	hashMap.put(requestObject.getName(), requestObject);
     	curUsedSpace += requestObject.getSize();
     }
-    
+
     public boolean specific_get(RequestedObject requestObject) {
         boolean result = false;
     	RequestedObject ro = hashMap.get(requestObject.getName());
@@ -45,5 +45,13 @@ public class CacheRLF extends CacheManagerBytes {
 	    	}
     	}
     	return result;
+    }
+
+    public String printCache() {
+         String res = "";
+         for (RequestedObject ro : this.hashMap.values()) {
+              res += ro.getName() + "\n";
+         }
+         return res;
     }
 }

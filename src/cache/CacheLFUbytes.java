@@ -49,4 +49,12 @@ public class CacheLFUbytes extends CacheManagerBytes {
         return res;
     }
 
+    public String printCache() {
+         String res = "";
+         for (RequestedObject ro : this.hashMap.values()) {
+              res += ro.getName() + "\n";
+         }
+         return res;
+    }
+
 }
