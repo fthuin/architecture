@@ -21,6 +21,11 @@ public class CacheLFUbytes extends CacheManagerBytes {
         hashMap.remove(current.getName());
         this.curUsedSpace -= current.getSize();
     }
+    
+    public void removeDynamicRessource(RequestedObject requestObject) {
+      hashMap.remove(requestObject.getName());
+      this.curUsedSpace -= requestObject.getSize();
+    }
 
     public void put(RequestedObject requestObject) {
         while (requestObject.getSize() + curUsedSpace > this.getCapacity()) {
