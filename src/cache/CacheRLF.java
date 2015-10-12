@@ -29,6 +29,11 @@ public class CacheRLF extends CacheManagerBytes {
     	hashMap.put(requestObject.getName(), requestObject);
     	curUsedSpace += requestObject.getSize();
     }
+
+    public void removeDynamicRessource(RequestedObject requestObject){
+      hashMap.remove(requestObject.getName());  
+      curUsedSpace -= requestObject.getSize();
+    }
     
     public boolean specific_get(RequestedObject requestObject) {
         boolean result = false;
