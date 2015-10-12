@@ -40,9 +40,8 @@ public class Simulateur_Task1 {
         }
         double hitrateLFU = (double)hitsLFU / (double)compteur;
         double hitrateLRU = (double)hitsLRU / (double)compteur;
-        System.out.println("Hits rate LFU : " + roundDouble(hitrateLFU*100) + "%");
-        System.out.println("Hits rate LRU : " + roundDouble(hitrateLRU*100) + "%");
-        System.out.println("Total requests : " + compteur);
+        System.out.println("LFU Hit rate: " + roundDouble(hitrateLFU));
+        System.out.println("LRU Byte hit rate : " + roundDouble(hitrateLRU));
         tp.print("cache_lfu.txt", cacheLFU.printCache());
         tp.print("cache_lru.txt", cacheLRU.printCache());
     }
