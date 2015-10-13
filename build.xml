@@ -1,4 +1,4 @@
-<project name="task1_1" basedir="." default="main">
+<project name="task1_2" basedir="." default="main">
 
     <property name="src.dir"     value="src"/>
 
@@ -7,7 +7,7 @@
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
 
-    <property name="main-class"  value="Simulation"/>
+    <property name="main-class"  value="Simulation_Task2"/>
 
 
 
@@ -42,4 +42,3 @@
     <target name="main" depends="clean,run"/>
 
 </project>
-
