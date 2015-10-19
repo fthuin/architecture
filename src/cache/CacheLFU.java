@@ -60,6 +60,10 @@ public class CacheLFU extends CacheManager {
         return res;
 	}
 
+  /*This method is used print the content of the cache in the file 
+   *
+   */
+
     public String printCache() {
          String res = "";
          for (RequestedObject ro : this.hashmap.values()) {

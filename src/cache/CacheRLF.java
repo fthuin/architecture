@@ -13,6 +13,9 @@ public class CacheRLF extends CacheManagerBytes {
     	this.capacity = capacity;
     }
 
+    /*This method add an element to the cache, if there is no space
+     *the largest file will be remove.
+     */
     public void put(RequestedObject requestObject) {
     	while (requestObject.getSize() + curUsedSpace > capacity) {
     		int maxSize = Integer.MIN_VALUE;
@@ -30,6 +33,9 @@ public class CacheRLF extends CacheManagerBytes {
     	curUsedSpace += requestObject.getSize();
     }
 
+    /*This method remove an element already present in the cache
+     * but which is requested with a new size.
+     */
     public void removeDynamicRessource(RequestedObject requestObject){
       if(this.hashMap.containsKey(requestObject.getName())) {
         this.hashMap.remove(requestObject.getName());
@@ -37,6 +43,9 @@ public class CacheRLF extends CacheManagerBytes {
       }
    }
 
+     /*This method is used to get an element in the cache and if it's not 
+     * in the cache, it will be added
+     */
     public boolean specific_get(RequestedObject requestObject) {
         boolean result = false;
     	RequestedObject ro = hashMap.get(requestObject.getName());

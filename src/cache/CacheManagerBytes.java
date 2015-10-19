@@ -1,5 +1,8 @@
 package cache;
 
+/*This abstract class define the basic method that cache with
+ *capcity in byte
+ */
 public abstract class CacheManagerBytes extends CacheManager {
   private long hittedbytes = 0;
   private long totalbytes = 0;
