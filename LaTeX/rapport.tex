@@ -1,6 +1,10 @@
 \todo[inline]{Le rapport peut contenir entre 2 pages et 2 pages et demi, A4
 11pt}
 \section{Introduction}
+We were asked for the course Architecture and Performance of Computer to
+implement a cache server. The project was divided in two parts and the 
+goal was to compare different caching mechanism based on a trace
+of 3,079,312 requests which were provided to us.
 
 \section{Warm-up phase}
 
@@ -17,6 +21,21 @@ cache testées ; indiquer sa valeur}
 
 \todo[inline]{Une description de l'implémentation du LFU : data structures
 ; checking/adding/removing operations sont-elles efficaces ?}
+To implement the LFU we have decided to use an hashmap. The key used 
+by the hashmap is the path to the requested object and the value is what
+is requested (it's represented by the class requested object). The removal
+policy of the LFU is based on the access frequence of an object. To
+implement this aspect, each object has an access counter which is 
+increment at each access. Because we used an hashmap, adding an 
+checking element are done in O(1). The removal operation is less efficient,
+because we have to iterate over the data structure to find the object with
+the minimum access counter.\\
+If there are several object with the minimal access counter value, the first
+one found will be removed. Because there no guarantee on the order of
+the object in the hashmap (order of object does not depends on the 
+insertion order). So it provide a random behaviour which is what we
+were looking for as there is no defined strategies in this case and  
+depending on the trace, some choice may be better than other one. 
 
 
 \section{Task2.2}
