@@ -8,46 +8,77 @@ of 3,079,312 requests which were provided to us.
 
 \section{Warm-up phase}
 
-\todo[inline]{Expliquer la bonne valeur pour la warm-up phase}
-\missingfigure{plot du hit rate en fonction du temps, voir
-\url{http://blog.coelho.net/database/2013/08/14/postgresql-warmup/}}
+On this plot, you can see how the hit rate evolves over time (over the
+number of requests done). As we can
+see, after 10,000 requests, we reach a constant hit rate so we think it is
+a reasonable choice for a warm-up size to have results that make sense. 
 
 \section{Task1.1}
 
-\missingfigure[inline]{Un graphique avec 2 courbes : une pour le LFU et une
-pour le LRU, avec en y le hit rate et en x la taille du cache. Attention à
-choisir une valeur pour X suffisament grande par rapport aux tailles de
-cache testées ; indiquer sa valeur}
+\subsection{Results}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{task1.png}
+    \caption{LFU vs LRU implementation, 1 slot = 1 resource ; the y-axis is
+    for the hit rate (in percentage), the x-axis is the number of slots
+    (logarithmic). X = 10,000}
+\end{figure}
+\FloatBarrier
+
+\subsection{LFU implementation description}
 
 \todo[inline]{Une description de l'implémentation du LFU : data structures
 ; checking/adding/removing operations sont-elles efficaces ?}
 To implement the LFU we have decided to use an hashmap. The key used 
 by the hashmap is the path to the requested object and the value is what
-is requested (it's represented by the class requested object). The removal
-policy of the LFU is based on the access frequence of an object. To
+is requested (it's represented by the class RequestedObject). The removal
+policy of the LFU is based on the access frequency of an object. To
 implement this aspect, each object has an access counter which is 
-increment at each access. Because we used an hashmap, adding an 
-checking element are done in O(1). The removal operation is less efficient,
+incremented at each access. Because we used an hashmap, adding and
+checking an element are done in O(1). The removal operation is less efficient,
 because we have to iterate over the data structure to find the object with
-the minimum access counter.\\
+the minimum access counter. \newline
+
 If there are several object with the minimal access counter value, the first
 one found will be removed. Because there no guarantee on the order of
 the object in the hashmap (order of object does not depends on the 
-insertion order). So it provide a random behaviour which is what we
-were looking for as there is no defined strategies in this case and  
+insertion order). So it provides a random behaviour which is what we
+were looking for as there is no defined strategies in this case and 
 depending on the trace, some choice may be better than other one. 
 
+\section{Task1.2}
 
-\section{Task2.2}
+\subsection{Results}
 
-\missingfigure[inline]{Un graphique avec 6 courbes (byte hit rate et hit
-rate) : 2 pour le LFU, 2 pour le LRU et 2 pour la méthode supplémentaire
-choisie, avec en y le hit rate et en x la taille du cache. Attention à
-choisir une valeur pour X suffisament grande par rapport aux tailles de
-cache testées ; indiquer sa valeur}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{task2.png}
+    \caption{Results of the task 2 (X = 10,000)}
+\end{figure}
+\FloatBarrier
 
-\todo[inline]{Une description de la stratégie supplémentaire size-based :
-data structures, ...}
+\subsection{Chosen strategy}
 
-\todo[inline]{Discuter des performances des 3 stratégies : comment
-sont-elles différentes et quelles sont les raisons de ces différences ?}
+We choose to implement the Remove Largest File strategy. It used an hashmap
+to store the data, the keys are the name of the accessed resources and the
+values are the related RequestedObject linked to the value. We also tested
+the Remove Smallest File but the results in term of hit rates were worse,
+it doesn't look like a good strategy to cache this trace.
+
+\subsection{How the 3 strategies differ}
+
+The Remove Largest File (RLF) strategy has the best hit rate, but the worst byte
+hit rate. In this case, it is the strategy that gives the worst result. The
+average strategy is the LFU strategy which gives decent results on our set
+of data. The best strategy is clearly the LRU strategy which reaches 50\%
+of byte hit rate with less than 20Mb of cache size. \newline
+
+The reason for those results are that the trace is very big and contains a
+lot of different data, The RLF strategy doesn't provide good results
+because if you always remove the largest file, the miss (even if it happens
+more rarely) are huge in terms of bytes. The LFU doesn't provide good
+results because with some many data, we have cache pollution after a while.
+The LRU results might be explained by the fact that the first accessed
+resources are no more accessed after a while, replaced by new resources
+which provides good result in this case. \newline
