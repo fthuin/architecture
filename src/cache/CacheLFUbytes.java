@@ -42,7 +42,8 @@ public class CacheLFUbytes extends CacheManagerBytes {
       }
     }
 
-    /*This method add a new element in the cache
+    /*This method add a new element in the cache, if there is not enough
+     * space, it will remove element until there is enough space.
      */
 
     public void put(RequestedObject requestObject) {

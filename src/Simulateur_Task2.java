@@ -1,6 +1,9 @@
 import cache.*;
 import java.text.DecimalFormat;
 
+/*This class is used to simulate the usage of the cache by getting
+ * trace from the standard input
+ */
 public class Simulateur_Task2 {
     private int warmupLength;
     private int cacheSize;
@@ -14,6 +17,10 @@ public class Simulateur_Task2 {
         this.simulate();
     }
 
+    /*Initiate the two type of cache and compute the hitrate for
+     * each of them. Content of the cache are then written in 
+     * file
+     */
     public void simulate() {
         CacheLFUbytes cacheLFUbytes = new CacheLFUbytes(cacheSize);
         CacheLRUbytes cacheLRUbytes = new CacheLRUbytes(cacheSize);
