@@ -1,17 +1,20 @@
 package server;
 
+import utils.*;
 import java.lang.ClassNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
 
-	private ServerSocket socketserver;
-	private Socket socketduserveur;
-    private int port;
+	private ServerSocket socketserver = null;
+	private Socket socketduserveur = null;
+    private int port = -1;
     private ObjectInputStream inputStream = null;
+    private ObjectOutputStream outputStream = null;
 
     public Server(String port) {
         try {
@@ -29,10 +32,11 @@ public class Server {
     	try {
     		socketserver = new ServerSocket(this.port);
     		socketduserveur = socketserver.accept();
+            System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
-            System.out.println("Réponse : " +inputStream.readObject());
-    		System.out.println("Un zéro s'est connecté !");
-
+            Request r = (Request)inputStream.readObject();
+            // TODO : Gérer cette request
+            outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
     	} catch (IOException e) {
             System.err.println("Server start() - IOException");
     		e.printStackTrace();
