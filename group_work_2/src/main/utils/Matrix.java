@@ -1,6 +1,12 @@
 public class Matrix {
-    public Matrix {
+    Double[][] matrix;
 
+    public Matrix() {
+
+    }
+
+    public Matrix(Double[][] mat) {
+        this.matrix = mat;
     }
 
     /* Source : http://stackoverflow.com/questions/17623876/matrix-multiplication-using-arrays */
@@ -31,11 +37,20 @@ public class Matrix {
         return c;
     }
 
-    public Double[][] matrixPowered(Double[][] a, int power) {
-        Double[][] res = a;
+    public Double[][] matrixPowered(int power) {
+        Double[][] res = this.matrix.clone();
         for (int i = 0 ; i < power ; i++) {
-            res = multiplicar(res, a);
+            res = multiplicar(res, this.matrix);
         }
         return res;
+    }
+
+    public String toString() {
+        for (int i = 0; i < matrix.length ; i++) {
+            for (int j = 0 ; j < matrix.length ; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.print("\n");
+        }
     }
 }
