@@ -1,6 +1,8 @@
 package client;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -10,6 +12,8 @@ public class Client {
 	private Socket socket;
     private int port;
     private InetAddress servAddr;
+    private ObjectInputStream inputStream = null;
+    private ObjectOutputStream outputStream = null;
 
     public Client(String addr, String port) {
         try {
@@ -31,6 +35,8 @@ public class Client {
 
         try {
           socket = new Socket(this.servAddr, this.port);
+          outputStream = new ObjectOutputStream(socket.getOutputStream());
+          outputStream.writeObject("Hello World !");
 		} catch (UnknownHostException e) {
             System.err.println("UnknownHostException - Client.start()");
 			e.printStackTrace();
