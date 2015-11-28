@@ -15,4 +15,8 @@ sourceSets {
 	main.java.srcDir "src/main"
 }
 
+jar {
+	manifest.attributes "Main-Class" : "launcher.Main"
+}
+
 
