@@ -1,6 +1,6 @@
 public class Matrix {
     public Matrix {
-        
+
     }
 
     /* Source : http://stackoverflow.com/questions/17623876/matrix-multiplication-using-arrays */
