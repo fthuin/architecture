@@ -22,3 +22,6 @@ hs_err_pid*
 *.out
 *.fls
 *.fdb_latexmk
+
+# Gradle
+.gradle
