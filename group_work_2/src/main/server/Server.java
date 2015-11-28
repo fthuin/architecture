@@ -34,7 +34,8 @@ public class Server {
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
-            Request r = (Request)inputStream.readObject();
+            Request r = (Request) inputStream.readObject();
+			System.out.println(r.getMatrix().toString());
             // TODO : Gérer cette request
             outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
     	} catch (IOException e) {

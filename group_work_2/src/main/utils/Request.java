@@ -1,7 +1,6 @@
 package utils;
 
-import Matrix;
-import java.io;
+import java.io.Serializable;
 
 public class Request implements Serializable {
 

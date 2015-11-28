@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.lang.NumberFormatException;
+import utils.*;
 
 public class Client {
 	private Socket socket;
@@ -36,7 +37,7 @@ public class Client {
         try {
           socket = new Socket(this.servAddr, this.port);
           outputStream = new ObjectOutputStream(socket.getOutputStream());
-          outputStream.writeObject("Hello World !");
+		  outputStream.writeObject(createRequest());
 		} catch (UnknownHostException e) {
             System.err.println("UnknownHostException - Client.start()");
 			e.printStackTrace();
@@ -54,4 +55,11 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+	public Request createRequest(){
+		int i = 2;
+		Double[][] tab = {{1.0,2.0},{1.0,2.0}};
+		Matrix matrix = new Matrix(tab);
+		return new Request(i,matrix);
+	}
 }

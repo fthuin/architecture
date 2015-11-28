@@ -1,4 +1,7 @@
-public class Matrix {
+package utils;
+import java.io.Serializable;
+
+public class Matrix implements Serializable {
     Double[][] matrix;
 
     public Matrix() {
@@ -22,7 +25,7 @@ public class Matrix {
 
         Double[][] c = new Double[aRows][bColumns];
         for (int i = 0; i < aRows; i++) {
-            for (int j = 0; j < bColumns; j++) {
+            for (int j = 0; j < bColumns;j++) {
                 c[i][j] = 0.00000;
             }
         }
@@ -46,11 +49,13 @@ public class Matrix {
     }
 
     public String toString() {
+        String s ="";
         for (int i = 0; i < matrix.length ; i++) {
             for (int j = 0 ; j < matrix.length ; j++) {
-                System.out.print(matrix[i][j] + " ");
+                s += matrix[i][j] + " ";
             }
-            System.out.print("\n");
+            s+="\n";
         }
+        return s;
     }
 }
