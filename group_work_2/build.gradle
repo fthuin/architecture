@@ -1,9 +1,18 @@
-apply plugin: "java"
+apply plugin: 'application'
+
+mainClassName = 'launcher.Main'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.google.guava:guava:18.0'
+
+}
 
 sourceSets {
 	main.java.srcDir "src/main"
 }
 
-jar {
-	manifest.attributes "Main-Class" : "launcher.Main"
-}
+
