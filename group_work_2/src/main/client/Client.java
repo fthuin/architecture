@@ -37,7 +37,12 @@ public class Client {
         try {
           socket = new Socket(this.servAddr, this.port);
           outputStream = new ObjectOutputStream(socket.getOutputStream());
-		  outputStream.writeObject(createRequest());
+		  int i = 0;
+		  while(i<10){
+		  	outputStream.writeObject(createRequest());
+			System.out.println("Sending Request");
+			i++;
+		  }
 		} catch (UnknownHostException e) {
             System.err.println("UnknownHostException - Client.start()");
 			e.printStackTrace();
@@ -59,8 +64,11 @@ public class Client {
 	public Request createRequest(){
 		//FIXME Randdom for the power
 		int i = 2;
+		//Double[][] tab = {{1.0,2.0},{1.0,2.0}};
+		//Matrix matrix = new Matrix(tab);
 		RandomGenerator builder = new RandomGenerator();
 		builder.fillMatrix();
-		return new Request(i,builder.generate());
+		Matrix matrix = builder.generate();
+		return new Request(i,matrix);
 	}
 }

@@ -3,28 +3,30 @@ package utils;
 import java.util.Random;
 
 public class RandomGenerator{
-    //RandomGenerator.fillMatrix.generate()
-    public static int bound = 10000;
+    public static int MAX_SIZE = 100;
+    public static int MIN_SIZE = 20;
     private Double[][] matrix;
     private int size;
     public RandomGenerator(){
+        System.out.println("Creatring generator");
         Random intGenerator = new Random();
-        size = intGenerator.nextInt(bound);
-        while(size==0){
-            size = intGenerator.nextInt(bound);
+        size = intGenerator.nextInt(MAX_SIZE);
+        while(size<MIN_SIZE){
+            size = intGenerator.nextInt(MAX_SIZE);
         }
         matrix = new Double[size][size];
      }
 
     public RandomGenerator fillMatrix(){
+        System.out.println("Filling matrix");
         Random doubleGenerator = new Random();
-        double max = Double.MAX_VALUE;
+        double max = 100.0;
         //FIXME check for overflow
-        double min = - (max-1);
+        double min = -100.0;
         double value;
         for(int i=0; i<size;i++){
             for(int j=0;j<size;j++){
-                value = min -(max-min)*doubleGenerator.nextDouble();
+                value = (doubleGenerator.nextDouble()*max-min)+min;
                 matrix[i][j] = value;
             }
         }
@@ -32,6 +34,7 @@ public class RandomGenerator{
     }
 
     public Matrix generate(){
+        System.out.println("Generating random matrix");
         return new Matrix(matrix);
     }
 }
