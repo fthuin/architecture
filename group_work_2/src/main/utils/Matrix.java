@@ -1,11 +1,17 @@
 package utils;
 import java.io.Serializable;
-
+import java.util.Random;
 public class Matrix implements Serializable {
-    Double[][] matrix;
+    private Double[][] matrix;
 
-    public Matrix() {
-
+    public Matrix(int size) {
+        Double[][] res= new Double[size][size];
+        for(int i = 0; i< size;i++ ){
+            for(int j = 0; j < size;j++){
+                res[i][j] = 0.0;
+            }
+        }
+        this.matrix = res;
     }
 
     public Matrix(Double[][] mat) {
@@ -48,6 +54,7 @@ public class Matrix implements Serializable {
         return res;
     }
 
+
     public String toString() {
         String s ="";
         for (int i = 0; i < matrix.length ; i++) {
@@ -58,4 +65,6 @@ public class Matrix implements Serializable {
         }
         return s;
     }
+
+
 }

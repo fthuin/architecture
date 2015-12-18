@@ -57,9 +57,10 @@ public class Client {
     }
 
 	public Request createRequest(){
+		//FIXME Randdom for the power
 		int i = 2;
-		Double[][] tab = {{1.0,2.0},{1.0,2.0}};
-		Matrix matrix = new Matrix(tab);
-		return new Request(i,matrix);
+		RandomGenerator builder = new RandomGenerator();
+		builder.fillMatrix();
+		return new Request(i,builder.generate());
 	}
 }
