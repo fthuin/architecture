@@ -8,7 +8,6 @@ public class RandomGenerator{
     private Double[][] matrix;
     private int size;
     public RandomGenerator(){
-        System.out.println("Creatring generator");
         Random intGenerator = new Random();
         size = intGenerator.nextInt(MAX_SIZE);
         while(size<MIN_SIZE){
@@ -17,8 +16,11 @@ public class RandomGenerator{
         matrix = new Double[size][size];
      }
 
+     public RandomGenerator(int difficulty){
+        matrix = new Double[difficulty][difficulty]; 
+     }
+
     public RandomGenerator fillMatrix(){
-        System.out.println("Filling matrix");
         Random doubleGenerator = new Random();
         double max = 100.0;
         //FIXME check for overflow
@@ -34,7 +36,6 @@ public class RandomGenerator{
     }
 
     public Matrix generate(){
-        System.out.println("Generating random matrix");
         return new Matrix(matrix);
     }
 }

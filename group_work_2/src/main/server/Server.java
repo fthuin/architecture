@@ -36,9 +36,12 @@ public class Server {
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
 			while(true){
             	Request r = (Request) inputStream.readObject();
-				System.out.println("Received Request\n");
-				System.out.println(r.getMatrix().toString());
+				System.out.println("Received Request");
             	outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
+				System.out.println("Processing Request");
+				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
+				System.out.println("Sending Response");
+				outputStream.writeObject(new Request(0,response));
 			}
             // TODO : Gérer cette request
     	} catch (IOException e) {
