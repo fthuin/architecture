@@ -36,11 +36,11 @@ public class Server {
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
+            outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
 			int i = 0;
 			while(true) {
             	Request r = (Request) inputStream.readObject();
 				System.out.println("Received Request");
-            	outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
 				System.out.println("Processing Request number" + i);
 				long startTime = System.nanoTime();
 				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
