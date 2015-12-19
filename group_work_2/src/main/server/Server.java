@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.EOFException;
+import java.lang.Thread;
 
 public class Server {
 
@@ -19,7 +20,9 @@ public class Server {
     private int port = -1;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-
+	private int BUFFER_SIZE = 5;
+	private Buffer<Request> buffer = new Buffer<>(BUFFER_SIZE);
+	private boolean finish = false;
     public Server(String port) {
         try {
             this.port = Integer.parseInt(port);
@@ -30,6 +33,29 @@ public class Server {
         }
     }
 
+	private Thread t = new Thread(new Runnable() {
+		public void run() {
+			try{
+				outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
+				while(!finish){
+					if(!buffer.isEmpty()){
+						Request r = buffer.remove();
+						System.out.println("Processing Request number");
+						long startTime = System.nanoTime();
+						Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
+						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
+						outputStream.writeObject(new Request(responseID++, 0,response));
+					}
+				}
+			} catch (IOException e){
+				System.out.println("IOException - Thread Server");
+				e.printStackTrace();
+			}
+
+		}
+	});
+
+
 	public void start() {
         System.out.println("Server - start()");
 
@@ -38,14 +64,14 @@ public class Server {
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
-            outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
+			int i = 1;
 			while(true) {
             	Request r = (Request) inputStream.readObject();
-				System.out.println("Received Request" + responseID);
-				long startTime = System.nanoTime();
-				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
-				System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
-				outputStream.writeObject(new Request(responseID++,0,response));
+				System.out.println("Number of request received: "+i);
+				if(!buffer.add(r)){
+					System.out.println("Buffer is full");
+				}
+				i++;
 			}
             // TODO : Gérer cette request
     	} catch (EOFException e) {
@@ -57,7 +83,9 @@ public class Server {
     	} catch (ClassNotFoundException e) {
             System.err.println("Server start() - ClassNotFoundException");
             e.printStackTrace();
-        }
+        } finally {
+			finish = true;
+		}
         System.out.println("Server - end start()");
 	}
 
