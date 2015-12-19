@@ -46,14 +46,14 @@ public class Server {
 						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
 						outputStream.writeObject(new Request(responseID++, 0,response));
 					}
-					Thread.sleep(500);
+					//Thread.sleep(500);
 				}
 			} catch (IOException e){
 				System.out.println("IOException - Thread Server");
 				e.printStackTrace();
-			} catch (InterruptedException e){
+			/*} catch (InterruptedException e){
 					System.err.println("InterruptedException - Server start()");
-					e.printStackTrace();
+					e.printStackTrace();*/
 			}
 
 		}
@@ -77,7 +77,7 @@ public class Server {
 					System.out.println("Buffer is full");
 				}
 				i++;
-				Thread.sleep(500);
+			//	Thread.sleep(500);
 			}
             // TODO : Gérer cette request
     	} catch (EOFException e) {
@@ -89,10 +89,10 @@ public class Server {
     	} catch (ClassNotFoundException e) {
             System.err.println("Server start() - ClassNotFoundException");
             e.printStackTrace();
-		} catch (InterruptedException e){
+		} /*catch (InterruptedException e){
 				System.err.println("InterruptedException - Server start()");
 				e.printStackTrace();
-        } finally {
+        }*/ finally {
 			finish = true;
 			//t.interrupt();
 		}
