@@ -29,4 +29,8 @@ public class Request implements Serializable {
     public void setExposant(int exposant){
         this.exposant = exposant;
     }
+
+    public int getId() {
+        return this.id;
+    }
 }
