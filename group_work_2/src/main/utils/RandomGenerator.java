@@ -3,21 +3,19 @@ package utils;
 import java.util.Random;
 
 public class RandomGenerator{
-    public static int MAX_SIZE = 100;
-    public static int MIN_SIZE = 20;
+    public static int MAX_SIZE = 500;
+    public static int MIN_SIZE = 150;
     private Double[][] matrix;
     private int size;
     public RandomGenerator(){
         Random intGenerator = new Random();
-        size = intGenerator.nextInt(MAX_SIZE);
-        while(size<MIN_SIZE){
-            size = intGenerator.nextInt(MAX_SIZE);
-        }
+        size = intGenerator.nextInt(MAX_SIZE-MIN_SIZE) + MIN_SIZE;
+        System.out.println("Taille de la matrice créée : " + size);
         matrix = new Double[size][size];
      }
 
      public RandomGenerator(int difficulty){
-        matrix = new Double[difficulty][difficulty]; 
+        matrix = new Double[difficulty][difficulty];
      }
 
     public RandomGenerator fillMatrix(){

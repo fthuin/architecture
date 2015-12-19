@@ -136,7 +136,7 @@ public class Client {
 
 	public Request createRequest(){
 		//FIXME Randdom for the power
-		int i = 2;
+		int i = 5;
 		//Use RandomGenerator(int s) to force the size of the generated matrix
 		RandomGenerator builder = new RandomGenerator();
 		builder.fillMatrix();

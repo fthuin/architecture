@@ -32,7 +32,7 @@ public class Server {
         System.out.println("Server - start()");
 
     	try {
-    		socketserver = new ServerSocket(this.port, 2);
+    		socketserver = new ServerSocket(this.port);
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
@@ -42,8 +42,9 @@ public class Server {
 				System.out.println("Received Request");
             	outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
 				System.out.println("Processing Request number" + i);
+				long startTime = System.nanoTime();
 				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
-				System.out.println("Sending Response");
+				System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
 				outputStream.writeObject(new Request(0,response));
 				i++;
 			}
