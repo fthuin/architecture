@@ -26,7 +26,7 @@ public class Client {
     private InetAddress servAddr;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-	private double RATE =2d;
+	private double RATE =3d;
 
 	private boolean allResponsesReceived = false;
 
@@ -37,10 +37,10 @@ public class Client {
 			Request response;
 			int i = 0;
 			try{
-					inputStream = new ObjectInputStream(socket.getInputStream());
+				inputStream = new ObjectInputStream(socket.getInputStream());
 				while(i < NUMBER_REQUESTS){
 					response = (Request) inputStream.readObject();
-					System.out.println("Received Reponse from server");
+					System.out.println("Received Reponse from server for request " + response.getId());
 					i++;
 				}
 				allResponsesReceived = true;

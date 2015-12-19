@@ -1,4 +1,3 @@
-
 package server;
 
 import utils.*;
@@ -12,8 +11,6 @@ import java.io.EOFException;
 import java.lang.Thread;
 
 public class Server {
-
-	private int responseID = 0;
 
 	private ServerSocket socketserver = null;
 	private Socket socketduserveur = null;
@@ -44,7 +41,7 @@ public class Server {
 						long startTime = System.nanoTime();
 						Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
 						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
-						outputStream.writeObject(new Request(responseID++, 0,response));
+						outputStream.writeObject(new Request(r.getId(), 0,response));
 					}
 					Thread.sleep(500);
 				}
