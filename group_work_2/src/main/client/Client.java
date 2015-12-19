@@ -36,8 +36,8 @@ public class Client {
 			Request response;
 			int i = 0;
 			try{
-				while(i < NUMBER_REQUESTS){
 					inputStream = new ObjectInputStream(socket.getInputStream());
+				while(i < NUMBER_REQUESTS){
 					response = (Request) inputStream.readObject();
 					System.out.println("Received Reponse from server");
 					i++;
