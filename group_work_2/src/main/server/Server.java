@@ -37,7 +37,7 @@ public class Server {
 				while(! finish ){
 					if ( ! buffer.isEmpty() ){
 						Request r = buffer.remove();
-						System.out.println("Processing Request number");
+						System.out.println("Processing Request number " + r.getId());
 						long startTime = System.nanoTime();
 						Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
 						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
