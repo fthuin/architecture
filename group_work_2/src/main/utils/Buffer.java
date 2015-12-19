@@ -1,36 +1,26 @@
 package utils;
 
 import java.util.Queue;
+import java.util.ArrayDeque;
 
-public class Buffer<E> implements Queue<E> {
+public class Buffer<E> extends ArrayDeque<E> {
 	private int size = 1;
 
 	public Buffer(int size) {
-
+		super();
+  		this.size = size;
 	}
 
 	public boolean add(E e) {
-		// TODO
+		if(size()<size){
+			super.add(e);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	public E element() {
-		// TODO
+	public boolean isFull(){
+		return size()==size;
 	}
-
-	public boolean offer(E e){
-		// TODO
-	}
-
-	public E peek() {
-		// TODO
-	}
-
-	public E poll() {
-		// TODO
-	}
-
-	public E remove() {
-		// TODO
-	}
-
 }
