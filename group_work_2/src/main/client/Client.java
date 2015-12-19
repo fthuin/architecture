@@ -10,8 +10,15 @@ import java.lang.Thread;
 import java.lang.NumberFormatException;
 import java.util.Random;
 import java.lang.Math;
-import utils.*;
 
+import utils.Matrix;
+import utils.RandomGenerator;
+import utils.Request;
+
+/**
+	This class contains the implementation of a Client that can send matrices
+	to a server in order to calculate a function on it.
+ */
 public class Client {
 	private Socket socket;
     private int port;
@@ -20,16 +27,22 @@ public class Client {
     private ObjectOutputStream outputStream = null;
 	private double RATE =3d;
 
+	private boolean allResponsesReceived = false;
+
+	private int NUMBER_REQUESTS = 50;
+
 	private Thread t = new Thread(new Runnable() {
 		public void run() {
 			Request response;
+			int i = 0;
 			try{
-				while(true){
+				while(i < NUMBER_REQUESTS){
 					inputStream = new ObjectInputStream(socket.getInputStream());
 					response = (Request) inputStream.readObject();
 					System.out.println("Received Reponse from server");
+					i++;
 				}
-
+				allResponsesReceived = true;
 			} catch (IOException e){
 				System.err.println("IOException - Thread receiving response");
 				e.printStackTrace();
@@ -64,10 +77,19 @@ public class Client {
 		  t.start();
 		  int i = 0;
 		  System.out.println("Beginning sending request");
-		  while(true){
+		  while(i < NUMBER_REQUESTS){
 			  //outputStream.writeObject(createRequest());
 			  loadGenerator();
-			  System.out.println("Sending Request");
+			  System.out.println("Sending Request number " + i);
+			  i++;
+		  }
+		  while (! allResponsesReceived) {
+			  try {
+			  	Thread.sleep(1000);
+			  } catch (InterruptedException e){
+	  			System.err.println("InterruptedException - Client start()");
+	  			e.printStackTrace();
+	  		  }
 		  }
 		} catch (UnknownHostException e) {
             System.err.println("UnknownHostException - Client.start()");
@@ -99,7 +121,10 @@ public class Client {
 	}
 
 
-
+	/**
+		This function releases the resources linked to a client and stop all
+		his action.
+	 */
     public void stop() {
         try {
             socket.close();

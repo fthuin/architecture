@@ -1,3 +1,4 @@
+
 package server;
 
 import utils.*;
@@ -7,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.EOFException;
 
 public class Server {
 
@@ -30,23 +32,28 @@ public class Server {
         System.out.println("Server - start()");
 
     	try {
-    		socketserver = new ServerSocket(this.port);
+    		socketserver = new ServerSocket(this.port, 2);
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
-			while(true){
+			int i = 0;
+			while(true) {
             	Request r = (Request) inputStream.readObject();
 				System.out.println("Received Request");
             	outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
-				System.out.println("Processing Request");
+				System.out.println("Processing Request number" + i);
 				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
 				System.out.println("Sending Response");
 				outputStream.writeObject(new Request(0,response));
+				i++;
 			}
             // TODO : Gérer cette request
-    	} catch (IOException e) {
+    	} catch (EOFException e) {
+			System.err.println("Server start() - EOFException");
+			// e.printStackTrace();
+		} catch (IOException e) {
             System.err.println("Server start() - IOException");
-    		e.printStackTrace();
+    		// e.printStackTrace();
     	} catch (ClassNotFoundException e) {
             System.err.println("Server start() - ClassNotFoundException");
             e.printStackTrace();

@@ -1,6 +1,8 @@
 package utils;
+
 import java.io.Serializable;
 import java.util.Random;
+
 public class Matrix implements Serializable {
     private Double[][] matrix;
 

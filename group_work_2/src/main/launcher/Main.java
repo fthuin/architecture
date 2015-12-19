@@ -2,10 +2,12 @@ package launcher;
 
 import client.*;
 import server.*;
-import com.google.common.base.Joiner;
 import java.lang.Thread;
 import java.lang.IndexOutOfBoundsException;
 
+/**
+    This class launches the client and server following command arguments
+ */
 public class Main {
 
   private static final String TYPE_CLIENT = "client";
@@ -45,7 +47,7 @@ public class Main {
         Server server = new Server(port);
         //Thread t = new Thread(new Runnable() {
         //  public void run() {
-            server.start();
+        server.start();
         //  }
         //});
         //t.start();
