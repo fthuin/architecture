@@ -22,6 +22,7 @@ import utils.Request;
 public class Client {
 	private Socket socket;
     private int port;
+	private int requestID = 0;
     private InetAddress servAddr;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
@@ -80,7 +81,7 @@ public class Client {
 		  while(i < NUMBER_REQUESTS){
 			  //outputStream.writeObject(createRequest());
 			  loadGenerator();
-			  System.out.println("Sending Request number " + i);
+			  System.out.println("Sending Request number " + requestID);
 			  i++;
 		  }
 		  while (! allResponsesReceived) {
@@ -141,6 +142,6 @@ public class Client {
 		RandomGenerator builder = new RandomGenerator();
 		builder.fillMatrix();
 		Matrix matrix = builder.generate();
-		return new Request(i,matrix);
+		return new Request(requestID++, i,matrix);
 	}
 }

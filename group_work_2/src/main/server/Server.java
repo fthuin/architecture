@@ -12,6 +12,8 @@ import java.io.EOFException;
 
 public class Server {
 
+	private int responseID = 0;
+
 	private ServerSocket socketserver = null;
 	private Socket socketduserveur = null;
     private int port = -1;
@@ -37,16 +39,13 @@ public class Server {
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
             outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
-			int i = 0;
 			while(true) {
             	Request r = (Request) inputStream.readObject();
-				System.out.println("Received Request");
-				System.out.println("Processing Request number" + i);
+				System.out.println("Received Request" + responseID);
 				long startTime = System.nanoTime();
 				Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
 				System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
-				outputStream.writeObject(new Request(0,response));
-				i++;
+				outputStream.writeObject(new Request(responseID++,0,response));
 			}
             // TODO : Gérer cette request
     	} catch (EOFException e) {
