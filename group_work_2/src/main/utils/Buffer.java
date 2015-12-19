@@ -1,9 +1,8 @@
 package utils;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
-
-public class Buffer<E> extends ArrayDeque<E> {
+import java.util.concurrent.ConcurrentLinkedDeque;
+public class Buffer<E> extends ConcurrentLinkedDeque<E> {
 	private int size = 1;
 
 	public Buffer(int size) {
