@@ -23,4 +23,8 @@ public class Buffer<E> extends ArrayDeque<E> {
 	public boolean isFull(){
 		return size()==size;
 	}
+
+	public boolean isEmpty() {
+		return size()==0;
+	}
 }

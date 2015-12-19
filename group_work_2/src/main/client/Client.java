@@ -26,7 +26,7 @@ public class Client {
     private InetAddress servAddr;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-	private double RATE =3d;
+	private double RATE =2d;
 
 	private boolean allResponsesReceived = false;
 

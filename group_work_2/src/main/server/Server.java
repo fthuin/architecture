@@ -37,8 +37,8 @@ public class Server {
 		public void run() {
 			try{
 				outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
-				while(!finish){
-					if(!buffer.isEmpty()){
+				while(! finish ){
+					if ( ! buffer.isEmpty() ){
 						Request r = buffer.remove();
 						System.out.println("Processing Request number");
 						long startTime = System.nanoTime();
@@ -46,10 +46,14 @@ public class Server {
 						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
 						outputStream.writeObject(new Request(responseID++, 0,response));
 					}
+					Thread.sleep(500);
 				}
 			} catch (IOException e){
 				System.out.println("IOException - Thread Server");
 				e.printStackTrace();
+			} catch (InterruptedException e){
+					System.err.println("InterruptedException - Server start()");
+					e.printStackTrace();
 			}
 
 		}
@@ -64,6 +68,7 @@ public class Server {
     		socketduserveur = socketserver.accept();
             System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
             inputStream = new ObjectInputStream(socketduserveur.getInputStream());
+			t.start();
 			int i = 1;
 			while(true) {
             	Request r = (Request) inputStream.readObject();
@@ -72,6 +77,7 @@ public class Server {
 					System.out.println("Buffer is full");
 				}
 				i++;
+				Thread.sleep(500);
 			}
             // TODO : Gérer cette request
     	} catch (EOFException e) {
@@ -83,8 +89,12 @@ public class Server {
     	} catch (ClassNotFoundException e) {
             System.err.println("Server start() - ClassNotFoundException");
             e.printStackTrace();
+		} catch (InterruptedException e){
+				System.err.println("InterruptedException - Server start()");
+				e.printStackTrace();
         } finally {
 			finish = true;
+			//t.interrupt();
 		}
         System.out.println("Server - end start()");
 	}
