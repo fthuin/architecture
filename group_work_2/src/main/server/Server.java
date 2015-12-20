@@ -116,7 +116,7 @@ public class Server extends NetworkNode {
 
 	private Matrix compute(Matrix m, int exposant) {
 		long startTime = System.nanoTime();
-		Matrix result = new Matrix(m.matrixPowered(exposant));
+		Matrix result = new Matrix(m.matrixPowered(exposant), m.getSize());
 		computeTime += (System.nanoTime() - startTime);
 		return result;
 	}

@@ -18,7 +18,8 @@ public class Matrix implements Serializable {
         this.matrix = res;
     }
 
-    public Matrix(Double[][] mat) {
+    public Matrix(Double[][] mat, int size) {
+        this.size = size;
         this.matrix = mat;
     }
 
