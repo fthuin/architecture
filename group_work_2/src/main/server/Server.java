@@ -34,7 +34,7 @@ public class Server extends NetworkNode {
 	private Thread t = new Thread(new Runnable() {
 		public void run() {
 			outputStream = getSocketOutputStream(socket);
-			while (! receiveFinished ) {
+			while (! receiveFinished || ! buffer.isEmpty() ) {
 				if ( ! buffer.isEmpty() ) {
 					Request r = buffer.remove();
 					Matrix response = compute( r.getMatrix() , r.getExposant() );
