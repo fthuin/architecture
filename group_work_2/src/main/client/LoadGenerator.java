@@ -27,7 +27,9 @@ import utils.ResultWriter;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.Interval;/**
+import org.joda.time.Interval;
+
+/**
 	This class contains the implementation of a LoadGenerator that can send matrices
 	to a server in order to calculate a function on it.
  */
