@@ -63,7 +63,7 @@ public class ThreadedServer extends NetworkNode {
 
     Runnable fecthBuffer = new Runnable(){
         public void run(){
-            outputStream = getSocketOutputStream(socket);
+
             while (! receiveFinished || ! buffer.isEmpty() ) {
                 if ( ! buffer.isEmpty() ) {
                     Request r = buffer.remove();
@@ -95,6 +95,7 @@ public class ThreadedServer extends NetworkNode {
             System.exit(-1);
 		}
         Log.print("Connection established : " + socketServer.getLocalSocketAddress());
+        outputStream = getSocketOutputStream(socket);
         inputStream = getSocketInputStream(socket);
         initiatePool();
         startThreads();
