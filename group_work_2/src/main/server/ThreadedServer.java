@@ -63,19 +63,21 @@ public class ThreadedServer extends NetworkNode {
 
     Runnable fecthBuffer = new Runnable(){
         public void run(){
-            outputStream = getSocketOutputStream(socket);
+
             while (! receiveFinished || ! buffer.isEmpty() ) {
                 if ( ! buffer.isEmpty() ) {
                     Request r = buffer.remove();
+                    Log.print("Processing Request: "+r.getId());
                     Matrix response = compute(r);
                     Request dataToSend = r;
                     dataToSend.setMatrix(response);
                     dataToSend.setServerSendingTimeStamp(new DateTime());
                     send( dataToSend , outputStream);
+                    Log.print("Sending Response: "+r.getId());
                 }
                 else {
                     Log.print("Buffer is empty... Sleeping for a second.");
-                    threadSleep(20);
+                    threadSleep(1000);
                 }
             }
             send( null, outputStream);
@@ -95,6 +97,7 @@ public class ThreadedServer extends NetworkNode {
             System.exit(-1);
 		}
         Log.print("Connection established : " + socketServer.getLocalSocketAddress());
+        outputStream = getSocketOutputStream(socket);
         inputStream = getSocketInputStream(socket);
         initiatePool();
         startThreads();
