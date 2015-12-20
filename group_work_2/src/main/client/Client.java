@@ -52,7 +52,7 @@ public class Client extends NetworkNode {
 				if (response == null) {
 					break;
 				}
-				System.out.println("Received Reponse from server for request " + response.getId());
+				System.out.println("Received response from server for request " + response.getId());
 				i++;
 			}
 		}
@@ -94,8 +94,10 @@ public class Client extends NetworkNode {
 			Log.print("Sending Request number #" + requestID);
 			i++;
 		}
-		closeStream(outputStream);
 		/* We should not stop until all responses are received */
+
+		Log.print("Outputstream closed.");
+		closeStream(outputStream);
 
 		try{
 			receiverThread.join();
@@ -127,6 +129,7 @@ public class Client extends NetworkNode {
             System.err.println("IOException - Client.stop()");
             e.printStackTrace();
         }
+		Log.print("Client stop()");
     }
 
 	/**

@@ -22,6 +22,7 @@ public abstract class NetworkNode {
     public void send(Request r, ObjectOutputStream outputStream) {
         try {
             outputStream.writeObject(r);
+            outputStream.flush();
         } catch (InvalidClassException e) {
             Log.error("NetworkNode send() - Something is wrong with a class used by serialization.");
         } catch (NotSerializableException e) {
@@ -91,9 +92,9 @@ public abstract class NetworkNode {
         return ois;
     }
 
-    public void closeStream(ObjectOutputStream ois){
+    public void closeStream(ObjectOutputStream oos){
         try{
-            ois.close();
+            oos.close();
         } catch (IOException e){
             Log.error("flushOutput - Error");
         }
@@ -103,6 +104,7 @@ public abstract class NetworkNode {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
         } catch (IOException e) {
             Log.error("NetworkNode getSocketOutputStream() - I/O error " +
             "occured when creating the output stream or socket is not connected.");
