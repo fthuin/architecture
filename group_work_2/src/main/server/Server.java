@@ -80,6 +80,11 @@ public class Server extends NetworkNode {
 
 			i++;
 		}
+		try{
+			t.join();
+		} catch (InterruptedException e){
+			Log.error("Unable to join receiving thread");
+		}
 
         Log.print("Server - end start()");
 	}
