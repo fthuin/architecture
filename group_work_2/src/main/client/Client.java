@@ -97,11 +97,12 @@ public class Client extends NetworkNode {
 		}
 		closeStream(outputStream);
 		/* We should not stop until all responses are received */
-		while (! allResponsesReceived) {
-			Log.print("All responses not yet received... waiting.");
-			threadSleep(1);
+
+		try{
+			receiverThread.join();
+		} catch (InterruptedException e){
+			Log.error("Unable to join receiving thread");
 		}
-		receiverThread.interrupt();
 	}
 
 	//FIXME Move in an other class
