@@ -66,26 +66,34 @@ public class ThreadedServer extends NetworkNode {
         public void run(){
 
             while (! receiveFinished || ! buffer.isEmpty() ) {
-				checkBuffer();
+				Request r = checkBuffer();
+				if (r == null) break;
+				Log.print("Processing Request: "+r.getId());
+				Matrix response = compute(r);
+				Request dataToSend = r;
+				dataToSend.setMatrix(response);
+				dataToSend.setServerSendingTimeStamp(new DateTime());
+				Log.print("Sending Response: "+r.getId());
+				send( dataToSend , outputStream);
             }
         }
     };
 
-	public synchronized void checkBuffer() {
-		if ( ! buffer.isEmpty() ) {
-			Request r = buffer.remove();
-			Log.print("Processing Request: "+r.getId());
-			Matrix response = compute(r);
-			Request dataToSend = r;
-			dataToSend.setMatrix(response);
-			dataToSend.setServerSendingTimeStamp(new DateTime());
-			Log.print("Sending Response: "+r.getId());
-			send( dataToSend , outputStream);
+	public synchronized Request checkBuffer() {
+		while (true) {
+			if ( ! buffer.isEmpty() ) {
+				Request r = buffer.remove();
+				return r;
+			}
+			else {
+				if (receiveFinished) {
+					break;
+				}
+				Log.print("Buffer is empty... Sleeping for a second.");
+				threadSleep(1000);
+			}
 		}
-		else {
-			Log.print("Buffer is empty... Sleeping for a second.");
-			threadSleep(1000);
-		}
+		return null;
 	}
 
 
