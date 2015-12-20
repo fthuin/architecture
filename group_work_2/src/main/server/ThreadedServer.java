@@ -43,7 +43,7 @@ public class ThreadedServer extends NetworkNode {
 
     public void initiatePool(){
         for(int i=0;i<nbrThread;i++){
-            Thread t = new Thread(fecthBuffer);
+            Thread t = new Thread(fetchBuffer);
             pool.add(t);
         }
     }
@@ -62,28 +62,31 @@ public class ThreadedServer extends NetworkNode {
 
 
 
-    Runnable fecthBuffer = new Runnable(){
+    Runnable fetchBuffer = new Runnable(){
         public void run(){
 
             while (! receiveFinished || ! buffer.isEmpty() ) {
-                if ( ! buffer.isEmpty() ) {
-                    Request r = buffer.remove();
-                    Log.print("Processing Request: "+r.getId());
-                    Matrix response = compute(r);
-                    Request dataToSend = r;
-                    dataToSend.setMatrix(response);
-                    dataToSend.setServerSendingTimeStamp(new DateTime());
-                    Log.print("Sending Response: "+r.getId());
-                    send( dataToSend , outputStream);
-                }
-                else {
-                    Log.print("Buffer is empty... Sleeping for a second.");
-                    threadSleep(1000);
-                }
+				checkBuffer();
             }
-            send( null, outputStream);
         }
     };
+
+	public synchronized void checkBuffer() {
+		if ( ! buffer.isEmpty() ) {
+			Request r = buffer.remove();
+			Log.print("Processing Request: "+r.getId());
+			Matrix response = compute(r);
+			Request dataToSend = r;
+			dataToSend.setMatrix(response);
+			dataToSend.setServerSendingTimeStamp(new DateTime());
+			Log.print("Sending Response: "+r.getId());
+			send( dataToSend , outputStream);
+		}
+		else {
+			Log.print("Buffer is empty... Sleeping for a second.");
+			threadSleep(1000);
+		}
+	}
 
 
 
@@ -123,6 +126,7 @@ public class ThreadedServer extends NetworkNode {
 		}
 		try{
             joinThreads();
+			send( null, outputStream);
 		} catch (InterruptedException e){
 			Log.error("Unable to join receiving thread");
 		}
