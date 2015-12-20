@@ -2,8 +2,9 @@ package utils;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
-public class Buffer<E> extends ConcurrentLinkedDeque<E> {
+public class Buffer<E> extends LinkedBlockingDeque<E> {
 	private int size = 50;
 
 	public Buffer(int size) {
