@@ -89,9 +89,9 @@ public abstract class NetworkNode {
         return ois;
     }
 
-    public void flushOutput(ObjectOutputStream ois){
+    public void closeStream(ObjectOutputStream ois){
         try{
-            ois.flush();
+            ois.close();
         } catch (IOException e){
             Log.error("flushOutput - Error");
         }

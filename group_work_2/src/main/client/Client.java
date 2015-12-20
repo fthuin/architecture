@@ -92,7 +92,7 @@ public class Client extends NetworkNode {
 			Log.print("Sending Request number #" + requestID);
 			i++;
 		}
-		flushOutput(outputStream);
+		closeStream(outputStream);
 		/* We should not stop until all responses are received */
 		while (! allResponsesReceived) {
 			Log.print("All responses not yet received... waiting.");
