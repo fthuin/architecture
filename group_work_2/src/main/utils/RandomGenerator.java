@@ -20,6 +20,7 @@ public class RandomGenerator{
 
     public RandomGenerator fillMatrix(){
         Random doubleGenerator = new Random();
+        doubleGenerator.setSeed(123456789);
         double max = 100.0;
         //FIXME check for overflow
         double min = -100.0;
@@ -34,6 +35,6 @@ public class RandomGenerator{
     }
 
     public Matrix generate(){
-        return new Matrix(matrix);
+        return new Matrix(matrix, this.size);
     }
 }

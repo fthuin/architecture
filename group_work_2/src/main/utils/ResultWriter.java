@@ -16,7 +16,6 @@ public class ResultWriter {
             out.write(""+r.getNetworkTime() + ",");
             out.write(""+r.getCalculationTime() + "\n");
             out.flush();
-            out.close();
         } catch (IOException e) {
             Log.error("ResultWriter write() - I/O error.");
         }
