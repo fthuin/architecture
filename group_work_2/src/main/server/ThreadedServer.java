@@ -145,7 +145,7 @@ public class ThreadedServer extends NetworkNode {
         Matrix m = r.getMatrix();
         int exposant = r.getExposant();
 		long startTime = System.nanoTime();
-		Matrix result = new Matrix(m.matrixPowered(exposant));
+		Matrix result = new Matrix(m.matrixPowered(exposant), m.getSize());
         r.setCalculationTime(System.nanoTime() - startTime);
 		//computeTime += (System.nanoTime() - startTime);
 		return result;
