@@ -49,10 +49,13 @@ public class Client extends NetworkNode {
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
+				if (response == null) {
+					allResponsesReceived = true;
+					break;
+				}
 				System.out.println("Received Reponse from server for request " + response.getId());
 				i++;
 			}
-			allResponsesReceived = true;
 		}
 	});
 
