@@ -89,6 +89,14 @@ public abstract class NetworkNode {
         return ois;
     }
 
+    public void flushOutput(ObjectOutputStream ois){
+        try{
+            ois.flush();
+        } catch (IOException e){
+            Log.error("flushOutput - Error");
+        }
+    }
+
     public ObjectOutputStream getSocketOutputStream(Socket socket) {
         ObjectOutputStream oos = null;
         try {

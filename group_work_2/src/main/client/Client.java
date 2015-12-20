@@ -45,7 +45,7 @@ public class Client extends NetworkNode {
 	/* Thread that handles responses from the server */
 	private Thread receiverThread = new Thread(new Runnable() {
 		public void run() {
-			int i = 0;
+			int i = 1;
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
@@ -88,17 +88,17 @@ public class Client extends NetworkNode {
 		Log.print("Beginning sending request");
 
 		while ( i < NUMBER_REQUESTS ) {
-			//outputStream.writeObject(createRequest());
 			loadGenerator();
 			Log.print("Sending Request number #" + requestID);
 			i++;
 		}
-
+		flushOutput(outputStream);
 		/* We should not stop until all responses are received */
 		while (! allResponsesReceived) {
-			Log.print("All responses received... waiting.");
+			Log.print("All responses not yet received... waiting.");
 			threadSleep(1);
 		}
+		receiverThread.interrupt();
 	}
 
 	//FIXME Move in an other class
