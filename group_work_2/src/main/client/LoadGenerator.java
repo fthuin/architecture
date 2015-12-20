@@ -51,7 +51,10 @@ public class LoadGenerator extends NetworkNode {
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
-				if (response == null) {
+				if(response != null){
+						response.setClientReceivingTimeStamp(new DateTime());
+				}
+				else {
 					break;
 				}
 				System.out.println("Received response from server for request " + response.getId());

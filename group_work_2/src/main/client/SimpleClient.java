@@ -79,7 +79,7 @@ public class SimpleClient extends NetworkNode {
 			this.send( r , this.outputStream );
 			Log.print("Sending Request number #" + requestID);
             Request response = receive(inputStream);
-			response.setClientReceivingTimeStamp();
+			response.setClientReceivingTimeStamp(new DateTime());
             System.out.println("Received response from server for request " + response.getId());
 			i++;
 		}

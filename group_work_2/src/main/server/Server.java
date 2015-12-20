@@ -45,7 +45,7 @@ public class Server extends NetworkNode {
 					r.setCalculationTime(computeTime - startComputeTime);
 					Request dataToSend = r;
 					dataToSend.setMatrix(response);
-					dataToSend.setServerSendingTimeStamp();
+					dataToSend.setServerSendingTimeStamp(new DateTime());
 					send( dataToSend , outputStream);
 				}
 				else {
@@ -75,8 +75,10 @@ public class Server extends NetworkNode {
 
 		while (true) {
         	Request r = receive(inputStream);
-			r.setServerReceivingTimeStamp(new DateTime());
-			if (r == null) {
+			if(r != null){
+				r.setServerReceivingTimeStamp(new DateTime());
+			}
+			else {
 				Log.print("All the data were received...");
 				receiveFinished = true;
 				break;
