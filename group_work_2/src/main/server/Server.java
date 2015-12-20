@@ -38,7 +38,8 @@ public class Server extends NetworkNode {
 				if ( ! buffer.isEmpty() ) {
 					Request r = buffer.remove();
 					Matrix response = compute( r.getMatrix() , r.getExposant() );
-					send(new Request(r.getId(), 0, response) , outputStream);
+					Request dataToSend = new Request(r.getId(), 0, response);
+					send( dataToSend , outputStream);
 				}
 				else {
 					Log.print("Buffer is empty... Sleeping for a second.");
