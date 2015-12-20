@@ -15,6 +15,9 @@ import utils.Matrix;
 import utils.NetworkNode;
 import utils.Request;
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Interval;
 public class Server extends NetworkNode {
 
 	private ServerSocket socketServer = null;
@@ -37,8 +40,12 @@ public class Server extends NetworkNode {
 			while (! receiveFinished || ! buffer.isEmpty() ) {
 				if ( ! buffer.isEmpty() ) {
 					Request r = buffer.remove();
+					long startComputeTime = computeTime;
 					Matrix response = compute( r.getMatrix() , r.getExposant() );
-					Request dataToSend = new Request(r.getId(), 0, response);
+					r.setCalculationTime(computeTime - startComputeTime);
+					Request dataToSend = r;
+					dataToSend.setMatrix(response);
+					dataToSend.setServerSendingTimeStamp(new DateTime());
 					send( dataToSend , outputStream);
 				}
 				else {
@@ -68,7 +75,10 @@ public class Server extends NetworkNode {
 
 		while (true) {
         	Request r = receive(inputStream);
-			if (r == null) {
+			if(r != null){
+				r.setServerReceivingTimeStamp(new DateTime());
+			}
+			else {
 				Log.print("All the data were received...");
 				receiveFinished = true;
 				break;

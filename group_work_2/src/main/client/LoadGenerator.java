@@ -25,7 +25,9 @@ import utils.RandomGenerator;
 import utils.Request;
 import utils.ResultWriter;
 
-/**
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Interval;/**
 	This class contains the implementation of a LoadGenerator that can send matrices
 	to a server in order to calculate a function on it.
  */
@@ -52,7 +54,10 @@ public class LoadGenerator extends NetworkNode {
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
-				if (response == null) {
+				if(response != null){
+						response.setClientReceivingTimeStamp(new DateTime());
+				}
+				else {
 					break;
 				}
 				ResultWriter.write(response, TEST_RESULT);

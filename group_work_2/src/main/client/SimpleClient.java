@@ -25,7 +25,9 @@ import utils.RandomGenerator;
 import utils.Request;
 import utils.ResultWriter;
 
-/**
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Interval;/**
 	This class contains the implementation of a SimpleClient that can send matrices
 	to a server in order to calculate a function on it.
  */
@@ -75,10 +77,13 @@ public class SimpleClient extends NetworkNode {
 		Log.print("Beginning sending request");
 
 		while ( i < NUMBER_REQUESTS ) {
-			this.send( createRequest() , this.outputStream );
+			Request r = createRequest();
+			r.setClientSendingTimeStamp(new DateTime());
+			this.send( r , this.outputStream );
 			Log.print("Sending Request number #" + requestID);
             Request response = receive(inputStream);
 			ResultWriter.write(response, FILE_RESULT);
+			response.setClientReceivingTimeStamp(new DateTime());
             System.out.println("Received response from server for request " + response.getId());
 			i++;
 		}
