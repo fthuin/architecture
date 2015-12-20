@@ -23,6 +23,7 @@ import utils.Matrix;
 import utils.NetworkNode;
 import utils.RandomGenerator;
 import utils.Request;
+import utils.ResultWriter;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -39,6 +40,8 @@ public class LoadGenerator extends NetworkNode {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 	private double RATE = 3d;
+
+	private static final String TEST_RESULT = "loadgenerator_result.csv";
 
 	private boolean allResponsesReceived = false;
 
@@ -57,6 +60,7 @@ public class LoadGenerator extends NetworkNode {
 				else {
 					break;
 				}
+				ResultWriter.write(response, TEST_RESULT);
 				System.out.println("Received response from server for request " + response.getId());
 				i++;
 			}
