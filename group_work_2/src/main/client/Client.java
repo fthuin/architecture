@@ -45,7 +45,7 @@ public class Client extends NetworkNode {
 	/* Thread that handles responses from the server */
 	private Thread receiverThread = new Thread(new Runnable() {
 		public void run() {
-			int i = 1;
+			int i = 0;
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
