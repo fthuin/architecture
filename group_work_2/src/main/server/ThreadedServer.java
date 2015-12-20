@@ -20,6 +20,7 @@ import utils.Request;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+
 public class ThreadedServer extends NetworkNode {
 
 	private ServerSocket socketServer = null;
@@ -72,8 +73,8 @@ public class ThreadedServer extends NetworkNode {
                     Request dataToSend = r;
                     dataToSend.setMatrix(response);
                     dataToSend.setServerSendingTimeStamp(new DateTime());
-                    send( dataToSend , outputStream);
                     Log.print("Sending Response: "+r.getId());
+                    send( dataToSend , outputStream);
                 }
                 else {
                     Log.print("Buffer is empty... Sleeping for a second.");
@@ -105,15 +106,13 @@ public class ThreadedServer extends NetworkNode {
 
 		while (true) {
         	Request r = receive(inputStream);
-			if(r != null){
-				r.setServerReceivingTimeStamp(new DateTime());
-			}
-			else {
+			if(r == null){
 				Log.print("All the data were received...");
 				receiveFinished = true;
 				break;
 			}
 
+			r.setServerReceivingTimeStamp(new DateTime());
 			Log.print("Request received: #" + r.getId());
 
 			if( ! buffer.add(r) ) {

@@ -56,12 +56,10 @@ public class LoadGenerator extends NetworkNode {
 			inputStream = getSocketInputStream(socket);
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
-				if(response != null){
-						response.setClientReceivingTimeStamp(new DateTime());
-				}
-				else {
+				if (response == null) {
 					break;
 				}
+				response.setClientReceivingTimeStamp(new DateTime());
 				ResultWriter.write(response, TEST_RESULT);
 				System.out.println("Received response from server for request " + response.getId());
 				i++;
@@ -126,7 +124,9 @@ public class LoadGenerator extends NetworkNode {
 			double interTime = Math.log(1d-d)/(-RATE);
 			System.out.println("Waiting for "+interTime+" seconds");
 			this.threadSleep((long)interTime*1000);
-			this.send( createRequest() , this.outputStream );
+			Request r = createRequest();
+			r.setClientSendingTimeStamp(new DateTime());
+			this.send( r , this.outputStream );
 	}
 
 

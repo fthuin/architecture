@@ -19,7 +19,7 @@ public abstract class NetworkNode {
 
     private int port = -1;
 
-    public void send(Request r, ObjectOutputStream outputStream) {
+    public synchronized void send(Request r, ObjectOutputStream outputStream) {
         try {
             outputStream.writeObject(r);
             outputStream.flush();
