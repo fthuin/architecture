@@ -18,10 +18,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Random;
 
+import utils.Log;
 import utils.Matrix;
+import utils.NetworkNode;
 import utils.RandomGenerator;
 import utils.Request;
-import utils.NetworkNode;
 
 /**
 	This class contains the implementation of a Client that can send matrices
@@ -30,7 +31,7 @@ import utils.NetworkNode;
 public class Client extends NetworkNode {
 
 	private Socket socket = null;
-    private int port = -1;
+
 	private int requestID = 0;
     private InetAddress serverAddress = null;
     private ObjectInputStream inputStream = null;
@@ -69,32 +70,33 @@ public class Client extends NetworkNode {
 		try {
 			this.socket = new Socket(address, port);
 		} catch (IOException e) {
-			System.err.println("Error - Client initializeSocket() - I/O error occured when creating the socket.");
+			Log.error("Client initializeSocket() - I/O error occured when creating the socket.");
 		} catch (IllegalArgumentException e) {
-			System.err.println("Error - Client initializeSocket() - The port is outside the range of valid port values (0-65535)");
+			Log.error("Client initializeSocket() - The port is outside the range of valid port values (0-65535)");
 		} catch (NullPointerException e) {
-			System.err.println("Error - Client initializeSocket() - The address is null");
+			Log.error("Client initializeSocket() - The address is null");
 		}
 	}
 
 	public void start() {
-        System.out.println("Client - start");
+        Log.print("Client - start");
 
-        this.initializeSocket(this.serverAddress, this.port);
+        this.initializeSocket(this.serverAddress, this.getPort());
         outputStream = getSocketOutputStream(socket);
 		receiverThread.start();
 		int i = 0;
-		System.out.println("Beginning sending request");
+		Log.print("Beginning sending request");
 
 		while ( i < NUMBER_REQUESTS ) {
 			//outputStream.writeObject(createRequest());
 			loadGenerator();
-			System.out.println("Sending Request number " + requestID);
+			Log.print("Sending Request number #" + requestID);
 			i++;
 		}
 
 		/* We should not stop until all responses are received */
 		while (! allResponsesReceived) {
+			Log.print("All responses received... waiting.");
 			threadSleep(1);
 		}
 	}
@@ -124,40 +126,6 @@ public class Client extends NetworkNode {
         }
     }
 
-	public void send(Request r, ObjectOutputStream outputStream) {
-		try {
-			outputStream.writeObject(r);
-		} catch (InvalidClassException e) {
-			System.err.println("Error - Client send() - Something is wrong with a class used by serialization.");
-		} catch (NotSerializableException e) {
-			System.err.println("Error - Client send() - The object does not implement java.io.Serializable.");
-		} catch (IOException e) {
-			System.out.println("Error - Client send() - I/O error on the OutputStream.");
-		}
-	}
-
-	/** Reads from the ObjectInputStream and returns a Request
-	if there was one, returns null otherwise.
-	 */
-	public Request receive(ObjectInputStream ois) {
-		Request result = null;
-		try {
-			result = (Request) inputStream.readObject();
-		} catch (ClassNotFoundException e) {
-			System.err.println("Error - Client receive() : Class of a serialized object cannot be found.");
-		} catch (InvalidClassException e) {
-			System.err.println("Error - Client receive() : Something is wrong with a class used by serialization.");
-		} catch(StreamCorruptedException e) {
-			System.err.println("Error - Client receive() : Control information in the stream is inconsistent.");
-		} catch(OptionalDataException e) {
-			System.err.println("Error - Client receive() : Primitive data was found in the stream instead of objects.");
-		} catch(IOException e) {
-			System.err.println("Error - Client receive() : Input/Output related exceptions");
-		}
-
-		return result;
-	}
-
 	/**
 		Generates a randomly-sized Request
 	 */
@@ -168,54 +136,6 @@ public class Client extends NetworkNode {
 		builder.fillMatrix();
 		Matrix matrix = builder.generate();
 		return new Request(requestID++, i, matrix);
-	}
-
-	/**
-		Set the port of the server from a String containing its number
-	 */
-	public void setPort(String port) {
-		try {
-			this.port = Integer.parseInt(port);
-		} catch (NumberFormatException e) {
-			System.err.println("Error - Client setPort() - The string does not contain a parsable integer. Exiting...");
-			System.exit(-1);
-		}
-	}
-
-	/**
-		Returns the ObjectInputStream of the Socket if it is possible, null
-		otherwise.
-	 */
-	public ObjectInputStream getSocketInputStream(Socket socket) {
-		ObjectInputStream ois = null;
-		try {
-			ois = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e){
-			System.err.println(
-			"Error - Client getSocketInputStream() - The socket is closed, " +
-			"not connected or the input has been shutdown."
-			);
-		}
-		return ois;
-	}
-
-	public ObjectOutputStream getSocketOutputStream(Socket socket) {
-		ObjectOutputStream oos = null;
-		try {
-			oos = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			System.err.println("Error - Client getSocketOutputStream() - I/O error occured when creating the output stream or socket is not connected.");
-		}
-		return oos;
-	}
-
-	public void threadSleep(long seconds) {
-		try {
-			Thread.sleep(seconds*1000);
-		} catch (InterruptedException e){
-			System.err.println("Error - Client threadSleep() - thread was interrupted.");
-			e.printStackTrace();
-		}
 	}
 
 	/**

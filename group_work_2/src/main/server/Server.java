@@ -1,6 +1,5 @@
 package server;
 
-import utils.*;
 import java.lang.ClassNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,100 +9,96 @@ import java.net.Socket;
 import java.io.EOFException;
 import java.lang.Thread;
 
-public class Server {
+import utils.Buffer;
+import utils.Log;
+import utils.Matrix;
+import utils.NetworkNode;
+import utils.Request;
 
-	private ServerSocket socketserver = null;
-	private Socket socketduserveur = null;
-    private int port = -1;
+public class Server extends NetworkNode {
+
+	private ServerSocket socketServer = null;
+	private Socket socket = null;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 	private int BUFFER_SIZE = 5;
 	private Buffer<Request> buffer = new Buffer<>(BUFFER_SIZE);
-	private boolean finish = false;
+	private boolean receiveFinished = false;
+
+	private long computeTime = 0L;
+
     public Server(String port) {
-        try {
-            this.port = Integer.parseInt(port);
-        } catch (NumberFormatException e) {
-            System.err.println("Server constructor - Port "+port+" is not a number.");
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        this.setPort(port);
     }
 
 	private Thread t = new Thread(new Runnable() {
 		public void run() {
-			try{
-				outputStream = new ObjectOutputStream(socketduserveur.getOutputStream());
-				while(! finish ){
-					if ( ! buffer.isEmpty() ){
-						Request r = buffer.remove();
-						System.out.println("Processing Request number " + r.getId());
-						long startTime = System.nanoTime();
-						Matrix response = new Matrix(r.getMatrix().matrixPowered(r.getExposant()));
-						System.out.println("Sending Response after " + (System.nanoTime() - startTime)/1000000000.0);
-						outputStream.writeObject(new Request(r.getId(), 0,response));
-					}
-					//Thread.sleep(500);
+			outputStream = getSocketOutputStream(socket);
+			while (! receiveFinished ) {
+				if ( ! buffer.isEmpty() ) {
+					Request r = buffer.remove();
+					Matrix response = compute( r.getMatrix() , r.getExposant() );
+					send(new Request(r.getId(), 0, response) , outputStream);
 				}
-			} catch (IOException e){
-				System.out.println("IOException - Thread Server");
-				e.printStackTrace();
-			/*} catch (InterruptedException e){
-					System.err.println("InterruptedException - Server start()");
-					e.printStackTrace();*/
+				else {
+					Log.print("Buffer is empty... Sleeping for a second.");
+					threadSleep(1);
+				}
 			}
-
 		}
 	});
 
 
 	public void start() {
-        System.out.println("Server - start()");
+        Log.print("Server - start()");
 
-    	try {
-    		socketserver = new ServerSocket(this.port);
-    		socketduserveur = socketserver.accept();
-            System.out.println("Connection established : " + socketserver.getLocalSocketAddress());
-            inputStream = new ObjectInputStream(socketduserveur.getInputStream());
-			t.start();
-			int i = 1;
-			while(true) {
-            	Request r = (Request) inputStream.readObject();
-				System.out.println("Number of request received: "+i+" RequestID:"+ r.getId());
-				if(!buffer.add(r)){
-					System.out.println("Buffer is full");
-				}
-				i++;
-			//	Thread.sleep(500);
-			}
-            // TODO : Gérer cette request
-    	} catch (EOFException e) {
-			System.err.println("Server start() - EOFException");
-			// e.printStackTrace();
+		try {
+			socketServer = new ServerSocket(this.getPort());
+			socket = socketServer.accept();
 		} catch (IOException e) {
-            System.err.println("Server start() - IOException");
-    		// e.printStackTrace();
-    	} catch (ClassNotFoundException e) {
-            System.err.println("Server start() - ClassNotFoundException");
-            e.printStackTrace();
-		} /*catch (InterruptedException e){
-				System.err.println("InterruptedException - Server start()");
-				e.printStackTrace();
-        }*/ finally {
-			finish = true;
-			//t.interrupt();
+			Log.error("Server start() - Cannot connect sockets");
 		}
-        System.out.println("Server - end start()");
+
+        Log.print("Connection established : " + socketServer.getLocalSocketAddress());
+        inputStream = getSocketInputStream(socket);
+		t.start();
+		int i = 1;
+
+		while (true) {
+        	Request r = receive(inputStream);
+			if (r == null) {
+				Log.print("All the data were received...");
+				receiveFinished = true;
+				break;
+			}
+
+			Log.print("Request received: #" + r.getId());
+
+			if( ! buffer.add(r) ) {
+				Log.print("Buffer is full");
+			}
+
+			i++;
+		}
+
+        Log.print("Server - end start()");
 	}
 
     public void stop() {
         try {
-            socketserver.close();
-            socketduserveur.close();
+            socketServer.close();
+            socket.close();
         } catch (IOException e) {
-            System.err.println("IOException - Server.stop()");
+            Log.error("IOException - Server.stop()");
             e.printStackTrace();
         }
-        System.out.println("Server - end stop()");
+        Log.print("Server - end stop()");
     }
+
+	private Matrix compute(Matrix m, int exposant) {
+		long startTime = System.nanoTime();
+		Matrix result = new Matrix(m.matrixPowered(exposant));
+		computeTime += (System.nanoTime() - startTime);
+		return result;
+	}
 }
