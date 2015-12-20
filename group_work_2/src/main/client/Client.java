@@ -96,8 +96,9 @@ public class Client extends NetworkNode {
 		}
 		/* We should not stop until all responses are received */
 
-		Log.print("Outputstream closed.");
-		closeStream(outputStream);
+		this.send(null, this.outputStream);
+		//Log.print("Outputstream closed.");
+		//closeStream(outputStream);
 
 		try{
 			receiverThread.join();
@@ -124,6 +125,8 @@ public class Client extends NetworkNode {
 	 */
     public void stop() {
         try {
+			outputStream.close();
+			inputStream.close();
             socket.close();
         } catch (IOException e ) {
             System.err.println("IOException - Client.stop()");

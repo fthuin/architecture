@@ -46,6 +46,7 @@ public class Server extends NetworkNode {
 					threadSleep(1);
 				}
 			}
+			send( null, outputStream);
 		}
 	});
 
@@ -92,6 +93,8 @@ public class Server extends NetworkNode {
 
     public void stop() {
         try {
+			outputStream.close();
+			inputStream.close();
             socketServer.close();
             socket.close();
         } catch (IOException e) {
