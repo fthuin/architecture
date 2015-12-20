@@ -28,6 +28,7 @@ public abstract class NetworkNode {
             Log.error("NetworkNode send() - The object does not implement java.io.Serializable.");
         } catch (IOException e) {
             Log.error("NetworkNode send() - I/O error on the OutputStream.");
+            e.printStackTrace();
         }
     }
 
@@ -48,6 +49,7 @@ public abstract class NetworkNode {
             Log.error("NetworkNode receive() : Primitive data was found in the stream instead of objects.");
         } catch(IOException e) {
             Log.error("NetworkNode receive() : Input/Output related exceptions");
+            e.printStackTrace();
         }
 
         return result;

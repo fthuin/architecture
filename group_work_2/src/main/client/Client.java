@@ -50,7 +50,6 @@ public class Client extends NetworkNode {
 			while (i < NUMBER_REQUESTS) {
 				Request response = receive(inputStream);
 				if (response == null) {
-					allResponsesReceived = true;
 					break;
 				}
 				System.out.println("Received Reponse from server for request " + response.getId());
