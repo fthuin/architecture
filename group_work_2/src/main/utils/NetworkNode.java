@@ -112,9 +112,9 @@ public abstract class NetworkNode {
         return oos;
     }
 
-    public void threadSleep(long seconds) {
+    public void threadSleep(long milliseconds) {
         try {
-            Thread.sleep(seconds*1000);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException e){
             System.err.println("Error - Client threadSleep() - thread was interrupted.");
             e.printStackTrace();

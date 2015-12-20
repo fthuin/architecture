@@ -2,7 +2,6 @@ package launcher;
 
 import client.*;
 import server.*;
-import com.google.common.base.Joiner;
 import java.lang.Thread;
 import java.lang.IndexOutOfBoundsException;
 
@@ -52,7 +51,7 @@ public class Main {
         server.stop();
     }
     else if (type.equals(TYPE_CLIENT)) {
-        Client client = new Client(serverAddr, port);
+        SimpleClient client = new SimpleClient(serverAddr, port);
         client.start();
         client.stop();
     }

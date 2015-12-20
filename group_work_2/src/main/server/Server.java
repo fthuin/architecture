@@ -43,7 +43,7 @@ public class Server extends NetworkNode {
 				}
 				else {
 					Log.print("Buffer is empty... Sleeping for a second.");
-					threadSleep(1);
+					threadSleep(20);
 				}
 			}
 			send( null, outputStream);

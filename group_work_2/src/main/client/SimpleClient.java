@@ -25,10 +25,10 @@ import utils.RandomGenerator;
 import utils.Request;
 
 /**
-	This class contains the implementation of a Client that can send matrices
+	This class contains the implementation of a SimpleClient that can send matrices
 	to a server in order to calculate a function on it.
  */
-public class Client extends NetworkNode {
+public class SimpleClient extends NetworkNode {
 
 	private Socket socket = null;
 
@@ -38,32 +38,14 @@ public class Client extends NetworkNode {
     private ObjectOutputStream outputStream = null;
 	private double RATE = 3d;
 
-	private boolean allResponsesReceived = false;
-
 	private int NUMBER_REQUESTS = 50;
-
-	/* Thread that handles responses from the server */
-	private Thread receiverThread = new Thread(new Runnable() {
-		public void run() {
-			int i = 0;
-			inputStream = getSocketInputStream(socket);
-			while (i < NUMBER_REQUESTS) {
-				Request response = receive(inputStream);
-				if (response == null) {
-					break;
-				}
-				System.out.println("Received response from server for request " + response.getId());
-				i++;
-			}
-		}
-	});
 
 	/**
 		Constructor
 		@addr : The address of the server
 		@port : The port of the server
 	 */
-    public Client(String addr, String port) {
+    public SimpleClient(String addr, String port) {
 		this.setPort(port);
         this.setServerAddress(addr);
     }
@@ -72,51 +54,33 @@ public class Client extends NetworkNode {
 		try {
 			this.socket = new Socket(address, port);
 		} catch (IOException e) {
-			Log.error("Client initializeSocket() - I/O error occured when creating the socket.");
+			Log.error("SimpleClient initializeSocket() - I/O error occured when creating the socket.");
 		} catch (IllegalArgumentException e) {
-			Log.error("Client initializeSocket() - The port is outside the range of valid port values (0-65535)");
+			Log.error("SimpleClient initializeSocket() - The port is outside the range of valid port values (0-65535)");
 		} catch (NullPointerException e) {
-			Log.error("Client initializeSocket() - The address is null");
+			Log.error("SimpleClient initializeSocket() - The address is null");
 		}
 	}
 
 	public void start() {
-        Log.print("Client - start");
+        Log.print("SimpleClient - start");
 
         this.initializeSocket(this.serverAddress, this.getPort());
         outputStream = getSocketOutputStream(socket);
-		receiverThread.start();
+        inputStream = getSocketInputStream(socket);
 		int i = 0;
 		Log.print("Beginning sending request");
 
 		while ( i < NUMBER_REQUESTS ) {
-			loadGenerator();
+			this.send( createRequest() , this.outputStream );
 			Log.print("Sending Request number #" + requestID);
+            Request response = receive(inputStream);
+            System.out.println("Received response from server for request " + response.getId());
 			i++;
 		}
-		/* We should not stop until all responses are received */
 
-		this.send(null, this.outputStream);
-		//Log.print("Outputstream closed.");
-		//closeStream(outputStream);
-
-		try{
-			receiverThread.join();
-		} catch (InterruptedException e){
-			Log.error("Unable to join receiving thread");
-		}
+        this.send(null, this.outputStream);
 	}
-
-	//FIXME Move in an other class
-	public void loadGenerator(){
-			Random gen = new Random();
-			double d = gen.nextDouble();
-			double interTime = Math.log(1d-d)/(-RATE);
-			System.out.println("Waiting for "+interTime+" seconds");
-			this.threadSleep((long)interTime);
-			this.send( createRequest() , this.outputStream );
-	}
-
 
 	@Override
 	/**
@@ -129,10 +93,10 @@ public class Client extends NetworkNode {
 			inputStream.close();
             socket.close();
         } catch (IOException e ) {
-            System.err.println("IOException - Client.stop()");
+            System.err.println("IOException - SimpleClient.stop()");
             e.printStackTrace();
         }
-		Log.print("Client stop()");
+		Log.print("SimpleClient stop()");
     }
 
 	/**
@@ -144,7 +108,7 @@ public class Client extends NetworkNode {
 		RandomGenerator builder = new RandomGenerator();
 		builder.fillMatrix();
 		Matrix matrix = builder.generate();
-		return new Request(requestID++, i, matrix);
+		return new Request(++requestID, i, matrix);
 	}
 
 	/**
@@ -154,7 +118,7 @@ public class Client extends NetworkNode {
 		try {
 			this.serverAddress = InetAddress.getByName(address);
 		} catch (UnknownHostException e) {
-			System.err.println("Error - Client setServerAddress() - no IP address for the host could be found. Exiting...");
+			Log.error("SimpleClient setServerAddress() - no IP address for the host could be found. Exiting...");
 			System.exit(-1);
 		}
 	}
