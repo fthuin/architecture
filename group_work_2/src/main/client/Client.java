@@ -100,13 +100,12 @@ public class Client extends NetworkNode {
 	}
 
 	//FIXME Move in an other class
-	//http://stackoverflow.com/questions/2106503/pseudorandom-number-generator-exponential-distribution
 	public void loadGenerator(){
 			Random gen = new Random();
 			double d = gen.nextDouble();
 			double interTime = Math.log(1d-d)/(-RATE);
 			System.out.println("Waiting for "+interTime+" seconds");
-			this.threadSleep((long)interTime*1000);
+			this.threadSleep((long)interTime);
 			this.send( createRequest() , this.outputStream );
 	}
 
@@ -163,7 +162,6 @@ public class Client extends NetworkNode {
 		Generates a randomly-sized Request
 	 */
 	public Request createRequest(){
-		//FIXME Randdom for the power
 		int i = 5;
 		//Use RandomGenerator(int s) to force the size of the generated matrix
 		RandomGenerator builder = new RandomGenerator();

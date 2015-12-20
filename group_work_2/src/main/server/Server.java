@@ -69,7 +69,7 @@ public class Server {
 			int i = 1;
 			while(true) {
             	Request r = (Request) inputStream.readObject();
-				System.out.println("Number of request received: "+i);
+				System.out.println("Number of request received: "+i+" RequestID:"+ r.getId());
 				if(!buffer.add(r)){
 					System.out.println("Buffer is full");
 				}
