@@ -5,8 +5,10 @@ import java.util.Random;
 
 public class Matrix implements Serializable {
     private Double[][] matrix;
+    private int size;
 
     public Matrix(int size) {
+        this.size = size;
         Double[][] res= new Double[size][size];
         for(int i = 0; i< size;i++ ){
             for(int j = 0; j < size;j++){
@@ -56,6 +58,9 @@ public class Matrix implements Serializable {
         return res;
     }
 
+    public int getSize() {
+        return this.size;
+    }
 
     public String toString() {
         String s ="";
