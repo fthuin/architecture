@@ -23,6 +23,7 @@ import utils.Matrix;
 import utils.NetworkNode;
 import utils.RandomGenerator;
 import utils.Request;
+import utils.ResultWriter;
 
 /**
 	This class contains the implementation of a LoadGenerator that can send matrices
@@ -38,6 +39,8 @@ public class LoadGenerator extends NetworkNode {
     private ObjectOutputStream outputStream = null;
 	private double RATE = 3d;
 
+	private static final String TEST_RESULT = "loadgenerator_result.csv";
+
 	private boolean allResponsesReceived = false;
 
 	private int NUMBER_REQUESTS = 50;
@@ -52,6 +55,7 @@ public class LoadGenerator extends NetworkNode {
 				if (response == null) {
 					break;
 				}
+				ResultWriter.write(response, TEST_RESULT);
 				System.out.println("Received response from server for request " + response.getId());
 				i++;
 			}

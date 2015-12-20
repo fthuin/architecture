@@ -23,6 +23,7 @@ import utils.Matrix;
 import utils.NetworkNode;
 import utils.RandomGenerator;
 import utils.Request;
+import utils.ResultWriter;
 
 /**
 	This class contains the implementation of a SimpleClient that can send matrices
@@ -31,6 +32,8 @@ import utils.Request;
 public class SimpleClient extends NetworkNode {
 
 	private Socket socket = null;
+
+	private static String FILE_RESULT = "simpleclient_result.csv";
 
 	private int requestID = 0;
     private InetAddress serverAddress = null;
@@ -75,6 +78,7 @@ public class SimpleClient extends NetworkNode {
 			this.send( createRequest() , this.outputStream );
 			Log.print("Sending Request number #" + requestID);
             Request response = receive(inputStream);
+			ResultWriter.write(response, FILE_RESULT);
             System.out.println("Received response from server for request " + response.getId());
 			i++;
 		}

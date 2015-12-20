@@ -10,13 +10,13 @@ import utils.Log;
 
 public class ResultWriter {
 
-    private static final String RESULT_FILENAME = "res.csv";
-
-    public void write(Request r) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("myfile.txt", true)))) {
+    public static void write(Request r, String filename) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)))) {
             out.write(""+r.getMatrix().getSize() + ",");
             out.write(""+r.getNetworkTime() + ",");
             out.write(""+r.getCalculationTime() + "\n");
+            out.flush();
+            out.close();
         } catch (IOException e) {
             Log.error("ResultWriter write() - I/O error.");
         }
