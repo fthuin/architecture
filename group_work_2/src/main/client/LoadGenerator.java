@@ -64,6 +64,7 @@ public class LoadGenerator extends NetworkNode {
 				System.out.println("Received response from server for request " + response.getId());
 				i++;
 			}
+			Log.print("Response rate : " + ((double)i/(double)NUMBER_REQUESTS));
 		}
 	});
 

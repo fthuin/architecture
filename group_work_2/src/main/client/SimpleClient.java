@@ -43,7 +43,7 @@ public class SimpleClient extends NetworkNode {
     private ObjectOutputStream outputStream = null;
 	private double RATE = 3d;
 
-	private int NUMBER_REQUESTS = 50;
+	private int NUMBER_REQUESTS = 5000;
 
 	/**
 		Constructor
