@@ -47,6 +47,7 @@ public class SimpleServer extends NetworkNode {
 					Request dataToSend = r;
 					dataToSend.setMatrix(response);
 					dataToSend.setServerSendingTimeStamp(new DateTime());
+					Log.print("Sending request #" + r.getId());
 					send( dataToSend , outputStream);
 					r = null;
 					sleepTime /= 2;
