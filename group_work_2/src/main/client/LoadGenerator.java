@@ -62,6 +62,7 @@ public class LoadGenerator extends NetworkNode {
 				response.setClientReceivingTimeStamp(new DateTime());
 				ResultWriter.write(response, TEST_RESULT);
 				System.out.println("Received response from server for request " + response.getId());
+				response = null;
 				i++;
 			}
 			Log.print("Response rate : " + ((double)i/(double)NUMBER_REQUESTS));
@@ -127,6 +128,7 @@ public class LoadGenerator extends NetworkNode {
 			Request r = createRequest();
 			r.setClientSendingTimeStamp(new DateTime());
 			this.send( r , this.outputStream );
+			r = null;
 	}
 
 

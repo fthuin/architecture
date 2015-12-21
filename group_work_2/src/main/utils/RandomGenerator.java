@@ -3,8 +3,8 @@ package utils;
 import java.util.Random;
 
 public class RandomGenerator{
-    public static int MAX_SIZE = 100;
-    public static int MIN_SIZE = 50;
+    public static int MAX_SIZE = 400;
+    public static int MIN_SIZE = 20;
     private Double[][] matrix;
     private int size;
     public RandomGenerator(){
@@ -15,7 +15,9 @@ public class RandomGenerator{
      }
 
      public RandomGenerator(int difficulty){
-        matrix = new Double[difficulty][difficulty];
+        this.matrix = new Double[difficulty][difficulty];
+        System.out.println("Taille de la matrice créée : " + difficulty);
+        this.size = difficulty;
      }
 
     public RandomGenerator fillMatrix(){

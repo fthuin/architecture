@@ -43,7 +43,7 @@ public class SimpleClient extends NetworkNode {
     private ObjectOutputStream outputStream = null;
 	private double RATE = 3d;
 
-	private int NUMBER_REQUESTS = 5000;
+	private int NUMBER_REQUESTS = 500;
 
 	/**
 		Constructor
@@ -73,11 +73,11 @@ public class SimpleClient extends NetworkNode {
         this.initializeSocket(this.serverAddress, this.getPort());
         outputStream = getSocketOutputStream(socket);
         inputStream = getSocketInputStream(socket);
-		int i = 0;
+		int i = 1;
 		Log.print("Beginning sending request");
 
 		while ( i < NUMBER_REQUESTS ) {
-			Request r = createRequest();
+			Request r = createRequest(i);
 			r.setClientSendingTimeStamp(new DateTime());
 			this.send( r , this.outputStream );
 			Log.print("Sending Request number #" + requestID);
@@ -86,6 +86,7 @@ public class SimpleClient extends NetworkNode {
 			response.setClientReceivingTimeStamp(new DateTime());
             System.out.println("Received response from server for request " + response.getId());
 			i++;
+			r = null;
 		}
 
         this.send(null, this.outputStream);
@@ -115,6 +116,18 @@ public class SimpleClient extends NetworkNode {
 		int i = 5;
 		//Use RandomGenerator(int s) to force the size of the generated matrix
 		RandomGenerator builder = new RandomGenerator();
+		builder.fillMatrix();
+		Matrix matrix = builder.generate();
+		return new Request(++requestID, i, matrix);
+	}
+
+	/**
+		Generates a randomly-sized Request
+	 */
+	public Request createRequest(int size){
+		int i = 5;
+		//Use RandomGenerator(int s) to force the size of the generated matrix
+		RandomGenerator builder = new RandomGenerator(size);
 		builder.fillMatrix();
 		Matrix matrix = builder.generate();
 		return new Request(++requestID, i, matrix);

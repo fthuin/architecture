@@ -47,6 +47,7 @@ public class SimpleServer extends NetworkNode {
 					dataToSend.setMatrix(response);
 					dataToSend.setServerSendingTimeStamp(new DateTime());
 					send( dataToSend , outputStream);
+					r = null;
 				}
 				else {
 					Log.print("Buffer is empty... Sleeping for a second.");
@@ -90,6 +91,7 @@ public class SimpleServer extends NetworkNode {
 				Log.print("Buffer is full");
 			}
 
+			r = null;
 			i++;
 		}
 		try{
