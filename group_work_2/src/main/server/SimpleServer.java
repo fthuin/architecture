@@ -53,7 +53,7 @@ public class SimpleServer extends NetworkNode {
 				}
 				else {
 					Log.print("Buffer is empty... Sleeping for "+sleepTime+" milliseconds.");
-					sleepTime += 40;
+					sleepTime += 100;
 					threadSleep(sleepTime);
 				}
 			}

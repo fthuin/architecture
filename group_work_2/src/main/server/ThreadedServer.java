@@ -90,7 +90,7 @@ public class ThreadedServer extends NetworkNode {
 				if (receiveFinished) {
 					break;
 				}
-				sleepTime += 20;
+				sleepTime += 100;
 				Log.print("Buffer is empty... Sleeping for a second.");
 				threadSleep(sleepTime);
 			}
