@@ -24,7 +24,7 @@ public abstract class NetworkNode {
         try {
             outputStream.writeObject(r);
             numberSend++;
-            if (numberSend % 100 == 0) {
+            if (numberSend % 40 == 0) {
                 outputStream.reset();
             }
             outputStream.flush();
