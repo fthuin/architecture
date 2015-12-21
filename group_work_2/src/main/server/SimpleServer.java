@@ -52,8 +52,8 @@ public class SimpleServer extends NetworkNode {
 					sleepTime /= 2;
 				}
 				else {
-					Log.print("Buffer is empty... Sleeping for a second.");
-					sleepTime += 20;
+					Log.print("Buffer is empty... Sleeping for "+sleepTime+" milliseconds.");
+					sleepTime += 40;
 					threadSleep(sleepTime);
 				}
 			}

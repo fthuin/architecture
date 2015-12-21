@@ -18,10 +18,15 @@ import utils.Log;
 public abstract class NetworkNode {
 
     private int port = -1;
+    private volatile int numberSend = 0;
 
     public synchronized void send(Request r, ObjectOutputStream outputStream) {
         try {
             outputStream.writeObject(r);
+            numberSend++;
+            if (numberSend % 100 == 0) {
+                outputStream.reset();
+            }
             outputStream.flush();
         } catch (InvalidClassException e) {
             Log.error("NetworkNode send() - Something is wrong with a class used by serialization.");
