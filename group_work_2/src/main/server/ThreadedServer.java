@@ -28,7 +28,7 @@ public class ThreadedServer extends NetworkNode {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 	private int BUFFER_SIZE = 5;
-	private Buffer<Request> buffer = new Buffer<>(BUFFER_SIZE);
+	private Buffer<Request> buffer = new Buffer<Request>(BUFFER_SIZE);
 	private boolean receiveFinished = false;
 
     private int nbrThread;
@@ -38,7 +38,7 @@ public class ThreadedServer extends NetworkNode {
     public ThreadedServer(String port, int nbrThread) {
         this.setPort(port);
         this.nbrThread = nbrThread;
-        this.pool = new ArrayList<>(this.nbrThread);
+        this.pool = new ArrayList<Thread>(this.nbrThread);
     }
 
     public void initiatePool(){
@@ -80,6 +80,7 @@ public class ThreadedServer extends NetworkNode {
     };
 
 	public synchronized Request checkBuffer() {
+		long sleepTime = 0;
 		while (true) {
 			if ( ! buffer.isEmpty() ) {
 				Request r = buffer.remove();
@@ -89,8 +90,9 @@ public class ThreadedServer extends NetworkNode {
 				if (receiveFinished) {
 					break;
 				}
+				sleepTime += 20;
 				Log.print("Buffer is empty... Sleeping for a second.");
-				threadSleep(1000);
+				threadSleep(sleepTime);
 			}
 		}
 		return null;
