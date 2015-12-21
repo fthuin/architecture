@@ -22,21 +22,22 @@ public class SimpleServer extends NetworkNode {
 
 	private ServerSocket socketServer = null;
 	private Socket socket = null;
-    private ObjectInputStream inputStream = null;
-    private ObjectOutputStream outputStream = null;
+	private ObjectInputStream inputStream = null;
+	private ObjectOutputStream outputStream = null;
 	private int BUFFER_SIZE = 5;
-	private Buffer<Request> buffer = new Buffer<>(BUFFER_SIZE);
+	private Buffer<Request> buffer = new Buffer<Request>(BUFFER_SIZE);
 	private boolean receiveFinished = false;
 
 	private long computeTime = 0L;
 
-    public SimpleServer(String port) {
-        this.setPort(port);
-    }
+	public SimpleServer(String port) {
+		this.setPort(port);
+	}
 
 	private Thread t = new Thread(new Runnable() {
 		public void run() {
 			outputStream = getSocketOutputStream(socket);
+			int sleepTime = 0;
 			while (! receiveFinished || ! buffer.isEmpty() ) {
 				if ( ! buffer.isEmpty() ) {
 					Request r = buffer.remove();
@@ -47,10 +48,12 @@ public class SimpleServer extends NetworkNode {
 					dataToSend.setMatrix(response);
 					dataToSend.setServerSendingTimeStamp(new DateTime());
 					send( dataToSend , outputStream);
+					sleepTime /= 2;
 				}
 				else {
 					Log.print("Buffer is empty... Sleeping for a second.");
-					threadSleep(1000);
+					sleepTime += 20;
+					threadSleep(sleepTime);
 				}
 			}
 			send( null, outputStream);
