@@ -10,6 +10,7 @@ import java.io.EOFException;
 import java.lang.Thread;
 
 import utils.Buffer;
+import utils.PriorityBuffer;
 import utils.Log;
 import utils.Matrix;
 import utils.NetworkNode;
@@ -25,7 +26,7 @@ public class SimpleServer extends NetworkNode {
 	private ObjectInputStream inputStream = null;
 	private ObjectOutputStream outputStream = null;
 	private int BUFFER_SIZE = 1000;
-	private Buffer<Request> buffer = new Buffer<Request>(BUFFER_SIZE);
+	private PriorityBuffer<Request> buffer = new PriorityBuffer<Request>(BUFFER_SIZE);
 	private boolean receiveFinished = false;
 
 	private long computeTime = 0L;
