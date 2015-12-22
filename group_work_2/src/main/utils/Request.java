@@ -1,12 +1,12 @@
 package utils;
 
 import java.io.Serializable;
-
+import java.lang.Comparable;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
-public class Request implements Serializable {
+public class Request implements Serializable,Comparable<Request> {
 
     private int id;
     private int exposant;
@@ -87,5 +87,15 @@ public class Request implements Serializable {
         Interval requestInterval = new Interval(clientSendingTimeStamp, serverReceivingTimeStamp);
         Interval responseInterval = new Interval(serverSendingTimeStamp, clientReceivingTimeStamp);
         return requestInterval.toDuration().getMillis() + responseInterval.toDuration().getMillis();
+    }
+
+
+    public int compareTo(Request r){
+        if(r.getMatrix().getSize()>matrix.getSize())
+            return -1;
+        else if (r.getMatrix().getSize()<matrix.getSize()) {
+            return 1;
+        } else
+            return 0;
     }
 }

@@ -64,10 +64,8 @@ public class ThreadedServer extends NetworkNode {
 
     Runnable fetchBuffer = new Runnable(){
         public void run(){
-
-            while (! receiveFinished || ! buffer.isEmpty() ) {
-				Request r = checkBuffer();
-				if (r == null) break;
+			Request r;
+            while ((r=buffer.take()) != null ) {
 				Log.print("Processing Request: "+r.getId());
 				Matrix response = compute(r);
 				Request dataToSend = r;
@@ -79,24 +77,6 @@ public class ThreadedServer extends NetworkNode {
         }
     };
 
-	public synchronized Request checkBuffer() {
-		long sleepTime = 0;
-		while (true) {
-			if ( ! buffer.isEmpty() ) {
-				Request r = buffer.remove();
-				return r;
-			}
-			else {
-				if (receiveFinished) {
-					break;
-				}
-				sleepTime += 100;
-				Log.print("Buffer is empty... Sleeping for a second.");
-				threadSleep(sleepTime);
-			}
-		}
-		return null;
-	}
 
 
 

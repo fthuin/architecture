@@ -38,9 +38,8 @@ public class SimpleServer extends NetworkNode {
 		public void run() {
 			outputStream = getSocketOutputStream(socket);
 			int sleepTime = 0;
-			while (! receiveFinished || ! buffer.isEmpty() ) {
-				if ( ! buffer.isEmpty() ) {
-					Request r = buffer.remove();
+			Request r;
+			while ((r=buffer.take()) !=null) {
 					long startComputeTime = computeTime;
 					Matrix response = compute( r.getMatrix() , r.getExposant() );
 					r.setCalculationTime(computeTime - startComputeTime);
@@ -49,17 +48,10 @@ public class SimpleServer extends NetworkNode {
 					dataToSend.setServerSendingTimeStamp(new DateTime());
 					Log.print("Sending request #" + r.getId());
 					send( dataToSend , outputStream);
-					r = null;
-					sleepTime /= 2;
-				}
-				else {
-					Log.print("Buffer is empty... Sleeping for "+sleepTime+" milliseconds.");
-					sleepTime += 100;
-					threadSleep(sleepTime);
-				}
 			}
 			send( null, outputStream);
 		}
+
 	});
 
 

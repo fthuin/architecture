@@ -23,6 +23,7 @@ public class Matrix implements Serializable {
         this.matrix = mat;
     }
 
+
     /* Source : http://stackoverflow.com/questions/17623876/matrix-multiplication-using-arrays */
     public Double[][] multiplicar(Double[][] a, Double[][] b) {
         int aRows = a.length;

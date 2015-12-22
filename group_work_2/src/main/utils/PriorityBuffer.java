@@ -1,13 +1,11 @@
 package utils;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.PriorityBlockingQueue;
 
-public class Buffer<E> extends LinkedBlockingDeque<E> {
-	private int size = 50;
+public class PriorityBuffer<E> extends PriorityBlockingQueue<E>{
+    private int size = 50;
 
-	public Buffer(int size) {
+	public PriorityBuffer(int size) {
 		super();
   		this.size = size;
 	}
