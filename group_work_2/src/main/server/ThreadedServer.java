@@ -65,7 +65,8 @@ public class ThreadedServer extends NetworkNode {
     Runnable fetchBuffer = new Runnable(){
         public void run(){
 			Request r;
-            while ((r=buffer.take()) != null ) {
+			try{
+				while ((r=buffer.take()) != null ) {
 				Log.print("Processing Request: "+r.getId());
 				Matrix response = compute(r);
 				Request dataToSend = r;
@@ -74,6 +75,10 @@ public class ThreadedServer extends NetworkNode {
 				Log.print("Sending Response: "+r.getId());
 				send( dataToSend , outputStream);
             }
+		} catch (InterruptedException e){
+			Log.error("Interrupted while waiting");
+		}
+
         }
     };
 
