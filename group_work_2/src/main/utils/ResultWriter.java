@@ -16,7 +16,7 @@ public class ResultWriter {
             out.write(""+r.getMatrix().getSize() + "\t");
             out.write(""+r.getNetworkTime()/1000.0 + "\t");
             out.write(""+r.getCalculationTime()/1000000000.0 + "\t");
-            out.write(""+r.getWaitingTime()/1000000000.0 + "\n");
+            out.write(""+r.getWaitingTime()/1000.0 + "\n");
             out.flush();
         } catch (IOException e) {
             Log.error("ResultWriter write() - I/O error.");
