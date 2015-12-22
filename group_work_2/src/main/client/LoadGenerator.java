@@ -41,13 +41,13 @@ public class LoadGenerator extends NetworkNode {
     private InetAddress serverAddress = null;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-	private double RATE = 3d;
+	private double RATE = 0.3d;
 
-	private static final String TEST_RESULT = "loadgenerator_result.csv";
+	private static final String TEST_RESULT = "loadgenerator_result_0.3d.csv";
 
 	private boolean allResponsesReceived = false;
 
-	private int NUMBER_REQUESTS = 50;
+	private int NUMBER_REQUESTS = 500;
 
 	/* Thread that handles responses from the server */
 	private Thread receiverThread = new Thread(new Runnable() {
