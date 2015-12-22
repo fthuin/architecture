@@ -67,6 +67,7 @@ public class ThreadedServer extends NetworkNode {
 			Request r;
 			try{
 				while ((r=buffer.take()) != null ) {
+				r.setServerProcessingTimeStamp(new DateTime());
 				Log.print("Processing Request: "+r.getId());
 				Matrix response = compute(r);
 				Request dataToSend = r;
