@@ -13,6 +13,7 @@ public class Request implements Serializable,Comparable<Request> {
     private Matrix matrix;
     private DateTime clientSendingTimeStamp;
     private DateTime serverReceivingTimeStamp;
+    private DateTime serverProcessingTimeStamp;
     private DateTime serverSendingTimeStamp;
     private DateTime clientReceivingTimeStamp;
     private long calculationTime;
@@ -75,12 +76,21 @@ public class Request implements Serializable,Comparable<Request> {
         clientReceivingTimeStamp = dt;
     }
 
+    public void setServerProcessingTimeStamp(DateTime dt) {
+        serverProcessingTimeStamp = dt;
+    }
+
     public DateTime getClientReceivingTimeStamp(){
         return clientReceivingTimeStamp;
     }
 
     public void setCalculationTime(long l){
         calculationTime = l;
+    }
+
+    public long getWaitingTime() {
+        Interval waitingInterval = new Interval(serverReceivingTimeStamp, serverProcessingTimeStamp);
+        return waitingInterval.toDuration().getMillis();
     }
 
     public long getNetworkTime() {
