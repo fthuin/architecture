@@ -1,15 +1,15 @@
 \section{Description of the server}
 \label{sec:Description of the server}
 
-We implemented our server in Java. Our server receives request and if it is busy proccessing one,
-coming request will be added to the queue and proccessed later. The server can be either
-single threaded (SimpleServer.java) meaning that it can only process one request at a time. Or
-it can use multiple thread(ThreadedServer.java) to process several requests at the same time.
+We implemented our project in Java. Our server receives requests and if it is busy proccessing one,
+arriving requests will be added to a queue to be proccessed later. The server can be either
+single threaded (\verb#SimpleServer.java#) meaning that it can only process one request at a time, either it can use multiple threads (\verb#ThreadedServer.java#) to process several requests at the same time.
 
 \subsection{Computation performed by the server}
 \label{sub:Computation performed by the server}
-The computation performed by the server consist of calculating the power of a
-two-dimensional Matrix $M$ powered by a natural $p$.
+
+The computation performed by the server consists of calculating the power of a
+two-dimensional matrix $M$ powered by a natural $p$.
 
 \subsection{Request and response format}
 \label{sub:Request and response format}
@@ -17,7 +17,7 @@ two-dimensional Matrix $M$ powered by a natural $p$.
 Each client request contains the matrix and the exposant. To achieve the
 measurement that were asked, we added some fields to the request to get
 some information such as computation time and and response time. We also
-give an identifier to a request to make a mapping between request and response.
+gave an identifier to a request to make a mapping between request and response.
 
 \section{Description of the measurement setup}
 \label{sec:Description of the measurement setup}
@@ -48,9 +48,8 @@ installed). \newline
 
 \subsection{Description of the load generator}
 \label{sub:Description of the load generator}
-We implemented a LoadGenerator to simulate the behavior of many independent
-clients. The LoadGenerator uses the inversion method to generate exponentiallly
-distributed randoms numbers to create inter-request times.
+
+We implemented a load generator (\verb#LoadGenerator.java#) to simulate the behavior of many independent clients. The LoadGenerator uses the inversion method to generate exponentiallly distributed randoms numbers to create inter-request times.
 
 \section{Measurements and modeling}
 \label{sec:Measurements and modeling}
@@ -60,10 +59,7 @@ distributed randoms numbers to create inter-request times.
 
 The figure~\ref{fig:measurement1} shows the evolution of the average time needed
 according to size-changing matrices. For the lower sized matrices, the network
-time is the most impactful factor on the average time because the server needs a negligible time
-to process the matrix. Furthermore, the request contained much more information than the matrix
-(because we used timestamp and other information) so the ratio between the total size of the request
-and the ''real content'' size (size of the matrix) is low at beginning and increases as the matrix grows.
+time is the most impactful factor on the average time because the server needs a negligible time to process the matrix. Furthermore, the request contained much more information than the matrix (because we used timestamp and other information) so the ratio between the total size of the request and the \enquote{real content} size (size of the matrix) is low at beginning and increases as the matrix grows.
 
 \begin{figure}[!ht]
     \centering
@@ -75,21 +71,17 @@ and the ''real content'' size (size of the matrix) is low at beginning and incre
 \subsection{Measurement of the load generator}
 \label{sub:Measurement of the load generator}
 
-The figure~\ref{fig:histocpu} shows the average CPU load for different request rate. As one could
-expect, when the request rate increases the average CPU load increases too. One thing important
-on this figure concerns the CPU load for request rate superior to 0.5. Indeed, we can see that the
-CPU load exceeds the 100\%\footnote{the top command express CPU load on one CPU even if multiple
-CPU are runnning}. This suggest that when the arrival rate exceeds 0.5, the server has an hard time
-processing the incoming request. 
+The figure~\ref{fig:histocpu} shows the average CPU load for different request rate. As one could expect, when the request rate increases the average CPU load increases too. One thing important on this figure concerns the CPU load for request rate superior to 0.5. Indeed, we can see that the CPU load exceeds the 100\%\footnote{the top command express CPU load on one CPU even if multiple CPU are runnning}. This suggests that when the arrival rate exceeds 0.5, the server has an hard time processing the incoming request. \newline
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{cpu_load.png}
     \caption{Histogram of the CPU load for multiple arrival rates}
     \label{fig:histocpu}
 \end{figure}
-The figure~\ref{fig:histonetwork} shows the network load for different request rate. We can see that
-network load does not differ much. This happens simply because we have done our measuremnt with the
-LoadGenerator sending 500 requests of variying size with different request rate so it's understandable to have the network load around 290 MB for each rate.
+
+The figure~\ref{fig:histonetwork} shows the network load for different request rate. We can see that network load does not differ much. This happens simply because we have done our measuremnt with the LoadGenerator sending 500 requests of variying size with different request rate. The global size of 500 requests with a random size between 150 and 250 is around 290 MB for each rate. After all the tests were made we thought that it would be good to set a time limit instead of an amount limit but we didn't had time to repeat all the tests. \newline
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{network_load.png}
@@ -97,13 +89,9 @@ LoadGenerator sending 500 requests of variying size with different request rate 
     \label{fig:histonetwork}
 \end{figure}
 
-The figure~\ref{fig:historesponse} shows the average response time for several arrival rates.
-We can notice on this figure, that the average response time skyrockets between arrival rate
-0.5 and arrival rate 0.7 . The reason of this phenomenon is explained in the following section but
-it's the average waiting time that has a the most impact on the response time. Request arrives too fast
-for the server, so they keep being accumulating in the queuing making them wait for a longer period
-of time. Which means that one bottleneck is that with only a single thread of the server does 
-not compute fast enough incoming request such that they pile up.
+The figure~\ref{fig:historesponse} shows the average response time for several arrival rates. We can notice on this figure, that the average response time skyrockets between arrival rate 0.5 and arrival rate $0.7$. The reason of this phenomenon is explained in the following section but it's the average waiting time that has the most impact on the response time. Request arrives too quickly
+for the server, so they keep being accumulating in the queuing making them wait for a longer period of time. Which means that one bottleneck is that with only a single thread of the server does not compute fast enough incoming request such that they pile up. Other bottlenecks will be discussed later (see  \ref{subs:Bottlenecks})
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{responsetime.png}
@@ -113,11 +101,12 @@ not compute fast enough incoming request such that they pile up.
 
 \subsection{Queueing station model}
 \label{sub:Queueing station model}
+
 For our queueing station model, we used an \texttt{M/M/1} queue. For each
-arrival rate($\lambda$) and service rate($\mu$), we computed the
-average response time and the average waiting time in the queue. The queue 
-scheduling is \textit{First-Come-First-Served}Notice that
-every value expressed in the tables below are in second.
+arrival rate ($\lambda$) and service rate ($\mu$), we computed the
+average response time and the average waiting time in the queue. The queue
+scheduling is \textit{First-Come-First-Served}. Notice that
+every value expressed in the tables below are in seconds.
 
 
 \begin{minipage}{\linewidth}
@@ -300,27 +289,15 @@ every value expressed in the tables below are in second.
     \bigskip
 \end{minipage}
 
-As we can see, the model performs quite well for $\lambda$ <0.5 . For example, with $\lambda$ = 0.3,
-we obtained an average time spent in the system of 2.9412 second with while the measured value gives us
-2.9605 which is not so far from the value given by the model. When the $\lambda$ value equals 0.5, the
-model does not fit anymore. The average waiting time measured far surpasses the model (almost the
-double). This be can explained, by the fact that the $\lambda$ get closer to the $\mu$ such that more
-request arrives in the queue than the one that leave the queue. This lead to a growing queue so request
-arriving must wait longer.
-
+As we can see, the model performs quite well for $\lambda < 0.5$. For example, with $\lambda$ = 0.3, we obtained an average time spent in the system of 2.9412 seconds while the measured value gives us 2.9605 which is not so far from the value given by the model. When the $\lambda$ value equals 0.5, the model does not fit anymore. The average waiting time measured far surpasses the model (almost the double). This be can explained, by the fact that the $\lambda$ get closer to the $\mu$ such that more request arrives in the queue than the one that leave the queue. This lead to a growing queue so request arriving must wait longer.
 
 \subsection{Improvement of the performance of the system}
 \label{sub:Improvement of the performance of the system}
-The improvement we chose to do is the usage of job priorities. Instead of using a FCFS queue,
-the server uses a priority queue. The queue is sorted in natural order, so requests with the smaller matrix
-are the ones that will be processed first. The figure~\ref{fig:priorityqueue} shows the impact of this
-improvement on the response time(y-axis in log scale).
 
-We can see on this graph that for the lower value of the request rate, the gain is not too much but
-for the upper value it is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average
-response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the
-request rate of 0.9, it goes from 191.15 to 104.448 seconds. So using job priorities seems to have
-some impact on the average response time.
+The improvement we chose to implement is the usage of job priorities. Instead of using a FCFS queue, the server uses a priority queue. The queue is sorted in natural order, so requests with the smaller matrix are the ones that will be processed first. The figure~\ref{fig:priorityqueue} shows the impact of this
+improvement on the response time(y-axis in log scale). \newline
+
+We can see on this graph that for the lower value of the request rate, the gain is not too much but for the upper value it is significant. Indeed, with a request rate of $0.7$, using the simple FCFS queue, average response time was 118.88seconds but with the priority queue it only goes up to $64.539$ seconds. For the request rate of $0.9$, it goes from $191.15$ to $104.448$ seconds. So using job priorities seems to have some impact on the average response time.
 
 \begin{figure}[!ht]
     \centering
@@ -336,13 +313,9 @@ some impact on the average response time.
 
 \subsubsection{Multi-threading and queuing station model}
 \label{subs:Multi-threading and queuing station model}
-The figure~\ref{fig:cpuload_threads} shows the CPU Load for the for different request rate and
-with 3 threads and 4 threads. We can see on the graph that for the three first rate, there is an
-underutilization of the threads meaning that the rate is not high enough to make the server use
-a good percentage of its ressource. But when we get to the upper request rate, the server becomes
-limited and uses all it ressources. And indeed, we can see on the figure~\ref{fig:responsetime_threads}
-that the response time for the upper request rate is much higher than the one for the lower value.
 
+The figure~\ref{fig:cpuload_threads} shows the CPU Load for the for different request rate and with 3 threads and 4 threads. We can see on the graph that for the three first rate, there is an underutilization of the threads meaning that the rate is not high enough to make the server use a good percentage of its ressource. But when we get to the upper request rate, the server becomes
+limited and uses all it ressources. And indeed, we can see on the figure~\ref{fig:responsetime_threads} that the response time for the upper request rate is much higher than the one for the lower value.
 
 \begin{figure}[!ht]
     \centering
@@ -365,10 +338,7 @@ that the response time for the upper request rate is much higher than the one fo
     \label{fig:responsetime_threads}
 \end{figure}
 
-The queuing model we used is a M/M/c where c is either 3 or 4. Scheduling is always FCFS.
-We can see on the table below that the model does not fit at all compare to the measurement.
-This difference could be explained by the fact that the model consider the 3/4 servers as
-independent while it not necessary the case with threads.
+The queuing model we used is a M/M/c where $c$ is either 3 or 4 (we will not show results with 4 threads because results are similar). Scheduling is again FCFS. We can see on the tables below that the model does not fit at all compare to the measurement. This difference could be explained by the fact that the model consider the 3/4 servers as independent while it not necessary the case with threads.
 
 \underline{\textbf{With 3 threads}} :
 
@@ -529,10 +499,4 @@ independent while it not necessary the case with threads.
 In our tests, the two main issues are the performances of the CPU and the Java
 implementation. The CPUs are old and we could have much better performances on
 new-generation CPU (i5, i7 of the 6th generation) but there will always be a
-limit of calculation that will be the bottleneck on a computer not designed to be
-a server. Java isn't the best programming language to run client-server application
-because Threads management and Network management is at high-level programming
-and you can't really decide to improve the performance to solve a particular
-problem (a solution would be to use C to improve the mutual exclusion, choose when to
-free the memory, improve the calculation with specific compilation flags,
-\ldots). \newline
+limit of calculation that will be the bottleneck on a computer not designed to be a server. Java isn't the best programming language to run client-server application because Threads management and Network management is at high-level programming and you can't really decide to improve the performance to solve a particular problem (a solution would be to use C to improve the mutual exclusion, choose when to free the memory, improve the calculation with specific compilation flags, \ldots). \newline
