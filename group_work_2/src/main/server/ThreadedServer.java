@@ -27,7 +27,7 @@ public class ThreadedServer extends NetworkNode {
 	private Socket socket = null;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-	private int BUFFER_SIZE = 5;
+	private int BUFFER_SIZE = 1000;
 	private Buffer<Request> buffer = new Buffer<Request>(BUFFER_SIZE);
 	private boolean receiveFinished = false;
 
