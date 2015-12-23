@@ -1,0 +1,122 @@
+#########################
+# 0.1d			#
+#########################
+
+# Experimental #
+
+Calculation time : 765.784987
+Average calculation time : 1.531699
+Queue time : 115.282
+Average waiting time : 0.23056
+Average time spent in system : 1.762133
+Average CPU load : 20,077%
+
+Mu : 1/1.5315699 = 0.65
+
+# Theory #
+
+Average time spent in system : 1.8182
+Average waiting time : 0.2797
+Average CPU load : 15.38%
+
+#########################
+# 0.2d			#
+#########################
+
+# Experimental #
+
+Calculation time : 758.96718
+Average calculation time : 1.517934
+Queue time : 344.924
+Average waiting time : 0.6898
+Average time spent in system : 2.20778
+Average CPU load : 40.35%
+
+# Theory #
+
+Average time spent in system : 2.2222
+Average waiting time : 0.6838
+Average CPU load : 30.77%
+
+#########################
+# 0.3d			#
+#########################
+
+# Experimental #
+
+Calculation time : 772.9727
+Average calculation time : 1.545945
+Queue time : 707.31
+Average waiting time : 1.41462
+Average time spent in system : 2.9605
+Average CPU load : 61.943%
+
+Mu : 0.64685
+
+# Theory #
+
+Average time spent in system : 2.9412
+Average waiting time : 1.3787
+Average CPU load : 0.4688
+
+#########################
+# 0.4d			#
+#########################
+
+# Experimental #
+
+Calculation time : 727.67711
+Average calculation time : 1.4553542
+Queue time : 1214.914
+Average waiting time : 2.429828
+Average time spent in system : 3.8851
+Average CPU load : 85.47%
+
+# Theory #
+
+Average time spent in system : 3.4843
+Average waiting time : 2.0287
+Average CPU load : 58.22%
+
+#########################
+# 0.5d			#
+#########################
+
+# Experimental #
+
+Calculation time : 709.71048
+Average calculation time : 1.4194
+Queue time : 3427.032
+Average waiting time : 6.854064
+Average CPU load : 105%
+
+Mu : 0.7045
+
+# Theory #
+
+Average time spent in system : 4.902
+Average waiting time : 3.4815
+Average CPU load : 105%
+
+#########################
+# 0.7d			#
+#########################
+
+# Experimental #
+
+Calculation time : 739.24599
+Average calculation time : 1.478491
+Queue time : 58704.59
+Average CPU load : 116.694%
+
+#########################
+# 0.9d			#
+#########################
+
+# Experimental #
+
+Calculation time : 712.9506
+Average calculation time : 1.4259
+Queue time : 94863.47
+Average waiting time : 191.1528
+Average CPU load : 118.325%
