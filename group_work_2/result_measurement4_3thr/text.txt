@@ -1,4 +1,61 @@
 #################
+# 0.3d		#
+#################
+
+# Experimental #
+
+Calculation time : 921.893
+Average calculation time : 1.8437
+Queue time : 23,405
+Average waiting time : 0.0468
+CPU load : 71.5577%
+
+Network Load : 296.65 MB
+
+# Theory #
+
+Average time spent in system : 1.86
+Average waiting time : 0.015
+
+#################
+# 0.5d		#
+#################
+
+# Experimental #
+
+Calculation time : 965.014
+Average calculation time : 1.93 
+Queue time : 205.538
+Average waiting time : 0.411
+CPU load : 143.875%
+
+Network Load : 292.25924 MB
+
+# Theory #
+
+Average time spent in system : 2.0096
+Average waiting time : 0.0791
+
+#################
+# 0.7d		#
+#################
+
+# Experimental #
+
+Calculation time : 952.265
+Average calculation time : 1.904
+Queue time : 282
+Average waiting time : 0.564
+CPU load : 89.50%
+
+Network Load : 296.2241
+
+# Theory #
+
+Average time spent in system : 2.1114
+Average waiting time : 0.2066
+
+#################
 # 1.3d		#
 #################
 
@@ -11,6 +68,12 @@ Average waiting time : 44.02
 CPU load : 317.9537%
 
 Network load : 298.93MB
+
+# Theory #
+
+Average time spent in system : 11.0283
+Average waiting time : 8.8824
+
 
 #################
 # 1.5d		#
