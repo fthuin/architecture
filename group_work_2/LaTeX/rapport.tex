@@ -8,7 +8,7 @@ it can use multiple thread(ThreadedServer.java) to process several requests at t
 
 \subsection{Computation performed by the server}
 \label{sub:Computation performed by the server}
-The compution performed by the server consist of calculating the power of a
+The computation performed by the server consist of calculating the power of a
 two-dimensional Matrix $M$ powered by a natural $p$.
 
 \subsection{Request and response format}
@@ -25,7 +25,7 @@ give an identifier to a request to make a mapping between request and response.
 \subsection{Used hardwares and softwares}
 \label{sub:Used hardwares and softwares}
 
-For our tests, two computer from the Intel room were used (in the Reaumur
+For our tests, two computers from the Intel room were used (in the Reaumur
 building), they have the following specifications :
 
 \begin{tabular}{|l|l|}
@@ -89,7 +89,7 @@ processing the incoming request.
 \end{figure}
 The figure~\ref{fig:histonetwork} shows the network load for different request rate. We can see that
 network load does not differ much. This happens simply because we have done our measuremnt with the
-LoadGenerator sending 500 requests of variying size with different request rate so it's understandable to have the network load around 290 MB for each rate
+LoadGenerator sending 500 requests of variying size with different request rate so it's understandable to have the network load around 290 MB for each rate.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{network_load.png}
@@ -311,13 +311,13 @@ arriving must wait longer.
 
 \subsection{Improvement of the performance of the system}
 \label{sub:Improvement of the performance of the system}
-The improvement we choose to do is the usage of job priorities. Instead of using a FCFS queue,
+The improvement we chose to do is the usage of job priorities. Instead of using a FCFS queue,
 the server uses a priority queue. The queue is sorted in natural order, so requests with the smaller matrix
 are the ones that will be processed first. The figure~\ref{fig:priorityqueue} shows the impact of this
 improvement on the response time(y-axis in log scale).
 
-We can see on this graph that for the lower value of the request rate the time, the gain is not too much but
-for the upper value the is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average
+We can see on this graph that for the lower value of the request rate, the gain is not too much but
+for the upper value it is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average
 response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the
 request rate of 0.9, it goes from 191.15 to 104.448 seconds. So using job priorities seems to have
 some impact on the average response time.
@@ -364,6 +364,11 @@ that the response time for the upper request rate is much higher than the one fo
     \caption{Results of response time of a server with 3 threads (red) and 4 threads (green)}
     \label{fig:responsetime_threads}
 \end{figure}
+
+The queuing model we used is a M/M/c where c is either 3 or 4. Scheduling is always FCFS.
+We can see on the table below that the model does not fit at all compare to the measurement.
+This difference could be explained by the fact that the model consider the 3/4 servers as
+independent while it not necessary the case with threads.
 
 \underline{\textbf{With 3 threads}} :
 
