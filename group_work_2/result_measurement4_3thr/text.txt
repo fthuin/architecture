@@ -1,0 +1,69 @@
+#################
+# 1.3d		#
+#################
+
+# Experimental #
+
+Calculation time : 1072.50
+Average calculation time : 2.1450
+Queue time : 22014
+Average waiting time : 44.02
+CPU load : 317.9537%
+
+Network load : 298.93MB
+
+#################
+# 1.5d		#
+#################
+
+# Experimental #
+
+Calculation time : 1050.5948
+Average calculation time : 2.1011
+Queue time : 38856.82
+Average waiting time : 77.71363
+CPU load : 317.25566%
+
+Network load : 299.18516
+
+#################
+# 1.7d		#
+#################
+
+# Experimental #
+
+Calculation time : 1094.3998
+Average calculation time : 2.18879
+Queue time : 55770.8
+Average waiting time : 111.54
+CPU load : 296.72415%
+
+Network load : 291.8926
+
+#################
+# 1.9d		#
+#################
+
+# Experimental #
+
+Calculation time : 1118.09
+Average calculation time : 2.23618
+Queue time : 54916.2
+Average waiting time : 109.83
+CPU load : 289.19%
+
+Network load : 294.5490
+
+#################
+# 2.1d		#
+#################
+
+# Experimental #
+
+Calculation time : 1054.06
+Average calculation time : 2.108
+Queue time : 53351.796
+Average waiting time : 106.7035
+CPU load : 319.24511%
+
+Network load : 292.23

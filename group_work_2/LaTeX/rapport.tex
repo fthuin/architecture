@@ -36,13 +36,13 @@ building), they have the following specifications :
     Total memory & 3981192 kB \\
     Total swap & 4063228 kB \\
     \hline
-    Ethernet controller: Intel Corporation 82566DM-2 Gigabit Network Connection
+    Ethernet controller & Intel Corporation 82566DM-2 Gigabit Network Connection \\
     \hline
 \end{tabular}
 \bigskip
 
 Those computers run on Linux (centOS distribution) so we used \enquote{top},
-\enquote{htop} and \nequote{grep} to monitor CPU load and \enquote{Wireshark}
+\enquote{htop} and \enquote{grep} to monitor CPU load and \enquote{Wireshark}
 to monitor network usage (because nor \enquote{NetHogs} nor \enquote{iftop} were
 installed). \newline
 
@@ -64,7 +64,7 @@ time is the most impactful factor on the average time. The network time is
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{measurement1.png}
+    \includegraphics[width=0.5\linewidth]{measurement1.png}
     \caption{Measurement of average time needed depending on size-changing matrices}
     \label{fig:measurement1}
 \end{figure}
@@ -72,11 +72,222 @@ time is the most impactful factor on the average time. The network time is
 \subsection{Measurement of the load generator}
 \label{sub:Measurement of the load generator}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{cpu_load.png}
+    \caption{Histogram of the CPU load for multiple arrival rates}
+    \label{fig:histocpu}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{network_load.png}
+    \caption{Histogram of the network load for multiple arrival rates}
+    \label{fig:histonetwork}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{responsetime.png}
+    \caption{Histogram of the response time for multiple arrival rates}
+    \label{fig:historesponse}
+\end{figure}
+
 \subsection{Queueing station model}
 \label{sub:Queueing station model}
 
+
+\begin{minipage}{\linewidth}
+    For 0.1 as arrival rate and 0.65 as service rate:
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & 1.8182 \\
+            Average waiting time & 0.2797 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 765.78 \\
+            Average calculation time & 1.53 \\
+            Queue time & 115.282 \\
+            Average waiting time & 0.23 \\
+            Average time spent in system & 1.76 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \bigskip
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+    For 0.2 as arrival rate and 0.66 as service rate:
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & 2.2222 \\
+            Average waiting time & 0.6838 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 758.96718 \\
+            Average calculation time & 1.517934 \\
+            Queue time & 344.924 \\
+            Average waiting time & 0.6898 \\
+            Average time spent in system & 2.20778 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \bigskip
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+    For 0.3 as arrival rate and 0.646 as service rate :
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & 2.9412 \\
+            Average waiting time & 1.3787 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 772.9727 \\
+            Average calculation time & 1.545945 \\
+            Queue time & 707.31 \\
+            Average waiting time & 1.41462 \\
+            Average time spent in system & 2.9605 \\
+            \hline
+        \end{tabular}
+    \bigskip
+    \end{minipage}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+    For 0.4 as arrival rate and 0.687 as service rate :
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & 3.4843 \\
+            Average waiting time & 2.0287 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 727.67711 \\
+            Average calculation time & 1.4553542 \\
+            Queue time & 1214.914 \\
+            Average waiting time & 2.429828 \\
+            Average time spent in system & 3.8851 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \bigskip
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+    For 0.5 as arrival rate and 0,7045 as service rate :
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & 4.902 \\
+            Average waiting time & 3.4815 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 709.71048 \\
+            Average calculation time & 1.4194 \\
+            Queue time & 3427.032 \\
+            Average waiting time & 6.854064 \\
+            Average time spent in system & 8,273464 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \bigskip
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+    For 0.7 as arrival rate and 0,6763 as service rate :
+
+    \bigskip
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Theory & \\
+            \hline
+            Average time spent in system & N/A \\
+            Average waiting time & N/A \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+        \begin{tabular}{|l|l|}
+            \hline
+            Experimental & \\
+            \hline
+            Calculation time & 739.24599 \\
+            Average calculation time & 1.478491 \\
+            Queue time & 58704.59 \\
+            Average waiting time & 11,740918 \\
+            Average time spent in system & 13,219409 \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \bigskip
+\end{minipage}
+
+
+
 \subsection{Improvement of the performance of the system}
 \label{sub:Improvement of the performance of the system}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{responsetime_priority.png}
+    \caption{Results with a priority queue (in red) vs results without (in green)}
+    \label{fig:priorityqueue}
+\end{figure}
 
 \subsection{Measurements on a multi-threaded server}
 \label{sub:Measurements on a multi-threaded server}
