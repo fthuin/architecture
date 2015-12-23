@@ -15,16 +15,25 @@ import java.net.Socket;
 import utils.Request;
 import utils.Log;
 
+/**
+    This class represents a NetworkNode(Server or Client),it is also
+    used to catch several exceptions that can occurs
+*/
 public abstract class NetworkNode {
 
     private int port = -1;
     private volatile int numberSend = 0;
 
+    /** Write to the ObjectOutputStream
+    */
     public synchronized void send(Request r, ObjectOutputStream outputStream) {
         try {
             outputStream.writeObject(r);
             numberSend++;
             if (numberSend % 40 == 0) {
+                // The outputStream keeps a cache of all the object that have
+                // been sent, so to avoid an out of memory we must clear
+                // outputStream.
                 outputStream.reset();
             }
             outputStream.flush();
@@ -97,6 +106,9 @@ public abstract class NetworkNode {
         return ois;
     }
 
+    /**
+        This method closes the ObjectOutputStream
+    */
     public void closeStream(ObjectOutputStream oos){
         try{
             oos.close();
@@ -105,6 +117,9 @@ public abstract class NetworkNode {
         }
     }
 
+    /**
+        Retrieves the ObjectOutputStream from a socket
+    */
     public ObjectOutputStream getSocketOutputStream(Socket socket) {
         ObjectOutputStream oos = null;
         try {

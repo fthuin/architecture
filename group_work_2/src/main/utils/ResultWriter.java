@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import utils.Request;
 import utils.Log;
 
+/**
+    This class is used to write some measurement result in a file
+*/
 public class ResultWriter {
 
     public static void write(Request r, String filename) {

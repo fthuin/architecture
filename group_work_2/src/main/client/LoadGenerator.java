@@ -118,7 +118,6 @@ public class LoadGenerator extends NetworkNode {
 		}
 	}
 
-	//FIXME Move in an other class
 	public void loadGenerator(){
 			Random gen = new Random();
 			double d = gen.nextDouble();

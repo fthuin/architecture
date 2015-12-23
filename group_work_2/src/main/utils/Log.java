@@ -1,5 +1,9 @@
 package utils;
 
+/**
+    This class is used to monitor what happens between the server and the
+    client 
+*/
 public class Log {
 
     public static boolean DEBUG = true;

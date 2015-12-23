@@ -19,6 +19,11 @@ import utils.Request;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+
+/**
+	This class represent a simple server that computes the power of a matrix
+	M by and an exposant e
+*/
 public class SimpleServer extends NetworkNode {
 
 	private ServerSocket socketServer = null;
@@ -30,7 +35,10 @@ public class SimpleServer extends NetworkNode {
 	private boolean receiveFinished = false;
 
 	private long computeTime = 0L;
-
+	/**
+		Constructor
+		@port : The port of the server
+	 */
 	public SimpleServer(String port) {
 		this.setPort(port);
 	}
@@ -61,7 +69,10 @@ public class SimpleServer extends NetworkNode {
 
 	});
 
-
+	/**
+		This method start the simple server (single thread). Its wait far a
+		connection and then it add the coming request to the queue
+	*/
 	public void start() {
         Log.print("Server - start()");
 
@@ -106,6 +117,9 @@ public class SimpleServer extends NetworkNode {
         Log.print("Server - end start()");
 	}
 
+	/**
+		This method stop the server and close all the stream
+	*/
     public void stop() {
         try {
 			outputStream.close();
@@ -119,6 +133,9 @@ public class SimpleServer extends NetworkNode {
         Log.print("Server - end stop()");
     }
 
+	/**
+		This method process a request client
+	*/
 	private Matrix compute(Matrix m, int exposant) {
 		long startTime = System.nanoTime();
 		Matrix result = new Matrix(m.matrixPowered(exposant), m.getSize());

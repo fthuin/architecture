@@ -3,6 +3,11 @@ package utils;
 import java.io.Serializable;
 import java.util.Random;
 
+/*
+* This class represent the matrox contained in the request sent to the server
+*  and the response received from the server
+*/
+
 public class Matrix implements Serializable {
     private Double[][] matrix;
     private int size;
@@ -52,6 +57,7 @@ public class Matrix implements Serializable {
         return c;
     }
 
+    
     public Double[][] matrixPowered(int power) {
         Double[][] res = this.matrix.clone();
         for (int i = 0 ; i < power ; i++) {

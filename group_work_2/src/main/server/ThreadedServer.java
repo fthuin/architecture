@@ -21,6 +21,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
+/*
+* This class represent the a server with several thread. It can process several
+* request at the same time.
+*/
 public class ThreadedServer extends NetworkNode {
 
 	private ServerSocket socketServer = null;
@@ -33,7 +37,6 @@ public class ThreadedServer extends NetworkNode {
 
     private int nbrThread;
     private List<Thread> pool ;
-	//private volatile long computeTime = 0L;
 
     public ThreadedServer(String port, int nbrThread) {
         this.setPort(port);
@@ -41,6 +44,7 @@ public class ThreadedServer extends NetworkNode {
         this.pool = new ArrayList<Thread>(this.nbrThread);
     }
 
+	//This method create all the thread use by the server
     public void initiatePool(){
         for(int i=0;i<nbrThread;i++){
             Thread t = new Thread(fetchBuffer);
@@ -48,12 +52,14 @@ public class ThreadedServer extends NetworkNode {
         }
     }
 
+	//This method start all the thread of the server
     public void startThreads(){
         for(Thread t : pool){
             t.start();
         }
     }
 
+	//This method join the threads( wait for all the thread to finish)
     public void joinThreads() throws InterruptedException{
         for(Thread t : pool){
             t.join();
@@ -61,14 +67,13 @@ public class ThreadedServer extends NetworkNode {
     }
 
 
-
+	//This Runnabe is used to describe the behavior of the threads
     Runnable fetchBuffer = new Runnable(){
         public void run(){
 			Request r;
 			try{
 				while ((r=buffer.take()) != null ) {
-				r.setServerProcessingTimeStamp(new DateTime());
-				Log.print("Processing Request: "+r.getId());
+				r.setServerProcessingTimeStamp(new DateTime()); Log.print("Processing Request: "+r.getId());
 				Matrix response = compute(r);
 				Request dataToSend = r;
 				dataToSend.setMatrix(response);
@@ -79,13 +84,13 @@ public class ThreadedServer extends NetworkNode {
 		} catch (InterruptedException e){
 			Log.error("Interrupted while waiting");
 		}
-
         }
     };
 
 
 
-
+	//This method start the server waiting for a client. It receives the request
+	//and add it to the queue
 	public void start() {
         Log.print("Server - start()");
 
@@ -130,6 +135,7 @@ public class ThreadedServer extends NetworkNode {
         Log.print("Server - end start()");
 	}
 
+	//This method stop the server and close the stream
     public void stop() {
         try {
 			outputStream.close();
@@ -143,13 +149,13 @@ public class ThreadedServer extends NetworkNode {
         Log.print("Server - end stop()");
     }
 
+	//This method process the client request
 	private Matrix compute(Request r) {
         Matrix m = r.getMatrix();
         int exposant = r.getExposant();
 		long startTime = System.nanoTime();
 		Matrix result = new Matrix(m.matrixPowered(exposant), m.getSize());
         r.setCalculationTime(System.nanoTime() - startTime);
-		//computeTime += (System.nanoTime() - startTime);
 		return result;
 	}
 }

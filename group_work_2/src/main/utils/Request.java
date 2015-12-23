@@ -6,11 +6,18 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
+
+/*
+* This class represents the request sent to the server and the response
+* it contains a matrix and the exposant
+*/
 public class Request implements Serializable,Comparable<Request> {
 
     private int id;
     private int exposant;
     private Matrix matrix;
+    //all these the timestamp are used to calculate the waiting time and
+    // response time,...
     private DateTime clientSendingTimeStamp;
     private DateTime serverReceivingTimeStamp;
     private DateTime serverProcessingTimeStamp;
@@ -89,17 +96,20 @@ public class Request implements Serializable,Comparable<Request> {
     }
 
     public long getWaitingTime() {
+        //The waiting time is the time elapsed since the request arrived in the
+        //queue and the moment the server will begin to process it
         Interval waitingInterval = new Interval(serverReceivingTimeStamp, serverProcessingTimeStamp);
         return waitingInterval.toDuration().getMillis();
     }
 
     public long getNetworkTime() {
+        //Networking time is the time to send the request and the time to receive the response
         Interval requestInterval = new Interval(clientSendingTimeStamp, serverReceivingTimeStamp);
         Interval responseInterval = new Interval(serverSendingTimeStamp, clientReceivingTimeStamp);
         return requestInterval.toDuration().getMillis() + responseInterval.toDuration().getMillis();
     }
 
-
+    //This method compareTo is used to sort requests in priority queue
     public int compareTo(Request r){
         if(r.getMatrix().getSize()>matrix.getSize())
             return -1;
