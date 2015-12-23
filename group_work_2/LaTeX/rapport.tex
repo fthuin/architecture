@@ -330,8 +330,6 @@ request rate of 0.9, it goes from 191.15 to 104.448 seconds.
 \subsection{Measurements on a multi-threaded server}
 \label{sub:Measurements on a multi-threaded server}
 
-\subsubsection{Bottlenecks}
-\label{subs:Bottlenecks}
 
 
 \subsubsection{Multi-threading and queuing station model}
@@ -509,3 +507,18 @@ request rate of 0.9, it goes from 191.15 to 104.448 seconds.
     \end{minipage}
     \bigskip
 \end{minipage}
+
+
+\subsubsection{Bottlenecks}
+\label{subs:Bottlenecks}
+
+In our tests, the two main issues are the performances of the CPU and the Java
+implementation. The CPUs are old and we could have much better performances on
+new-generation CPU (i5, i7 of the 6th generation) but there will always be a
+limit of calculation that will be the bottleneck on a computer not designed to be
+a server. Java isn't the best programming language to run client-server application
+because Threads management and Network management is at high-level programming
+and you can't really decide to improve the performance to solve a particular
+problem (a solution would be to use C to improve the mutual exclusion, choose when to
+free the memory, improve the calculation with specific compilation flags,
+\ldots). \newline
