@@ -77,10 +77,10 @@ and the ''real content'' size (size of the matrix) is low at beginning and incre
 
 The figure~\ref{fig:histocpu} shows the average CPU load for different request rate. As one could
 expect, when the request rate increases the average CPU load increases too. One thing important
-on this figure concerns the CPU load for request rate superior to 0.5. Indeed, we can see that the 
+on this figure concerns the CPU load for request rate superior to 0.5. Indeed, we can see that the
 CPU load exceeds the 100\%\footnote{the top command express CPU load on one CPU even if multiple
 CPU are runnning}. This suggest that when the arrival rate exceeds 0.5, the server has an hard time
-processing the incoming request. 
+processing the incoming request.
 
 \begin{figure}[!ht]
     \centering
@@ -89,7 +89,7 @@ processing the incoming request.
     \label{fig:histocpu}
 \end{figure}
 The figure~\ref{fig:histonetwork} shows the network load for different request rate. We can see that
-network load does not differ much. This happens simply because we have done our measuremnt with the 
+network load does not differ much. This happens simply because we have done our measuremnt with the
 LoadGenerator sending 500 requests of variying size with different request rate so it's understandable to have the network load around 290 MB for each rate
 \begin{figure}[!ht]
     \centering
@@ -99,11 +99,11 @@ LoadGenerator sending 500 requests of variying size with different request rate 
 \end{figure}
 
 The figure~\ref{fig:historesponse} shows the average response time for several arrival rates.
-We can notice on this figure, that the average response time skyrockets between arrival rate 
-0.5 and arrival rate 0.7 . The reason of this phenomenon is explained in the following section but 
-it's the average waiting time that has a most impact on the response time. Request arrives too fast 
+We can notice on this figure, that the average response time skyrockets between arrival rate
+0.5 and arrival rate 0.7 . The reason of this phenomenon is explained in the following section but
+it's the average waiting time that has a most impact on the response time. Request arrives too fast
 for the server, so they keep being accumulating in the queuing making them wait for a longer period
-of time. 
+of time.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{responsetime.png}
@@ -118,8 +118,10 @@ arrival rate($\lambda$) and service rate($\mu$), we computed the
 average response time and the average waiting time in the queue. Notice that
 every value expressed in the tables below are in second.
 
-$\lambda$ = 0.1 , $\mu$ = 0.65:
+
 \begin{minipage}{\linewidth}
+    $\lambda$ = 0.1 , $\mu$ = 0.65:
+
     \bigskip
     \begin{minipage}{0.45\linewidth}
         \begin{tabular}{|l|l|}
@@ -302,20 +304,20 @@ we obtained an average time spent in the system of 2.9412 second with while the 
 2.9605 which is not so far from the value given by the model. When the $\lambda$ value equals 0.5, the
 model does not fit anymore. The average waiting time measured far surpasses the model (almost the
 double). This be can explained, by the fact that the $\lambda$ get closer to the $\mu$ such that more
-request arrives in the queue than the one that leave the queue. This lead to a growing queue so request 
+request arrives in the queue than the one that leave the queue. This lead to a growing queue so request
 arriving must wait longer.
 
 
 \subsection{Improvement of the performance of the system}
 \label{sub:Improvement of the performance of the system}
-The improvement we choose to do is the usage of job priorities. Instead of using a FCFS queue, 
+The improvement we choose to do is the usage of job priorities. Instead of using a FCFS queue,
 the server uses a priority queue. The queue is sorted in natural order, so requests with the smaller matrix
 are the ones that will be processed first. The figure~\ref{fig:priorityqueue} shows the impact of this
 improvement on the response time(y-axis in log scale).
 
-We can see on this graph that for the lower value of the request rate the time, the gain is not too much but 
-for the upper value the is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average 
-response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the 
+We can see on this graph that for the lower value of the request rate the time, the gain is not too much but
+for the upper value the is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average
+response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the
 request rate of 0.9, it goes from 191.15 to 104.448 seconds.
 
 \begin{figure}[!ht]
@@ -334,3 +336,24 @@ request rate of 0.9, it goes from 191.15 to 104.448 seconds.
 
 \subsubsection{Multi-threading and queuing station model}
 \label{subs:Multi-threading and queuing station model}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{cpu_load_threads.png}
+    \caption{Results of CPU Load of a server with 3 threads (red) and 4 threads (green)}
+    \label{fig:cpuload_threads}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{network_load_threads.png}
+    \caption{Results of network load of a server with 3 threads (red) and 4 threads (green)}
+    \label{fig:network_threads}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{responsetime_threads.png}
+    \caption{Results of response time of a server with 3 threads (red) and 4 threads (green)}
+    \label{fig:responsetime_threads}
+\end{figure}
