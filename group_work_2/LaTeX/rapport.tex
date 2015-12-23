@@ -60,7 +60,10 @@ distributed randoms numbers to create inter-request times.
 
 The figure~\ref{fig:measurement1} shows the evolution of the average time needed
 according to size-changing matrices. For the lower sized matrices, the network
-time is the most impactful factor on the average time. The network time is
+time is the most impactful factor on the average time because the server needs a negligible time
+to process the matrix. Furthermore, the request contained much more information than the matrix
+(because we used timestamp and other information) so the ratio between the total size of the request
+and the ''real content'' size (size of the matrix) is low at beginning and increases as the matrix grows.
 
 \begin{figure}[!ht]
     \centering
@@ -72,13 +75,22 @@ time is the most impactful factor on the average time. The network time is
 \subsection{Measurement of the load generator}
 \label{sub:Measurement of the load generator}
 
+The figure~\ref{fig:histocpu} shows the average CPU load for different request rate. As one could
+expect, when the request rate increases the average CPU load increases too. One thing important
+on this figure concerns the CPU load for request rate superior to 0.5. Indeed, we can see that the 
+CPU load exceeds the 100\%\footnote{the top command express CPU load on one CPU even if multiple
+CPU are runnning}. This suggest that when the arrival rate exceeds 0.5, the server has an hard time
+processing the incoming request. 
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{cpu_load.png}
     \caption{Histogram of the CPU load for multiple arrival rates}
     \label{fig:histocpu}
 \end{figure}
-
+The figure~\ref{fig:histonetwork} shows the network load for different request rate. We can see that
+network load does not differ much. This happens simply because we have done our measuremnt with the 
+LoadGenerator sending 500 requests of variying size with different request rate so it's understandable to have the network load around 290 MB for each rate
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{network_load.png}
@@ -86,6 +98,12 @@ time is the most impactful factor on the average time. The network time is
     \label{fig:histonetwork}
 \end{figure}
 
+The figure~\ref{fig:historesponse} shows the average response time for several arrival rates.
+We can notice on this figure, that the average response time skyrockets between arrival rate 
+0.5 and arrival rate 0.7 . The reason of this phenomenon is explained in the following section but 
+it's the average waiting time that has a most impact on the response time. Request arrives too fast 
+for the server, so they keep being accumulating in the queuing making them wait for a longer period
+of time. 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.5\linewidth]{responsetime.png}
@@ -95,11 +113,13 @@ time is the most impactful factor on the average time. The network time is
 
 \subsection{Queueing station model}
 \label{sub:Queueing station model}
+For our queueing station model, we used an \texttt{M/M/1} queue. For each
+arrival rate($\lambda$) and service rate($\mu$), we computed the
+average response time and the average waiting time in the queue. Notice that
+every value expressed in the tables below are in second.
 
-
+$\lambda$ = 0.1 , $\mu$ = 0.65:
 \begin{minipage}{\linewidth}
-    For 0.1 as arrival rate and 0.65 as service rate:
-
     \bigskip
     \begin{minipage}{0.45\linewidth}
         \begin{tabular}{|l|l|}
@@ -128,7 +148,7 @@ time is the most impactful factor on the average time. The network time is
 \end{minipage}
 
 \begin{minipage}{\linewidth}
-    For 0.2 as arrival rate and 0.66 as service rate:
+    $\lambda$ = 0.2, $\mu$ = 0.66:
 
     \bigskip
     \begin{minipage}{0.45\linewidth}
@@ -158,7 +178,7 @@ time is the most impactful factor on the average time. The network time is
 \end{minipage}
 
 \begin{minipage}{\linewidth}
-    For 0.3 as arrival rate and 0.646 as service rate :
+    $\lambda$ = 0.3, $\mu$ = 0.646 :
 
     \bigskip
     \begin{minipage}{0.45\linewidth}
@@ -188,7 +208,7 @@ time is the most impactful factor on the average time. The network time is
 \end{minipage}
 
 \begin{minipage}{\linewidth}
-    For 0.4 as arrival rate and 0.687 as service rate :
+    $\lambda$ =0.4, $\mu$ = 0.687 :
 
     \bigskip
     \begin{minipage}{0.45\linewidth}
@@ -218,7 +238,7 @@ time is the most impactful factor on the average time. The network time is
 \end{minipage}
 
 \begin{minipage}{\linewidth}
-    For 0.5 as arrival rate and 0,7045 as service rate :
+   $\lambda$=0.5 , $\mu$ = 0.7045:
 
     \bigskip
     \begin{minipage}{0.45\linewidth}
@@ -248,7 +268,7 @@ time is the most impactful factor on the average time. The network time is
 \end{minipage}
 
 \begin{minipage}{\linewidth}
-    For 0.7 as arrival rate and 0,6763 as service rate :
+   $\lambda$=0.7, $\mu$ = 0.6763:
 
     \bigskip
     \begin{minipage}{0.45\linewidth}
@@ -277,10 +297,26 @@ time is the most impactful factor on the average time. The network time is
     \bigskip
 \end{minipage}
 
+As we can see, the model performs quite well for $\lambda$ <0.5 . For example, with $\lambda$ = 0.3,
+we obtained an average time spent in the system of 2.9412 second with while the measured value gives us
+2.9605 which is not so far from the value given by the model. When the $\lambda$ value equals 0.5, the
+model does not fit anymore. The average waiting time measured far surpasses the model (almost the
+double). This be can explained, by the fact that the $\lambda$ get closer to the $\mu$ such that more
+request arrives in the queue than the one that leave the queue. This lead to a growing queue so request 
+arriving must wait longer.
 
 
 \subsection{Improvement of the performance of the system}
 \label{sub:Improvement of the performance of the system}
+The improvement we choose to do is the usage of job priorities. Instead of using a FCFS queue, 
+the server uses a priority queue. The queue is sorted in natural order, so requests with the smaller matrix
+are the ones that will be processed first. The figure~\ref{fig:priorityqueue} shows the impact of this
+improvement on the response time(y-axis in log scale).
+
+We can see on this graph that for the lower value of the request rate the time, the gain is not too much but 
+for the upper value the is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average 
+response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the 
+request rate of 0.9, it goes from 191.15 to 104.448 seconds.
 
 \begin{figure}[!ht]
     \centering
