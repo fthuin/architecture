@@ -115,7 +115,8 @@ of time.
 \label{sub:Queueing station model}
 For our queueing station model, we used an \texttt{M/M/1} queue. For each
 arrival rate($\lambda$) and service rate($\mu$), we computed the
-average response time and the average waiting time in the queue. Notice that
+average response time and the average waiting time in the queue. The queue 
+scheduling is \textit{First-Come-First-Served}Notice that
 every value expressed in the tables below are in second.
 
 
@@ -318,7 +319,8 @@ improvement on the response time(y-axis in log scale).
 We can see on this graph that for the lower value of the request rate the time, the gain is not too much but
 for the upper value the is significant. Indeed, with a request rate of 0.7, using the simple FCFS queue, average
 response time was 118.88seconds but with the priority queue it only goes up to 64.539 seconds. For the
-request rate of 0.9, it goes from 191.15 to 104.448 seconds.
+request rate of 0.9, it goes from 191.15 to 104.448 seconds. So using job priorities seems to have
+some impact on the average response time.
 
 \begin{figure}[!ht]
     \centering
@@ -336,6 +338,13 @@ request rate of 0.9, it goes from 191.15 to 104.448 seconds.
 
 \subsubsection{Multi-threading and queuing station model}
 \label{subs:Multi-threading and queuing station model}
+The figure~\ref{fig:cpuload_threads} shows the CPU Load for the for different request rate and
+with 3 threads and 4 threads. We can see on the graph that for the three first rate, there is an
+underutilization of the threads meaning that the rate is not high enough to make the server use
+a good percentage of its ressource. But when we get to the upper request rate, the server becomes
+limited and uses all it ressources. And indeed, we can see on the figure~\ref{fig:responsetime_threads}
+that the response time for the upper request rate is much higher than the one for the lower value.
+
 
 \begin{figure}[!ht]
     \centering
