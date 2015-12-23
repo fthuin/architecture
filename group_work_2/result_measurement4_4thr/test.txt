@@ -1,4 +1,61 @@
 #################
+# 0.3d		#
+#################
+
+# Experimental #
+
+Calculation time : 905.4696
+Average calculation time : 1.8109
+Queue time : 5.24
+Average waiting time : 0.0105
+CPU load : 73.008%
+
+Network load : 293.8722MB
+
+# Theory #
+
+Average time spent in system : 1.8122
+Average waiting time : 0.0013
+
+#################
+# 0.5d		#
+#################
+
+# Experimental #
+
+Calculation time : 1003.5639
+Average calculation time : 2.00712
+Queue time : 81.246
+Average waiting time : 0.162
+CPU load : 142.35645%
+
+Network load : 291.35 MB
+
+# Theory #
+
+Average time spent in system : 2.0211
+Average waiting time : 0.0138
+
+#################
+# 0.7d		#
+#################
+
+# Experimental #
+
+Calculation time : 1139.6480
+Average calculation time : 2.139296
+Queue time : 228.42
+Average waiting time : 0.3468
+CPU load : 238.98965%
+
+Network load : 292.8345 MB
+
+# Theory #
+
+Average time spent in system : 2.3647
+Average waiting time : 0.0853
+
+#################
 # 1.3d		#
 #################
 
@@ -8,7 +65,7 @@ Calculation time : 1248.2644
 Average calculation time : 2.4965
 Queue time : 17836.361
 Average waiting time : 35.672
-CPU load : 317.95%
+CPU load : 374.1123%
 
 Network load : 287.002MB
 
@@ -22,7 +79,7 @@ Calculation time : 1321.071
 Average calculation time : 2.6421
 Queue time : 24990.738
 Average waiting time : 49.9814
-CPU load : 317.2556%
+CPU load : 377.907%
 
 Network load : 292.7724MB
 
@@ -36,7 +93,7 @@ Calculation time : 1318.60
 Average calculation time : 2.6372
 Queue time : 34644.4
 Average waiting time : 69.288
-CPU load : 296.724%
+CPU load : 374.3575%
 
 Network load : 292.8176MB
 
@@ -49,8 +106,8 @@ Network load : 292.8176MB
 Calculation time : 1327.5542
 Average calculation time : 2.6551
 Queue time : 44297.42
-Average waiting time : 88.5948
-CPU load : 289.19%
+Average waiting time : 71.5948
+CPU load : 379.2061%
 
 Network load : 289.5238MB
 
@@ -64,6 +121,6 @@ Calculation time : 1256.1535
 Average calculation time : 2.5123
 Queue time : 39451.69
 Average waiting time : 78.903
-CPU load : 319.245%
+CPU load : 373.608
 
 Network load : 288.001MB
