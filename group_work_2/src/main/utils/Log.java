@@ -2,12 +2,15 @@ package utils;
 
 /**
     This class is used to monitor what happens between the server and the
-    client 
+    client
 */
 public class Log {
 
     public static boolean DEBUG = true;
 
+    /**
+        Print on the standard output if debug is activated.
+     */
     public static void print(String s) {
         if (DEBUG) {
             System.out.println(s);
@@ -15,6 +18,9 @@ public class Log {
         }
     }
 
+    /**
+        Print on the standard error output if debug is activated.
+     */
     public static void error(String s) {
         if (DEBUG) {
             System.err.println("Error : " +s);

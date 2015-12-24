@@ -67,6 +67,10 @@ public class SimpleClient extends NetworkNode {
 		}
 	}
 
+	/**
+		Create a socket from the parameters given to the constructor and send
+		a predefined number of requests to the server.
+	 */
 	public void start() {
         Log.print("SimpleClient - start");
 

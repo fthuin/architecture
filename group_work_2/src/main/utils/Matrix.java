@@ -12,6 +12,9 @@ public class Matrix implements Serializable {
     private Double[][] matrix;
     private int size;
 
+    /**
+        Creates a size*size square matrix
+     */
     public Matrix(int size) {
         this.size = size;
         Double[][] res= new Double[size][size];
@@ -29,7 +32,12 @@ public class Matrix implements Serializable {
     }
 
 
-    /* Source : http://stackoverflow.com/questions/17623876/matrix-multiplication-using-arrays */
+    /**
+        @a : A matrix of size n*n
+        @b : A matrix of size n*n (same size)
+        @return : the result of the multiplication of a by b
+        Source : http://stackoverflow.com/questions/17623876/matrix-multiplication-using-arrays
+     */
     public Double[][] multiplicar(Double[][] a, Double[][] b) {
         int aRows = a.length;
         int aColumns = a[0].length;
@@ -57,7 +65,11 @@ public class Matrix implements Serializable {
         return c;
     }
 
-    
+
+    /**
+        Calculate the result of a matrix with an exponent, (A^p) where A is
+        the object calling this method and p is the argument power.
+     */
     public Double[][] matrixPowered(int power) {
         Double[][] res = this.matrix.clone();
         for (int i = 0 ; i < power ; i++) {
@@ -66,10 +78,16 @@ public class Matrix implements Serializable {
         return res;
     }
 
+    /**
+        @return : the size of the matrix
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+        @return : String containing line by line the content of the matrix.
+     */
     public String toString() {
         String s ="";
         for (int i = 0; i < matrix.length ; i++) {

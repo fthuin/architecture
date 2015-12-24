@@ -29,10 +29,17 @@ public class Buffer<E> extends LinkedBlockingDeque<E> {
 		}
 	}
 
+	/**
+		@return : true if the number of elements reached the size of the
+		buffer, false otherwise.
+	 */
 	public synchronized boolean isFull(){
 		return size() == size;
 	}
 
+	/**
+		@return true if there isn't any element in the buffer, false otherwise.
+	 */
 	public synchronized boolean isEmpty() {
 		return size()==0;
 	}

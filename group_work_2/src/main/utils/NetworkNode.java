@@ -73,6 +73,9 @@ public abstract class NetworkNode {
     public abstract void stop();
     public abstract void start();
 
+    /**
+        @return : the port of this network node
+     */
     public int getPort() {
         return this.port;
     }
@@ -107,8 +110,9 @@ public abstract class NetworkNode {
     }
 
     /**
-        This method closes the ObjectOutputStream
-    */
+     * Close the ObjectOutputStream given in parameter
+     * @param oos The ObjectOutputStream to close.
+     */
     public void closeStream(ObjectOutputStream oos){
         try{
             oos.close();
@@ -118,8 +122,10 @@ public abstract class NetworkNode {
     }
 
     /**
-        Retrieves the ObjectOutputStream from a socket
-    */
+     * Returns the ObjectOutputStream of a given socket.
+     * @param  socket The socket you want to get the OutputStream from.
+     * @return        Returns the OutputStream of the socket given in argument.
+     */
     public ObjectOutputStream getSocketOutputStream(Socket socket) {
         ObjectOutputStream oos = null;
         try {
@@ -132,6 +138,10 @@ public abstract class NetworkNode {
         return oos;
     }
 
+    /**
+     * Makes a thread sleep for a certain number of milliseconds
+     * @param milliseconds the number of milliseconds the thread will sleep
+     */
     public void threadSleep(long milliseconds) {
         try {
             Thread.sleep(milliseconds);

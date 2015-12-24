@@ -17,6 +17,10 @@ public class Main {
   private static final String TYPE_ADV = "advServer";
 
 
+  /**
+    This function handles the command line parameters and start weither a server
+    or a client with different parameters.
+   */
   public static void main(String[] args) {
     String type = "";
     String serverAddr = "";

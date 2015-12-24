@@ -25,12 +25,24 @@ public class Request implements Serializable,Comparable<Request> {
     private DateTime clientReceivingTimeStamp;
     private long calculationTime;
 
+    /**
+     * Creates a new request with an id, an exponent and a matrix as content.
+     * @param   id the ID of the request you create
+     * @param   matrix is the matrix you want the request to contain
+     * @param   exposant is the exponent you want for the matrix (for calculation
+     * purpose)
+     * @return  a new request initialized with given parameters
+     */
     public Request(int id, int exposant, Matrix matrix){
         this.id = id;
         this.exposant = exposant;
         this.matrix = matrix;
     }
 
+    /**
+     * Returns the matrix contained in the request.
+     * @return the Matrix contained in the request
+     */
     public Matrix getMatrix(){
         return matrix;
     }
@@ -95,6 +107,11 @@ public class Request implements Serializable,Comparable<Request> {
         calculationTime = l;
     }
 
+    /**
+     * Returns the interval in milliseconds between the time the request was
+     * in the queue of the server until the time it was taken from the queue.
+     * @return a long containing the time in milliseconds
+     */
     public long getWaitingTime() {
         //The waiting time is the time elapsed since the request arrived in the
         //queue and the moment the server will begin to process it
@@ -102,6 +119,11 @@ public class Request implements Serializable,Comparable<Request> {
         return waitingInterval.toDuration().getMillis();
     }
 
+    /**
+     * Returns the interval in milliseconds between the time the request left
+     * the client until the time the request arrived on the server.
+     * @return a long containing the time in milliseconds
+     */
     public long getNetworkTime() {
         //Networking time is the time to send the request and the time to receive the response
         Interval requestInterval = new Interval(clientSendingTimeStamp, serverReceivingTimeStamp);
